@@ -1,11 +1,12 @@
 import { Component } from 'react';
-import s from './Main.module.scss'; // Импортируем объект со стилями
+import Search from '../search/Search';
+import style from './Main.module.scss';
 
 export default class Main extends Component {
   render() {
     return (
-      <main className={s.mainContainer}>
-        <p>Мейн работает</p>
+      <main className={style.mainContainer}>
+        <Search></Search>
       </main>
     );
   }
