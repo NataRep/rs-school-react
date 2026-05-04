@@ -3,6 +3,7 @@ import type { Person, Planet, Starship } from '../../services/api-models';
 import { ApiService, type CategoryMap } from '../../services/api-service';
 import { StorageService } from '../../services/storage-service';
 import SearchForm from '../search/search-form/SearchForm';
+import ErrorBoundary from '../shared/error-boundary/ErrorBoundary';
 import Tabs from '../shared/tab/Tabs';
 import style from './Search.module.scss';
 
@@ -97,11 +98,18 @@ export default class Search extends Component<object, SearchState> {
           tabs={[
             { label: "People", value: "people" },
             { label: "Planets", value: "planets" },
-            { label: "Starships", value: "starships" }
+            { label: "Starships", value: "starships" },
+            { label: "Get Error Result", value: "error" }
           ] as const}
           activeTab={this.state.category as keyof CategoryMap}
           onSelect={this.onTabSelect}
         />
+
+        <div className={style.resultWrapper}>
+          <ErrorBoundary>
+            <p>все отлично тут выведем результаты поиска</p>
+          </ErrorBoundary>
+        </div>
       </div>
     );
   }
