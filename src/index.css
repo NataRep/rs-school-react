@@ -17,7 +17,7 @@ body {
     radial-gradient(circle at 70% 20%, rgba(3, 117, 161, 0.6) 0%, #00000021 60%),
     radial-gradient(circle at 25% 60%, rgba(0, 0, 0, 0.123) 0%, #00000021 70%),
     radial-gradient(circle at 65% 80%, rgba(4, 35, 173, 0.1) 0%, transparent 50%),
-    url(/src/assets/bg.png?t=1777535455090);
+    url(assets/bg.png?t=1777535455090);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
