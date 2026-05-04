@@ -1,27 +1,23 @@
 import { Component } from 'react';
-import type { Person, Planet, Starship } from '../../services/api-models';
-import { ApiService, type CategoryMap } from '../../services/api-service';
+import { type CategoryMap } from '../../services/api-service';
 import { StorageService } from '../../services/storage-service';
 import SearchForm from '../search/search-form/SearchForm';
 import ErrorBoundary from '../shared/error-boundary/ErrorBoundary';
 import Tabs from '../shared/tab/Tabs';
 import style from './Search.module.scss';
+import SearchResult from './search-result/SearchResult';
 
 type SearchState = {
   category: keyof CategoryMap;
   searchQuery: string;
-  items: (Person | Planet | Starship)[];
-  isLoading: boolean;
-  error: null | Error;
+  searchTerm: string;
 };
 
-export default class Search extends Component<object, SearchState> {
+export default class Search extends Component<SearchState> {
   state: SearchState = {
     category: "people",
     searchQuery: '',
-    items: [],
-    isLoading: false,
-    error: null
+    searchTerm: ''
   };
 
   componentDidMount() {
@@ -39,15 +35,16 @@ export default class Search extends Component<object, SearchState> {
     }
   }
 
-  onTabSelect = (value: keyof CategoryMap) => {
+  onTabSelect = (value: string) => {
+    const categoryValue = value as keyof CategoryMap;
     this.setState(
       {
         searchQuery: '',
-        category: value,
+        searchTerm: '',
+        category: categoryValue,
       },
       () => {
         StorageService.saveSearchQuery(this.state.category, this.state.searchQuery);
-        this.search(this.state.searchQuery);
       }
     );
   }
@@ -60,28 +57,14 @@ export default class Search extends Component<object, SearchState> {
     );
   }
 
-  search = async (value: string) => {
-    try {
-      this.setState({
-        searchQuery: value,
-        isLoading: true,
-        error: null
-      },
-        () => { StorageService.saveSearchQuery(this.state.category, this.state.searchQuery); });
-
-      const data = await ApiService.getData(this.state.category, value);
-
-      this.setState({
-        items: data.results,
-        isLoading: false
-      });
-
-    } catch (err) {
-      this.setState({
-        error: err instanceof Error ? err : new Error("Unknown error"),
-        isLoading: false
-      });
-    }
+  search = (value: string) => {
+    this.setState({
+      searchQuery: value,
+      searchTerm: value,
+      isLoading: true,
+      error: null
+    },
+      () => { StorageService.saveSearchQuery(this.state.category, this.state.searchQuery); });
   }
 
   render() {
@@ -99,15 +82,15 @@ export default class Search extends Component<object, SearchState> {
             { label: "People", value: "people" },
             { label: "Planets", value: "planets" },
             { label: "Starships", value: "starships" },
-            { label: "Get Error Result", value: "error" }
+            { label: "Show Error", value: "error" }
           ] as const}
           activeTab={this.state.category as keyof CategoryMap}
           onSelect={this.onTabSelect}
         />
 
         <div className={style.resultWrapper}>
-          <ErrorBoundary>
-            <p>все отлично тут выведем результаты поиска</p>
+          <ErrorBoundary resetCondition={this.state.category}>
+            <SearchResult category={this.state.category} searchQuery={this.state.searchTerm}></SearchResult>
           </ErrorBoundary>
         </div>
       </div>

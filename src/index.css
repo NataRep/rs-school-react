@@ -5,10 +5,9 @@
 body {
   display: flex;
   justify-content: center;
-  width: 100vw;
+  width: calc(100% - 8rem);
   min-width: 320px;
   min-height: calc(100vh - 8rem);
-  overflow: hidden;
   margin: 0 auto;
   padding: 4rem;
   background-color: var(--color-black);
@@ -37,4 +36,12 @@ input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 1000px var(--color-imperial-blue) inset;
   -webkit-text-fill-color: var(--text-primary);
   caret-color: var(--text-primary);
+}
+
+ul {
+  padding: 0;
+}
+
+li {
+  list-style: none;
 }

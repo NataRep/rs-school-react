@@ -4,7 +4,6 @@ export type CategoryMap = {
   people: Person;
   planets: Planet;
   starships: Starship;
-  error: string;
 };
 
 export class ApiService {

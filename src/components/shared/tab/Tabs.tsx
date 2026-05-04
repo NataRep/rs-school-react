@@ -1,17 +1,17 @@
 import { Component } from "react";
 import type { CategoryMap } from "../../../services/api-service";
-import Icon from "../icon/Icon";
+import Icon, { type IconName } from "../icon/Icon";
 import style from './Tabs.module.scss';
 
 export type TabsProps = {
   tabs: TabItem[];
-  activeTab: keyof CategoryMap;
-  onSelect?: (value: keyof CategoryMap) => void;
+  activeTab: keyof CategoryMap | string;
+  onSelect?: (value: keyof CategoryMap | string) => void;
 };
 
 export type TabItem = {
   label: string;
-  value: keyof CategoryMap;
+  value: keyof CategoryMap | string;
 };
 
 
@@ -30,7 +30,7 @@ export default class Tabs extends Component<TabsProps> {
             onClick={() => onSelect?.(tab.value)}
           >
             <Icon
-              name={tab.value}
+              name={tab.value as IconName}
               className="center"
             />
             {tab.label}

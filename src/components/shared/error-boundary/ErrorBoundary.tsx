@@ -3,6 +3,7 @@ import style from './ErrorBoundary.module.scss';
 
 interface Props {
   children: ReactNode;
+  resetCondition: string;
 }
 
 interface State {
@@ -21,6 +22,16 @@ export default class ErrorBoundary extends Component<Props, State> {
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error("Uncaught error:", error, errorInfo);
   }
+
+  componentDidUpdate(prevProps: Props) {
+    if (this.state.hasError && prevProps.resetCondition !== this.props.resetCondition) {
+      this.resetError();
+    }
+  }
+
+  resetError = () => {
+    this.setState({ hasError: false });
+  };
 
   render() {
     if (this.state.hasError) {
