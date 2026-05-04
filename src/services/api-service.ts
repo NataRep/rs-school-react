@@ -9,13 +9,14 @@ export type CategoryMap = {
 export class ApiService {
   static async getData<K extends keyof CategoryMap>(
     category: K,
-    searchQuery: string
+    searchQuery: string,
+    page: number = 1
   ): Promise<SwapiResponse<CategoryMap[K]>> {
 
     const baseUrl = "/api";
 
     const response = await fetch(
-      `${baseUrl}/${category}/?search=${encodeURIComponent(searchQuery)}`
+      `${baseUrl}/${category}/?search=${encodeURIComponent(searchQuery)}&page=${page}`
     );
 
     if (!response.ok) {

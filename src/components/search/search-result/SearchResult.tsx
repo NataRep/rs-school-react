@@ -9,6 +9,8 @@ type SearchResultState = {
   category: keyof CategoryMap;
   searchQuery: string;
   items: (Person | Planet | Starship)[];
+  totalPages: number;
+  currentPage: number;
   isLoading: boolean;
   error: null | Error;
   shouldThrow: boolean;
@@ -27,6 +29,8 @@ export default class SearchResult extends Component<SearchProps, SearchResultSta
       category: props.category || "people",
       searchQuery: props.searchQuery || '',
       items: [],
+      totalPages: 1,
+      currentPage: 1,
       isLoading: false,
       error: null,
       shouldThrow: false,
@@ -44,7 +48,8 @@ export default class SearchResult extends Component<SearchProps, SearchResultSta
     ) {
       this.setState({
         category: this.props.category,
-        searchQuery: this.props.searchQuery
+        searchQuery: this.props.searchQuery,
+        currentPage: 1
       }, () => {
         this.getResult();
       });
@@ -52,16 +57,20 @@ export default class SearchResult extends Component<SearchProps, SearchResultSta
   }
 
   private async getResult() {
-    this.setState({
-      isLoading: true,
-      error: null
-    });
+    this.setState({ isLoading: true, error: null });
 
     try {
-      const data = await ApiService.getData(this.props.category, this.props.searchQuery);
+      const { category, searchQuery, currentPage } = this.state;
+
+      const data = await ApiService.getData(
+        category,
+        searchQuery,
+        currentPage
+      );
 
       this.setState({
         items: data.results,
+        totalPages: Math.ceil(data.count / 10),
         isLoading: false,
       });
     } catch (err) {
@@ -71,6 +80,24 @@ export default class SearchResult extends Component<SearchProps, SearchResultSta
 
   handleThrowError = () => {
     this.setState({ shouldThrow: true });
+  };
+
+  goToNextPage = () => {
+    if (this.state.currentPage >= this.state.totalPages) return;
+
+    this.setState(
+      (prev) => ({ currentPage: prev.currentPage + 1 }),
+      () => this.getResult()
+    );
+  };
+
+  goToPrevPage = () => {
+    if (this.state.currentPage <= 1) return;
+
+    this.setState(
+      (prev) => ({ currentPage: prev.currentPage - 1 }),
+      () => this.getResult()
+    );
   };
 
   render() {
@@ -106,6 +133,23 @@ export default class SearchResult extends Component<SearchProps, SearchResultSta
           </li>
         ))}
       </ul>
+      <div className={style.pagination}>
+        <Button
+          text="Prev"
+          className="blue"
+          callback={this.goToPrevPage}
+          disabled={this.state.currentPage === 1}
+        />
+        <span>
+          {this.state.currentPage} / {this.state.totalPages}
+        </span>
+        <Button
+          text="Next"
+          className="blue"
+          callback={this.goToNextPage}
+          disabled={this.state.currentPage === this.state.totalPages}
+        />
+      </div>
     </div>
   }
 }

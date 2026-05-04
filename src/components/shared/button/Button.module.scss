@@ -22,6 +22,11 @@
 .blue {
   background-image: var(--gradient-lightsaber-blue);
 
+  &:disabled {
+    background: var(--color-grey);
+    pointer-events: none;
+  }
+
   @include hover-supported {
     box-shadow:
       0 0 0 1px rgba(var(--color-light-side-rgb), 0.4) inset,
