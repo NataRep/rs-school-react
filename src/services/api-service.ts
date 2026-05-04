@@ -1,9 +1,9 @@
-import { type Person, type Planet, type Starship, type SwapiResponse } from "./api-models.ts";
+import { type Person, type Planet, type Spaceship, type SwapiResponse } from "./api-models.ts";
 
 export type CategoryMap = {
   people: Person;
   planets: Planet;
-  starships: Starship;
+  spaceships: Spaceship;
 };
 
 export class ApiService {

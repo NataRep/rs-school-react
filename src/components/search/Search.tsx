@@ -1,6 +1,7 @@
 import { Component } from 'react';
-import type { Person, Planet, Starship } from '../../services/api-models';
+import type { Person, Planet, Spaceship } from '../../services/api-models';
 import { ApiService, type CategoryMap } from '../../services/api-service';
+import { StorageService } from '../../services/storage-service';
 import SearchForm from '../search/search-form/SearchForm';
 import Tabs from '../shared/tab/Tabs';
 import style from './Search.module.scss';
@@ -8,7 +9,7 @@ import style from './Search.module.scss';
 type SearchState = {
   category: keyof CategoryMap;
   searchQuery: string;
-  items: (Person | Planet | Starship)[];
+  items: (Person | Planet | Spaceship)[];
   isLoading: boolean;
   error: null | Error;
 };
@@ -22,6 +23,21 @@ export default class Search extends Component<object, SearchState> {
     error: null
   };
 
+  componentDidMount() {
+    const storageData = StorageService.getSearchQuery();
+    if (storageData.category) {
+      this.setState(
+        {
+          searchQuery: storageData.query || '',
+          category: storageData.category,
+        },
+        () => {
+          this.search(this.state.searchQuery);
+        }
+      );
+    }
+  }
+
   onTabSelect = (value: keyof CategoryMap) => {
     this.setState(
       {
@@ -29,6 +45,7 @@ export default class Search extends Component<object, SearchState> {
         category: value,
       },
       () => {
+        StorageService.saveSearchQuery(this.state.category, this.state.searchQuery);
         this.search(this.state.searchQuery);
       }
     );
@@ -48,7 +65,8 @@ export default class Search extends Component<object, SearchState> {
         searchQuery: value,
         isLoading: true,
         error: null
-      });
+      },
+        () => { StorageService.saveSearchQuery(this.state.category, this.state.searchQuery); });
 
       const data = await ApiService.getData(this.state.category, value);
 
@@ -79,7 +97,7 @@ export default class Search extends Component<object, SearchState> {
           tabs={[
             { label: "People", value: "people" },
             { label: "Planets", value: "planets" },
-            { label: "Starships", value: "starships" }
+            { label: "Spaceships", value: "spaceships" }
           ] as const}
           activeTab={this.state.category as keyof CategoryMap}
           onSelect={this.onTabSelect}
