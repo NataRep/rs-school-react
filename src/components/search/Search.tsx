@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import type { Person, Planet, Spaceship } from '../../services/api-models';
+import type { Person, Planet, Starship } from '../../services/api-models';
 import { ApiService, type CategoryMap } from '../../services/api-service';
 import { StorageService } from '../../services/storage-service';
 import SearchForm from '../search/search-form/SearchForm';
@@ -9,7 +9,7 @@ import style from './Search.module.scss';
 type SearchState = {
   category: keyof CategoryMap;
   searchQuery: string;
-  items: (Person | Planet | Spaceship)[];
+  items: (Person | Planet | Starship)[];
   isLoading: boolean;
   error: null | Error;
 };
@@ -97,7 +97,7 @@ export default class Search extends Component<object, SearchState> {
           tabs={[
             { label: "People", value: "people" },
             { label: "Planets", value: "planets" },
-            { label: "Spaceships", value: "spaceships" }
+            { label: "Starships", value: "starships" }
           ] as const}
           activeTab={this.state.category as keyof CategoryMap}
           onSelect={this.onTabSelect}

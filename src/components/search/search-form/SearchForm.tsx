@@ -57,7 +57,7 @@ export default class SearchForm extends Component<
             type="text"
             name="search"
             className={style.input}
-            placeholder="Find a character, planet, or spaceship"
+            placeholder="Find a character, planet, or starship"
             value={this.props.searchQuery}
             onChange={this.handleChange}
             onKeyDown={this.handleKeyDown}

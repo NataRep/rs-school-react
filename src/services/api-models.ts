@@ -11,7 +11,7 @@ export type Planet = {
   terrain: string;
 };
 
-export type Spaceship = {
+export type Starship = {
   name: string;
   model: string;
   manufacturer: string;

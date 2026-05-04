@@ -6,7 +6,7 @@ const iconsMap = {
   close: lazy(() => import('@/assets/icons/close.svg?react')),
   people: lazy(() => import('@/assets/icons/people.svg?react')),
   planets: lazy(() => import('@/assets/icons/death-star.svg?react')),
-  spaceships: lazy(() => import('@/assets/icons/spaceship.svg?react')),
+  starships: lazy(() => import('@/assets/icons/starship.svg?react')),
 };
 
 export type IconName = keyof typeof iconsMap;
