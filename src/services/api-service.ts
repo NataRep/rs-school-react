@@ -16,7 +16,14 @@ export class ApiService {
     const baseUrl = "https://swapi.py4e.com/api";
 
     const response = await fetch(
-      `${baseUrl}/${category}/?search=${encodeURIComponent(searchQuery)}&page=${page}`
+      `${baseUrl}/${category}/?search=${encodeURIComponent(searchQuery)}&page=${page}`,
+      {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+        },
+        mode: 'cors',
+      }
     );
 
     if (!response.ok) {
