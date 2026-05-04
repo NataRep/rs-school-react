@@ -1,17 +1,17 @@
-import react from '@vitejs/plugin-react'
-import path from 'path'
-import { defineConfig } from 'vite'
-import svgr from 'vite-plugin-svgr'
+import react from '@vitejs/plugin-react';
+import path from 'path';
+import { defineConfig } from 'vite';
+import svgr from 'vite-plugin-svgr';
+
 
 export default defineConfig({
-  plugins: [react(),
-  svgr()
-  ],
+  plugins: [react(), svgr()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
   },
+  base: '/',
   server: {
     proxy: {
       "/api": {
@@ -19,8 +19,8 @@ export default defineConfig({
         changeOrigin: true,
         secure: false,
         rewrite: (path) => path.replace(/^\/api/, ""),
-      }
-    }
+      },
+    },
   },
   css: {
     preprocessorOptions: {
@@ -28,7 +28,7 @@ export default defineConfig({
         additionalData: `
           @use "@/styles/variables.scss" as *;
           @use "@/styles/mixins.scss" as *;`
-      }
-    }
-  }
-})
+      },
+    },
+  },
+});
