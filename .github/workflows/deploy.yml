@@ -3,7 +3,6 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: ["class-components"]
-
 permissions:
   contents: read
   pages: write
@@ -34,7 +33,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist' # Путь к папке, которую создает Vite при сборке
+          path: './dist'
 
       - name: Deploy to GitHub Pages
         id: deployment
