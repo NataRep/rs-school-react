@@ -12,6 +12,16 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  server: {
+    proxy: {
+      "/api": {
+        target: "https://swapi.dev/api",
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      }
+    }
+  },
   css: {
     preprocessorOptions: {
       scss: {

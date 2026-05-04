@@ -3,11 +3,12 @@ import Button from '../../shared/button/Button';
 import style from './SearchForm.module.scss';
 
 type SearchFormProps = {
+  searchQuery: string;
   onSearch?: (value: string) => void;
+  onInputChange: (value: string) => void;
 };
 
 type SearchFormState = {
-  value: string;
   lastSentValue: string;
 };
 
@@ -16,16 +17,15 @@ export default class SearchForm extends Component<
   SearchFormState
 > {
   state: SearchFormState = {
-    value: '',
     lastSentValue: ''
   };
 
   handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ value: e.target.value });
+    this.props.onInputChange(e.target.value);
   };
 
   submit = () => {
-    const trimmed = this.state.value.trim();
+    const trimmed = this.props.searchQuery.trim()
 
     if (!trimmed) return;
     if (trimmed === this.state.lastSentValue) return;
@@ -45,6 +45,7 @@ export default class SearchForm extends Component<
   render() {
     return (
       <form
+        autoComplete="off"
         className={style.form}
         onSubmit={(e) => {
           e.preventDefault();
@@ -57,7 +58,7 @@ export default class SearchForm extends Component<
             name="search"
             className={style.input}
             placeholder="Find a character, planet, or starship"
-            value={this.state.value}
+            value={this.props.searchQuery}
             onChange={this.handleChange}
             onKeyDown={this.handleKeyDown}
             required
