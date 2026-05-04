@@ -1,0 +1,5 @@
+# Прокси для API (заменяет Vite proxy на продакшене)
+/api/*  https://swapi.dev/api/:splat  200
+
+# Поддержка React Router (чтобы не было 404 при перезагрузке)
+/*      /index.html                   200
