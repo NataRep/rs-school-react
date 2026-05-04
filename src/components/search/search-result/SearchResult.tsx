@@ -2,6 +2,7 @@ import { Component } from "react";
 import type { Person, Planet, Starship } from "../../../services/api-models";
 import { ApiService, type CategoryMap } from "../../../services/api-service";
 import Button from "../../shared/button/Button";
+import Loader from "../../shared/loader/Loader";
 import SearchResultItem from "../search-result-item/SearchResultItem";
 import style from './SearchResult.module.scss';
 
@@ -111,9 +112,8 @@ export default class SearchResult extends Component<SearchProps, SearchResultSta
 
     if (this.state.isLoading) {
       return <div className={style.container}>
-        <p>Loading...</p>
+        <Loader></Loader>
       </div>
-
     }
     return <div className={style.container}>
 
