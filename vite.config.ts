@@ -10,7 +10,7 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
-  base: './',
+  base: '/rs-school-react/',
   server: {
     proxy: {
       "/api": {
