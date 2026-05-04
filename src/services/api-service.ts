@@ -13,7 +13,7 @@ export class ApiService {
     page: number = 1
   ): Promise<SwapiResponse<CategoryMap[K]>> {
 
-    const baseUrl = "https://swapi.dev/api";
+    const baseUrl = "https://swapi.py4e.com/api";
 
     const response = await fetch(
       `${baseUrl}/${category}/?search=${encodeURIComponent(searchQuery)}&page=${page}`
