@@ -1,4 +1,5 @@
-import { Component, type ErrorInfo, type ReactNode } from 'react';
+import { Component, type ReactNode } from 'react';
+import Button from '../button/Button';
 import style from './ErrorBoundary.module.scss';
 
 interface Props {
@@ -15,14 +16,6 @@ export default class ErrorBoundary extends Component<Props, State> {
     hasError: false,
   };
 
-  static getDerivedStateFromError(_: Error): State {
-    return { hasError: true };
-  }
-
-  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error("Uncaught error:", error, errorInfo);
-  }
-
   componentDidUpdate(prevProps: Props) {
     if (this.state.hasError && prevProps.resetCondition !== this.props.resetCondition) {
       this.resetError();
@@ -33,12 +26,27 @@ export default class ErrorBoundary extends Component<Props, State> {
     this.setState({ hasError: false });
   };
 
+  handleReload = () => {
+    window.location.reload();
+  };
+
+  static getDerivedStateFromError(): State {
+    return { hasError: true };
+  }
+
   render() {
     if (this.state.hasError) {
       return (
         <div className={style.wrapper}>
           <h2>Oops! Something went wrong.</h2>
-          <p>Try search in another category!</p>
+          <Button
+            text="Reload This Page"
+            callback={this.handleReload}
+            disabled={false}
+            className="blue"
+            icon="reload"
+            iconPosition="right"
+          />
         </div>
       );
     }

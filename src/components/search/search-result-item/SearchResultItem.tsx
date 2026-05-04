@@ -47,7 +47,7 @@ export default class SearchResultItem extends Component<SearchItemProps> {
   render() {
     return <div className={style.wrapper}>
       <h2 className={style.name}><span>Name:</span> {this.props.item.name}</h2>
-      <div className={style.description}><p>Description:</p>
+      <div className={style.description}><div className={style.subtitle}>Description:</div>
         {this.renderDescription()}
       </div></div>
   }

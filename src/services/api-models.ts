@@ -9,12 +9,14 @@ export type Planet = {
   name: string;
   climate: string;
   terrain: string;
+  url: string
 };
 
 export type Starship = {
   name: string;
   model: string;
   manufacturer: string;
+  url: string
 };
 
 export type Person = {
@@ -22,4 +24,5 @@ export type Person = {
   height: string;
   mass: string;
   gender: string;
+  url: string
 };

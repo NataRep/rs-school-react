@@ -1,6 +1,7 @@
 import { Component } from "react";
 import type { Person, Planet, Starship } from "../../../services/api-models";
 import { ApiService, type CategoryMap } from "../../../services/api-service";
+import Button from "../../shared/button/Button";
 import SearchResultItem from "../search-result-item/SearchResultItem";
 import style from './SearchResult.module.scss';
 
@@ -10,6 +11,7 @@ type SearchResultState = {
   items: (Person | Planet | Starship)[];
   isLoading: boolean;
   error: null | Error;
+  shouldThrow: boolean;
 };
 
 interface SearchProps {
@@ -26,7 +28,8 @@ export default class SearchResult extends Component<SearchProps, SearchResultSta
       searchQuery: props.searchQuery || '',
       items: [],
       isLoading: false,
-      error: null
+      error: null,
+      shouldThrow: false,
     };
   }
 
@@ -62,17 +65,23 @@ export default class SearchResult extends Component<SearchProps, SearchResultSta
         isLoading: false,
       });
     } catch (err) {
-      this.setState({
-        error: err instanceof Error ? err : new Error("Unknown error"),
-        isLoading: false
-      });
+      this.setState({ error: err as Error, isLoading: false });
     }
   }
 
+  handleThrowError = () => {
+    this.setState({ shouldThrow: true });
+  };
+
   render() {
-    if (this.state.error) {
-      throw this.state.error;
+    if (this.state.shouldThrow) {
+      throw new Error("Критическая ошибка рендеринга!");
     }
+
+    if (this.state.error) {
+      return <div className={style.error}>Ошибка API: {this.state.error.message}. Попробуйте еще раз</div>;
+    }
+
     if (this.state.isLoading) {
       return <div className={style.container}>
         <p>Loading...</p>
@@ -80,9 +89,19 @@ export default class SearchResult extends Component<SearchProps, SearchResultSta
 
     }
     return <div className={style.container}>
+
+      <Button
+        text="Show Error Boundary"
+        callback={this.handleThrowError}
+        disabled={false}
+        className="red"
+        icon="error"
+        iconPosition="left"
+      />
+
       <ul className={style.itemList}>
         {this.state.items.map((item) => (
-          <li className={style.item}>
+          <li key={item.url} className={style.item}>
             <SearchResultItem item={item}></SearchResultItem>
           </li>
         ))}

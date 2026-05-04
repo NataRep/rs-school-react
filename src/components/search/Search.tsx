@@ -81,8 +81,7 @@ export default class Search extends Component<SearchState> {
           tabs={[
             { label: "People", value: "people" },
             { label: "Planets", value: "planets" },
-            { label: "Starships", value: "starships" },
-            { label: "Show Error", value: "error" }
+            { label: "Starships", value: "starships" }
           ] as const}
           activeTab={this.state.category as keyof CategoryMap}
           onSelect={this.onTabSelect}
