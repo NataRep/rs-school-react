@@ -3,7 +3,6 @@ import path from 'path';
 import { defineConfig } from 'vite';
 import svgr from 'vite-plugin-svgr';
 
-
 export default defineConfig({
   plugins: [react(), svgr()],
   resolve: {
@@ -11,7 +10,7 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
-  base: '/',
+  base: '',
   server: {
     proxy: {
       "/api": {
