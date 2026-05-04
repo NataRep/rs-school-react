@@ -13,7 +13,7 @@ type SearchState = {
   searchTerm: string;
 };
 
-export default class Search extends Component<SearchState> {
+export default class Search extends Component {
   state: SearchState = {
     category: "people",
     searchQuery: '',
