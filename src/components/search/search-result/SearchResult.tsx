@@ -115,6 +115,14 @@ export default class SearchResult extends Component<SearchProps, SearchResultSta
         <Loader></Loader>
       </div>
     }
+
+    if (this.state.items.length < 1) {
+      return <div className={style.container}>
+        <div className={style.emptyResult}><h2>Nothing found matching your request.</h2></div>
+      </div>
+    }
+
+
     return <div className={style.container}>
 
       <Button
