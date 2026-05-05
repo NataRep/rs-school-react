@@ -103,11 +103,11 @@ export default class SearchResult extends Component<SearchProps, SearchResultSta
 
   render() {
     if (this.state.shouldThrow) {
-      throw new Error("Критическая ошибка рендеринга!");
+      throw new Error("Critical rendering error");
     }
 
     if (this.state.error) {
-      return <div className={style.error}>Ошибка API: {this.state.error.message}. Попробуйте еще раз</div>;
+      return <div className={style.error}>{this.state.error.message}. <p>This category does not exist, try searching in another one.</p></div>;
     }
 
     if (this.state.isLoading) {
