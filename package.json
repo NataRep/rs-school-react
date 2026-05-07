@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "prepare": "husky install"
   },
   "dependencies": {
     "react": "^19.2.5",
@@ -37,6 +38,7 @@
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.58.2",
     "vite": "^8.0.10",
-    "vite-plugin-svgr": "^5.2.0"
+    "vite-plugin-svgr": "^5.2.0",
+    "husky": "^8.0.0"
   }
 }
