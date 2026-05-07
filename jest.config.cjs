@@ -4,7 +4,8 @@ module.exports = {
   setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
   moduleNameMapper: {
     '\\.(css|less|sass|scss)$': 'identity-obj-proxy',
-    '\\.svg$': 'jest-transformer-svg',
+    '\\.svg(\\?react)?$': '<rootDir>/src/__mocks__/svgMock.tsx',
+    '^@/(.*)$': '<rootDir>/src/$1',
   },
   collectCoverage: true,
   coverageDirectory: 'coverage',
