@@ -13,14 +13,16 @@ type SearchState = {
   searchTerm: string;
 };
 
-export default class Search extends Component {
+type SearchProps = Record<string, never>;
+
+export default class Search extends Component<SearchProps, SearchState> {
   state: SearchState = {
     category: "people",
     searchQuery: '',
     searchTerm: ''
   };
 
-  constructor(props: any) {
+  constructor(props: SearchProps) {
     super(props);
 
     const storageData = StorageService.getSearchQuery();
