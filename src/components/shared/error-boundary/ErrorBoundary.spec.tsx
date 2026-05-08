@@ -13,6 +13,15 @@ const ProblematicChild = ({ shouldThrow = false }) => {
 };
 
 describe('ErrorBoundary Component', () => {
+  let consoleSpy: jest.SpyInstance;
+
+  beforeAll(() => {
+    consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => { });
+  });
+
+  afterAll(() => {
+    consoleSpy.mockRestore();
+  });
 
   it('should render children if there is no error', () => {
     render(
@@ -29,6 +38,7 @@ describe('ErrorBoundary Component', () => {
         <ProblematicChild shouldThrow={true} />
       </ErrorBoundary>
     );
+
     expect(screen.getByText(/Oops! Something went wrong/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Reload This Page/i })).toBeInTheDocument();
   });
