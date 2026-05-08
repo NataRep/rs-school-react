@@ -6,8 +6,8 @@ export type StorageSearchKey = {
 }
 
 export class StorageService {
-  private static CATEGORY_KEY: string = 'search-query-key';
-  private static QUERY_KEY: string = 'search-category-key';
+  private static CATEGORY_KEY: string = 'search-category-key';
+  private static QUERY_KEY: string = 'search-query-key';
 
   static saveSearchQuery(category: keyof CategoryMap, query: string): void {
     localStorage.setItem(this.QUERY_KEY, query);

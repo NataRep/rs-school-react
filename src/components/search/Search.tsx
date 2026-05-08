@@ -20,18 +20,21 @@ export default class Search extends Component {
     searchTerm: ''
   };
 
-  componentDidMount() {
+  constructor(props: any) {
+    super(props);
+
     const storageData = StorageService.getSearchQuery();
-    if (storageData.category) {
-      this.setState(
-        {
-          searchQuery: storageData.query || '',
-          category: storageData.category,
-        },
-        () => {
-          this.search(this.state.searchQuery);
-        }
-      );
+
+    this.state = {
+      category: storageData.category || "people",
+      searchQuery: storageData.query || '',
+      searchTerm: storageData.query || ''
+    };
+  }
+
+  componentDidMount() {
+    if (this.state.searchTerm) {
+      this.search(this.state.searchTerm);
     }
   }
 

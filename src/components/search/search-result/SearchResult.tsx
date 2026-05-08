@@ -23,6 +23,7 @@ interface SearchProps {
 }
 
 export default class SearchResult extends Component<SearchProps, SearchResultState> {
+
   constructor(props: SearchProps) {
     super(props);
 
@@ -61,13 +62,8 @@ export default class SearchResult extends Component<SearchProps, SearchResultSta
     this.setState({ isLoading: true, error: null });
 
     try {
-      const { category, searchQuery, currentPage } = this.state;
 
-      const data = await ApiService.getData(
-        category,
-        searchQuery,
-        currentPage
-      );
+      const data = await ApiService.getData(this.props.category, this.props.searchQuery, this.state.currentPage);
 
       this.setState({
         items: data.results,
