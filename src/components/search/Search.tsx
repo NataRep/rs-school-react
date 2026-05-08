@@ -11,6 +11,8 @@ type SearchState = {
   category: keyof CategoryMap;
   searchQuery: string;
   searchTerm: string;
+  isLoading: boolean;
+  error: unknown
 };
 
 type SearchProps = Record<string, never>;
@@ -19,7 +21,9 @@ export default class Search extends Component<SearchProps, SearchState> {
   state: SearchState = {
     category: "people",
     searchQuery: '',
-    searchTerm: ''
+    searchTerm: '',
+    isLoading: false,
+    error: null
   };
 
   constructor(props: SearchProps) {
@@ -30,7 +34,9 @@ export default class Search extends Component<SearchProps, SearchState> {
     this.state = {
       category: storageData.category || "people",
       searchQuery: storageData.query || '',
-      searchTerm: storageData.query || ''
+      searchTerm: storageData.query || '',
+      isLoading: false,
+      error: null
     };
   }
 
