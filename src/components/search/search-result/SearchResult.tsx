@@ -1,6 +1,6 @@
 import { Component } from "react";
-import type { Person, Planet, Starship } from "../../../services/api-models";
-import { ApiService, type CategoryMap } from "../../../services/api-service";
+import type { Person, Planet, Starship } from "../../../services/api-service/api-models";
+import { ApiService, type CategoryMap } from "../../../services/api-service/api-service";
 import Button from "../../shared/button/Button";
 import Loader from "../../shared/loader/Loader";
 import SearchResultItem from "../search-result-item/SearchResultItem";

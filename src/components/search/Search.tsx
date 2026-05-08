@@ -1,6 +1,6 @@
 import { Component } from 'react';
-import { type CategoryMap } from '../../services/api-service';
-import { StorageService } from '../../services/storage-service';
+import { type CategoryMap } from '../../services/api-service/api-service';
+import { StorageService } from '../../services/storage-service/storage-service';
 import SearchForm from '../search/search-form/SearchForm';
 import ErrorBoundary from '../shared/error-boundary/ErrorBoundary';
 import Tabs from '../shared/tab/Tabs';

@@ -1,5 +1,5 @@
 import { Component } from "react";
-import type { CategoryMap } from "../../../services/api-service";
+import type { CategoryMap } from "../../../services/api-service/api-service";
 import Icon, { type IconName } from "../icon/Icon";
 import style from './Tabs.module.scss';
 

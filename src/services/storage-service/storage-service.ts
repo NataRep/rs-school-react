@@ -1,4 +1,4 @@
-import type { CategoryMap } from "./api-service";
+import type { CategoryMap } from "../api-service/api-service";
 
 export type StorageSearchKey = {
   category: keyof CategoryMap | null,
