@@ -1,11 +1,11 @@
 import { Component } from 'react';
+import { Outlet } from 'react-router-dom';
 import { type CategoryMap } from '../../services/api-service/api-service';
 import { StorageService } from '../../services/storage-service/storage-service';
 import SearchForm from '../search/search-form/SearchForm';
 import ErrorBoundary from '../shared/error-boundary/ErrorBoundary';
 import Tabs from '../shared/tab/Tabs';
 import style from './Search.module.scss';
-import SearchResult from './search-result/SearchResult';
 
 type SearchState = {
   category: keyof CategoryMap;
@@ -98,10 +98,9 @@ export default class Search extends Component<SearchProps, SearchState> {
           activeTab={this.state.category as keyof CategoryMap}
           onSelect={this.onTabSelect}
         />
-
         <div className={style.resultWrapper}>
           <ErrorBoundary resetCondition={this.state.category}>
-            <SearchResult category={this.state.category} searchQuery={this.state.searchTerm}></SearchResult>
+            <Outlet />
           </ErrorBoundary>
         </div>
       </div>

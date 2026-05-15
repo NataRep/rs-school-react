@@ -1,13 +1,12 @@
-import { Component } from 'react';
-import Search from '../search/Search';
+import { Outlet } from 'react-router-dom';
 import style from './Main.module.scss';
 
-export default class Main extends Component {
-  render() {
-    return (
-      <main className={style.mainContainer}>
-        <Search></Search>
-      </main>
-    );
-  }
+
+export default function Main() {
+
+  return (
+    <main className={style.mainContainer}>
+      <Outlet></Outlet>
+    </main>
+  );
 }

@@ -1,159 +1,92 @@
-import { Component } from "react";
-import type { Person, Planet, Starship } from "../../../services/api-service/api-models";
-import { ApiService, type CategoryMap } from "../../../services/api-service/api-service";
-import Button from "../../shared/button/Button";
-import Loader from "../../shared/loader/Loader";
+import { useState } from 'react';
+import { Outlet, useLoaderData, useNavigation, useSearchParams } from 'react-router-dom';
+import { ApiService } from "../../../services/api-service/api-service";
+import Button from '../../shared/button/Button';
+import Loader from '../../shared/loader/Loader';
+import SearchPagination from '../search-pagination/SearchPagination';
 import SearchResultItem from "../search-result-item/SearchResultItem";
 import style from './SearchResult.module.scss';
 
-type SearchResultState = {
-  category: keyof CategoryMap;
-  searchQuery: string;
-  items: (Person | Planet | Starship)[];
-  totalPages: number;
-  currentPage: number;
-  isLoading: boolean;
-  error: null | Error;
-  shouldThrow: boolean;
+
+export const searchResultLoader = async ({ params, request }: any) => {
+  const url = new URL(request.url);
+  const searchQuery = url.searchParams.get('search') || '';
+  const currentPage = Number(url.searchParams.get('page')) || 1;
+  const categoryName = params.categoryName || 'people';
+
+  const data = await ApiService.getData(categoryName, searchQuery, currentPage);
+
+  return {
+    items: data.results,
+    totalPages: Math.ceil(data.count / data.results.length),
+    searchQuery,
+    currentPage
+  };
 };
 
-interface SearchProps {
-  category: keyof CategoryMap;
-  searchQuery: string;
-}
 
-export default class SearchResult extends Component<SearchProps, SearchResultState> {
+export default function SearchResult() {
+  const { items, totalPages } = useLoaderData();
+  const navigation = useNavigation();
+  const isLoading = navigation.state === "loading";
 
-  constructor(props: SearchProps) {
-    super(props);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentDetailId = searchParams.get('details');
+  const [shouldCrash, setShouldCrash] = useState(false);
 
-    this.state = {
-      category: props.category || "people",
-      searchQuery: props.searchQuery || '',
-      items: [],
-      totalPages: 1,
-      currentPage: 1,
-      isLoading: false,
-      error: null,
-      shouldThrow: false,
-    };
-  }
+  const [error] = useState<Error | null>(null);
 
-  componentDidMount(): void {
-    this.getResult();
-  }
+  if (shouldCrash) throw new Error('Critical rendering error');
 
-  componentDidUpdate(prevProps: SearchProps) {
-    if (
-      prevProps.category !== this.props.category ||
-      prevProps.searchQuery !== this.props.searchQuery
-    ) {
-      this.setState({
-        category: this.props.category,
-        searchQuery: this.props.searchQuery,
-        currentPage: 1
-      }, () => {
-        this.getResult();
-      });
-    }
-  }
-
-  private async getResult() {
-    this.setState({ isLoading: true, error: null });
-
-    try {
-
-      const data = await ApiService.getData(this.props.category, this.props.searchQuery, this.state.currentPage);
-
-      this.setState({
-        items: data.results,
-        totalPages: Math.ceil(data.count / 10),
-        isLoading: false,
-      });
-    } catch (err) {
-      this.setState({ error: err as Error, isLoading: false });
-    }
-  }
-
-  handleThrowError = () => {
-    this.setState({ shouldThrow: true });
+  const closeDetails = () => {
+    const newParams = new URLSearchParams(searchParams);
+    newParams.delete('details');
+    setSearchParams(newParams);
   };
 
-  goToNextPage = () => {
-    if (this.state.currentPage >= this.state.totalPages) return;
+  if (shouldCrash) {
+    throw new Error('Critical rendering error');
+  }
 
-    this.setState(
-      (prev) => ({ currentPage: prev.currentPage + 1 }),
-      () => this.getResult()
-    );
-  };
+  if (error) {
+    return <div className={style.error}>{error.message}. Try another category.</div>;
+  }
 
-  goToPrevPage = () => {
-    if (this.state.currentPage <= 1) return;
-
-    this.setState(
-      (prev) => ({ currentPage: prev.currentPage - 1 }),
-      () => this.getResult()
-    );
-  };
-
-  render() {
-    if (this.state.shouldThrow) {
-      throw new Error("Critical rendering error");
-    }
-
-    if (this.state.error) {
-      return <div className={style.error}>{this.state.error.message}. <p>This category does not exist, try searching in another one.</p></div>;
-    }
-
-    if (this.state.isLoading) {
-      return <div className={style.container}>
-        <Loader></Loader>
-      </div>
-    }
-
-    if (this.state.items.length < 1) {
-      return <div className={style.container}>
-        <div className={style.emptyResult}><h2>Nothing found matching your request.</h2></div>
-      </div>
-    }
-
-
-    return <div className={style.container}>
-
-      <Button
-        text="Show Error Boundary"
-        callback={this.handleThrowError}
-        disabled={false}
-        variant="red"
-        icon="error"
-        iconPosition="left"
-      />
-
+  return <div className={style.container}>
+    <Button
+      text="Show Error Boundary"
+      callback={() => setShouldCrash(true)}
+      disabled={false}
+      variant="red"
+      icon="error"
+      iconPosition="left"
+    />
+    <div className={style.result}>
       <ul className={style.itemList}>
-        {this.state.items.map((item) => (
+        {isLoading && <Loader />}
+        {!isLoading && items.length === 0 && (
+          <div className={style.emptyResult}>
+            <h2>Nothing found matching your request.</h2>
+          </div>
+        )}
+        {!isLoading && items.map((item) => (
           <li key={item.url} className={style.item}>
-            <SearchResultItem item={item}></SearchResultItem>
+            <SearchResultItem item={item} />
           </li>
         ))}
       </ul>
-      <div className={style.pagination}>
-        <Button
-          text="Prev"
-          variant="blue"
-          callback={this.goToPrevPage}
-          disabled={this.state.currentPage === 1}
-        />
-        <span>
-          {this.state.currentPage} / {this.state.totalPages}
-        </span>
-        <Button
-          text="Next"
-          variant="blue"
-          callback={this.goToNextPage}
-          disabled={this.state.currentPage === this.state.totalPages}
-        />
-      </div>
+      <SearchPagination totalPages={totalPages}></SearchPagination>
     </div>
-  }
+    {currentDetailId && <div className={style.detail}>
+      <Button
+        text=""
+        callback={() => closeDetails()}
+        disabled={false}
+        variant="red"
+        icon="close"
+        iconPosition="left"
+      />
+      <Outlet></Outlet>
+    </div>}
+  </div>
 }
