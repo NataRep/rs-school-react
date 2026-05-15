@@ -2,7 +2,7 @@ import { useSearchParams } from 'react-router-dom';
 import Button from "../../shared/button/Button";
 import style from './SearchPagination.module.scss';
 
-interface SearchPaginationProps {
+export interface SearchPaginationProps {
   totalPages: number;
 }
 

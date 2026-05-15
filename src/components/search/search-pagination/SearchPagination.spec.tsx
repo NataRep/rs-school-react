@@ -2,15 +2,6 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import SearchPagination from './SearchPagination';
 
-jest.mock('../../shared/button/Button', () => {
-  return function MockButton(props: any) {
-    return (
-      <button disabled={props.disabled} onClick={props.callback}>
-        {props.text}
-      </button>
-    );
-  };
-});
 
 function renderWithRouter(initialPage = '1', totalPages = 5) {
   return render(
@@ -40,12 +31,12 @@ describe('SearchPagination', () => {
     expect(screen.getByText('Next')).not.toBeDisabled();
   });
 
-  it('should go to next page', () => {
+  it('should go to next page', async () => {
     renderWithRouter('1', 5);
 
     fireEvent.click(screen.getByText('Next'));
 
-    expect(screen.getByText('2 / 5')).toBeInTheDocument();
+    expect(await screen.findByText('2 / 5')).toBeInTheDocument();
   });
 
   it('should go to previous page', () => {
