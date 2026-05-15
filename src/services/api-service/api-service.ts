@@ -7,8 +7,8 @@ export type CategoryMap = {
 };
 
 export class ApiService {
-  static async getData(
-    category: string,
+  static async getData<K extends keyof CategoryMap>(
+    category: K,
     searchQuery: string,
     page: number = 1
   ): Promise<SwapiResponse<CategoryMap[K]>> {
