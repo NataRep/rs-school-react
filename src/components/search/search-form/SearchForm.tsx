@@ -68,7 +68,7 @@ export default class SearchForm extends Component<
           text="Search"
           callback={this.submit}
           disabled={false}
-          className="blue"
+          variant="blue"
           icon="search"
           iconPosition="left"
         />

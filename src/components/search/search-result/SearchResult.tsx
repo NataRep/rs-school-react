@@ -125,7 +125,7 @@ export default class SearchResult extends Component<SearchProps, SearchResultSta
         text="Show Error Boundary"
         callback={this.handleThrowError}
         disabled={false}
-        className="red"
+        variant="red"
         icon="error"
         iconPosition="left"
       />
@@ -140,7 +140,7 @@ export default class SearchResult extends Component<SearchProps, SearchResultSta
       <div className={style.pagination}>
         <Button
           text="Prev"
-          className="blue"
+          variant="blue"
           callback={this.goToPrevPage}
           disabled={this.state.currentPage === 1}
         />
@@ -149,7 +149,7 @@ export default class SearchResult extends Component<SearchProps, SearchResultSta
         </span>
         <Button
           text="Next"
-          className="blue"
+          variant="blue"
           callback={this.goToNextPage}
           disabled={this.state.currentPage === this.state.totalPages}
         />

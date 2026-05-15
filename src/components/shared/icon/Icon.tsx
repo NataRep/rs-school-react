@@ -1,30 +1,39 @@
+import style from './Icon.module.scss';
 
-import { Component, lazy, Suspense } from 'react';
+import CloseIcon from '@/assets/icons/close.svg?react';
+import PlanetsIcon from '@/assets/icons/death-star.svg?react';
+import ErrorIcon from '@/assets/icons/error.svg?react';
+import PeopleIcon from '@/assets/icons/people.svg?react';
+import ReloadIcon from '@/assets/icons/reload.svg?react';
+import SearchIcon from '@/assets/icons/search.svg?react';
+import StarshipsIcon from '@/assets/icons/starship.svg?react';
 
-const iconsMap = {
-  search: lazy(() => import('@/assets/icons/search.svg?react')),
-  close: lazy(() => import('@/assets/icons/close.svg?react')),
-  people: lazy(() => import('@/assets/icons/people.svg?react')),
-  planets: lazy(() => import('@/assets/icons/death-star.svg?react')),
-  starships: lazy(() => import('@/assets/icons/starship.svg?react')),
-  error: lazy(() => import('@/assets/icons/error.svg?react')),
-  reload: lazy(() => import('@/assets/icons/reload.svg?react')),
+export type IconName =
+  | 'search'
+  | 'close'
+  | 'people'
+  | 'planets'
+  | 'starships'
+  | 'error'
+  | 'reload';
+
+const iconsMap: Record<IconName, React.FC<React.SVGProps<SVGSVGElement>>> = {
+  search: SearchIcon,
+  close: CloseIcon,
+  people: PeopleIcon,
+  planets: PlanetsIcon,
+  starships: StarshipsIcon,
+  error: ErrorIcon,
+  reload: ReloadIcon,
 };
-
-export type IconName = keyof typeof iconsMap;
 
 interface IconProps {
   name: IconName;
   className?: string;
 }
 
-export default class Icon extends Component<IconProps> {
-  render() {
-    const { name, className } = this.props;
-    const SelectedIcon = iconsMap[name];
+export default function Icon({ name }: IconProps) {
+  const SelectedIcon = iconsMap[name];
 
-    return <Suspense fallback={<span className={className} />}>
-      <SelectedIcon className={className} />
-    </Suspense>
-  }
+  return <SelectedIcon className={`${style.icon}`} />;
 }

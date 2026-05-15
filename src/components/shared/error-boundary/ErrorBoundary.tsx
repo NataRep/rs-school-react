@@ -54,7 +54,7 @@ export default class ErrorBoundary extends Component<Props, State> {
             text="Reload This Page"
             callback={this.handleReload}
             disabled={false}
-            className="blue"
+            variant="blue"
             icon="reload"
             iconPosition="right"
           />
