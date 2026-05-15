@@ -1,29 +1,11 @@
 import { useState } from 'react';
 import { Outlet, useLoaderData, useNavigation, useSearchParams } from 'react-router-dom';
-import { ApiService } from "../../../services/api-service/api-service";
+import type { Person, Planet, Starship } from '../../../services/api-service/api-models';
 import Button from '../../shared/button/Button';
 import Loader from '../../shared/loader/Loader';
 import SearchPagination from '../search-pagination/SearchPagination';
 import SearchResultItem from "../search-result-item/SearchResultItem";
 import style from './SearchResult.module.scss';
-
-
-export const searchResultLoader = async ({ params, request }: any) => {
-  const url = new URL(request.url);
-  const searchQuery = url.searchParams.get('search') || '';
-  const currentPage = Number(url.searchParams.get('page')) || 1;
-  const categoryName = params.categoryName || 'people';
-
-  const data = await ApiService.getData(categoryName, searchQuery, currentPage);
-
-  return {
-    items: data.results,
-    totalPages: Math.ceil(data.count / data.results.length),
-    searchQuery,
-    currentPage
-  };
-};
-
 
 export default function SearchResult() {
   const { items, totalPages } = useLoaderData();
@@ -69,7 +51,7 @@ export default function SearchResult() {
             <h2>Nothing found matching your request.</h2>
           </div>
         )}
-        {!isLoading && items.map((item) => (
+        {!isLoading && items.map((item: Person | Planet | Starship) => (
           <li key={item.url} className={style.item}>
             <SearchResultItem item={item} />
           </li>

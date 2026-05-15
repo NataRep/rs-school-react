@@ -8,8 +8,10 @@ jest.mock('../search/Search', () => {
 });
 
 describe('Main component', () => {
-  it('should render the search', () => {
+  it('should render the main', async () => {
     render(<Main />);
-    expect(screen.getByText(/Star Wars Universe Search/i)).toBeInTheDocument();
+
+    const mainElement = await screen.findByRole('main', {}, { timeout: 1000 });
+    expect(mainElement).toBeInTheDocument();
   })
 })

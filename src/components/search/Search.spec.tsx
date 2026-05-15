@@ -1,4 +1,5 @@
 import { act, fireEvent, render, screen } from '@testing-library/react';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { StorageService } from '../../services/storage-service/storage-service';
 import Search from './Search';
 import SearchResult from './search-result/SearchResult';
@@ -70,7 +71,15 @@ describe('Search Component', () => {
     });
 
     await act(async () => {
-      render(<Search />);
+      render(
+        <MemoryRouter initialEntries={['/search/people']}>
+          <Routes>
+            <Route path="/search" element={<Search />}>
+              <Route path=":categoryName" element={<SearchResult />} />
+            </Route>
+          </Routes>
+        </MemoryRouter>
+      );
     });
 
     const errorMessage = screen.queryByText(/Something went wrong/i);

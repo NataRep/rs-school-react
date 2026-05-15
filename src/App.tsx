@@ -1,7 +1,9 @@
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
 import Main from './components/main/Main';
 import Search from './components/search/Search';
-import SearchResult, { searchResultLoader } from './components/search/search-result/SearchResult';
+import SearchResult from './components/search/search-result/SearchResult';
+import { searchResultLoader } from './components/search/search-result/searchLoader';
+
 
 const router = createBrowserRouter(
   [
@@ -32,7 +34,7 @@ const router = createBrowserRouter(
     },
   ],
   {
-    basename: '/rs-school-react',
+    basename: process.env.NODE_ENV === 'test' ? '/' : '/rs-school-react',
   }
 );
 
