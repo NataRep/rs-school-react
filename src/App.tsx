@@ -3,6 +3,7 @@ import Main from './components/main/Main';
 import Search from './components/search/Search';
 import SearchResult from './components/search/search-result/SearchResult';
 import { searchResultLoader } from './components/search/search-result/searchLoader';
+import Loader from './components/shared/loader/Loader';
 
 
 const router = createBrowserRouter(
@@ -10,6 +11,7 @@ const router = createBrowserRouter(
     {
       path: '/',
       element: <Main />,
+      HydrateFallback: () => <Loader />,
       children: [
         {
           index: true,
