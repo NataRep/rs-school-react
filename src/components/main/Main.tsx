@@ -3,7 +3,6 @@ import style from './Main.module.scss';
 
 
 export default function Main() {
-
   return (
     <main className={style.mainContainer}>
       <Outlet></Outlet>
