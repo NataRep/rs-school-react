@@ -1,49 +1,59 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 import Tabs from "./Tabs";
 
-const mockTabs = [
-  { label: 'People', value: 'people' },
-  { label: 'Planets', value: 'planets' },
-];
+jest.mock('../icon/Icon', () => {
+  return function MockIcon({ name }: { name: string }) {
+    return <span data-testid={`icon-${name}`} />;
+  };
+});
 
-describe('Tabs component', () => {
+describe('Tabs Component', () => {
+  const mockTabs = [
+    { label: 'People', value: 'people' },
+    { label: 'Planets', value: 'planets' },
+    { label: 'Starships', value: 'starships' },
+  ];
 
-  it('Should render tabs with correct labels', async () => {
-    render(<Tabs tabs={mockTabs} activeTab="people" />);
+  it('should render all tabs with correct labels and icons', () => {
+    render(
+      <MemoryRouter>
+        <Tabs tabs={mockTabs} />
+      </MemoryRouter>
+    );
 
-    const tabsList = await screen.findAllByRole('button');
-    const expectedLabels = mockTabs.map(tab => tab.label);
-
-    const actualLabels = tabsList.map(tab => tab.textContent?.trim());
-
-    expect(actualLabels).toEqual(expectedLabels);
+    mockTabs.forEach((tab) => {
+      expect(screen.getByText(tab.label)).toBeInTheDocument();
+      expect(screen.getByTestId(`icon-${tab.value}`)).toBeInTheDocument();
+    });
   });
 
-  it('should render nothing when tabs array is empty', () => {
-    render(<Tabs tabs={[]} activeTab="" />);
+  it('should apply active class to the currently active route', () => {
+    render(
+      <MemoryRouter initialEntries={['/search/planets']}>
+        <Tabs tabs={mockTabs} />
+      </MemoryRouter>
+    );
 
-    const buttons = screen.queryAllByRole('button');
+    const peopleLink = screen.getByRole('link', { name: /people/i });
+    const planetsLink = screen.getByRole('link', { name: /planets/i });
 
-    expect(buttons).toHaveLength(0);
+    expect(planetsLink.className).toContain('active');
+    expect(peopleLink.className).not.toContain('active');
   });
 
-  it('should call onSelect with correct value when a tab is clicked', async () => {
-    const mockCallback = jest.fn();
-    render(<Tabs tabs={mockTabs} activeTab="people" onSelect={mockCallback} />);
+  it('should remain active when on a sub-route or when query parameters are present ', () => {
+    render(
+      <MemoryRouter initialEntries={['/search/planets/tatooine?page=2&sort=desc']}>
+        <Tabs tabs={mockTabs} />
+      </MemoryRouter>
+    );
 
-    const planetsTab = screen.getByRole('button', { name: /planets/i });
+    const planetsLink = screen.getByRole('link', { name: /planets/i });
+    const peopleLink = screen.getByRole('link', { name: /people/i });
 
-    fireEvent.click(planetsTab);
-    expect(mockCallback).toHaveBeenCalledWith('planets');
+    expect(planetsLink.className).toContain('active');
+    expect(peopleLink.className).not.toContain('active');
   });
 
-  it('should have the active class for the current tab', () => {
-    render(<Tabs tabs={mockTabs} activeTab="people" />);
-
-    const activeTab = screen.getByRole('button', { name: /people/i });
-    const inactiveTab = screen.getByRole('button', { name: /planets/i });
-    expect(activeTab).toHaveClass('active');
-
-    expect(inactiveTab).not.toHaveClass('active');
-  });
 })

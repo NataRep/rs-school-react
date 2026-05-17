@@ -20,6 +20,7 @@ describe('Button component', () => {
     return render(
       <Button
         text={buttonText}
+        type='button'
         callback={mockCallback}
         disabled={false}
         {...props}
