@@ -33,6 +33,7 @@ export default function SearchPagination({ totalPages }: SearchPaginationProps) 
   return <div className={style.pagination}>
     <Button
       text="Prev"
+      type='button'
       variant="blue"
       callback={goToPrevPage}
       disabled={currentPage === 1}
@@ -42,6 +43,7 @@ export default function SearchPagination({ totalPages }: SearchPaginationProps) 
     </span>
     <Button
       text="Next"
+      type='button'
       variant="blue"
       callback={goToNextPage}
       disabled={currentPage === totalPages}

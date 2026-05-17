@@ -3,7 +3,8 @@ import style from './Button.module.scss';
 
 interface ButtonProps {
   text: string;
-  callback: () => void;
+  type: 'submit' | 'reset' | 'button';
+  callback?: () => void;
   disabled?: boolean;
   className?: string;
   icon?: IconName;
@@ -23,6 +24,7 @@ function renderIcon(
 
 export default function Button({
   text,
+  type,
   callback,
   disabled = false,
   className = '',
@@ -39,7 +41,7 @@ export default function Button({
 
   return (
     <button
-      type="button"
+      type={type}
       onClick={callback}
       className={classes}
       disabled={disabled}

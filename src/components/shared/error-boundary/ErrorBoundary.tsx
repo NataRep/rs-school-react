@@ -1,10 +1,11 @@
-import { Component, type ErrorInfo, type ReactNode } from 'react';
+// ErrorBoundary.tsx
+import { Component } from 'react';
 import Button from '../button/Button';
+import { reloadPage } from '../utils/navigation';
 import style from './ErrorBoundary.module.scss';
 
 interface Props {
-  children: ReactNode;
-  resetCondition: string;
+  children?: React.ReactNode;
 }
 
 interface State {
@@ -16,33 +17,16 @@ export default class ErrorBoundary extends Component<Props, State> {
     hasError: false,
   };
 
-  componentDidUpdate(prevProps: Props) {
-    if (this.state.hasError && prevProps.resetCondition !== this.props.resetCondition) {
-      this.resetError();
-    }
-  }
-
-  resetError = () => {
-    this.setState({ hasError: false });
-  };
-
   handleReload = () => {
-    window.location.reload();
+    reloadPage();
   };
 
   static getDerivedStateFromError(): State {
     return { hasError: true };
   }
 
-
-  static componentDidCatch(error: Error, info: ErrorInfo): void {
+  componentDidCatch(error: Error): void {
     console.error('ErrorBoundary caught an error:', error);
-    console.error('Component stack:', info.componentStack);
-    console.error({
-      message: error.message,
-      stack: error.stack,
-      componentStack: info.componentStack,
-    });
   }
 
   render() {
@@ -51,6 +35,7 @@ export default class ErrorBoundary extends Component<Props, State> {
         <div className={style.wrapper}>
           <h2>Oops! Something went wrong.</h2>
           <Button
+            type='button'
             text="Reload This Page"
             callback={this.handleReload}
             disabled={false}
@@ -61,7 +46,6 @@ export default class ErrorBoundary extends Component<Props, State> {
         </div>
       );
     }
-
-    return this.props.children;
+    return this.props.children || null;
   }
 }

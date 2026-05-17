@@ -38,6 +38,7 @@ export default function SearchResult() {
     <Button
       text="Show Error Boundary"
       callback={() => setShouldCrash(true)}
+      type="button"
       disabled={false}
       variant="red"
       icon="error"
@@ -62,6 +63,7 @@ export default function SearchResult() {
     {currentDetailId && <div className={style.detail}>
       <Button
         text=""
+        type='button'
         callback={() => closeDetails()}
         disabled={false}
         variant="red"

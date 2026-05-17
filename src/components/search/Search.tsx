@@ -1,12 +1,30 @@
-import { Component } from 'react';
 import { Outlet } from 'react-router-dom';
-import { type CategoryMap } from '../../services/api-service/api-service';
-import { StorageService } from '../../services/storage-service/storage-service';
-import SearchForm from '../search/search-form/SearchForm';
-import ErrorBoundary from '../shared/error-boundary/ErrorBoundary';
 import Tabs from '../shared/tab/Tabs';
+import SearchForm from './search-form/SearchForm';
 import style from './Search.module.scss';
 
+
+
+export default function Search() {
+
+  return <div className={style.container}>
+    <h1>Star Wars Universe Search</h1>
+    <SearchForm />
+    <Tabs
+      tabs={[
+        { label: "People", value: "people" },
+        { label: "Planets", value: "planets" },
+        { label: "Starships", value: "starships" },
+        { label: "Get 404", value: "error" }
+      ] as const}
+    />
+    <div className={style.resultWrapper}>
+      <Outlet />
+    </div>
+  </div>
+}
+
+/*
 type SearchState = {
   category: keyof CategoryMap;
   searchQuery: string;
@@ -16,6 +34,7 @@ type SearchState = {
 };
 
 type SearchProps = Record<string, never>;
+
 
 export default class Search extends Component<SearchProps, SearchState> {
   state: SearchState = {
@@ -55,7 +74,7 @@ export default class Search extends Component<SearchProps, SearchState> {
         category: categoryValue,
       },
       () => {
-        StorageService.saveSearchQuery(this.state.category, this.state.searchQuery);
+        StorageService.saveSearchQuery(this.state.category, this.state.searchQuery);        
       }
     );
   }
@@ -106,4 +125,4 @@ export default class Search extends Component<SearchProps, SearchState> {
       </div>
     );
   }
-}
+}*/

@@ -3,8 +3,8 @@ import Main from './components/main/Main';
 import Search from './components/search/Search';
 import SearchResult from './components/search/search-result/SearchResult';
 import { searchResultLoader } from './components/search/search-result/searchLoader';
+import ErrorBoundary from './components/shared/error-boundary/ErrorBoundary';
 import Loader from './components/shared/loader/Loader';
-
 
 const router = createBrowserRouter(
   [
@@ -20,6 +20,7 @@ const router = createBrowserRouter(
         {
           path: 'search',
           element: <Search />,
+          errorElement: <ErrorBoundary />,
           children: [
             {
               index: true,
