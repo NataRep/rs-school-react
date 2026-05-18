@@ -9,7 +9,7 @@ interface ButtonProps {
   className?: string;
   icon?: IconName;
   iconPosition?: 'left' | 'right';
-  variant?: 'blue' | 'red';
+  variant?: 'blue' | 'red' | 'base';
 }
 
 function renderIcon(

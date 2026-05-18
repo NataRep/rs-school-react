@@ -3,14 +3,13 @@
 }
 
 .itemList {
-  margin-top: 1rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   max-height: 420px;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 1rem 1.5rem 1rem 1rem;
+  padding: 0 1.5rem 1rem 1rem;
   border-radius: 1rem;
 }
 

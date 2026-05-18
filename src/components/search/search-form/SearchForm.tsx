@@ -22,6 +22,7 @@ export default function SearchForm() {
       const newParams = new URLSearchParams(searchParams);
       newParams.delete('search');
       newParams.set('page', '1');
+      newParams.delete('details');
       setSearchParams(newParams);
       return;
     }
@@ -31,6 +32,7 @@ export default function SearchForm() {
     const newParams = new URLSearchParams(searchParams);
     newParams.set('page', '1');
     newParams.set('search', trimmed);
+    newParams.delete('details');
     setSearchParams(newParams);
 
     StorageService.saveSearchQuery(trimmed);

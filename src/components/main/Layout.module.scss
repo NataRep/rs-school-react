@@ -10,7 +10,7 @@
 
 .main {
   width: 980px;
-  max-width: 100%;
+  max-width: calc(100% - 3rem);
   padding: 1rem 1.5rem;
   background-image: var(--gradient-container-bg);
   background-blend-mode: screen;
@@ -24,8 +24,18 @@
     0 0 40px rgba(var(--color-light-side-rgb), 0.1);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   color: var(--text-primary);
+  overflow: hidden;
+
 
   @media (max-width: 1080px) {
     width: auto;
   }
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
 }

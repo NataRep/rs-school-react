@@ -55,3 +55,17 @@
     }
   }
 }
+
+.base {
+  background: transparent;
+  background-image: none;
+
+  @include hover-supported {
+
+    svg {
+      opacity: 1;
+      filter: drop-shadow(0 0 4px rgba(var(--color-sith-glow-rgb), 0.8));
+    }
+  }
+
+}

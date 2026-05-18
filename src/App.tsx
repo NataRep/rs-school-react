@@ -3,6 +3,8 @@ import About from './components/about/About';
 import Layout from './components/main/Layout';
 import { NotFoundPage } from './components/not-found-page/NotFoundPage';
 import Search from './components/search/Search';
+import DetailView from './components/search/detail/Detail';
+import { detailLoader } from './components/search/detail/detailLoader';
 import SearchResult from './components/search/search-result/SearchResult';
 import { searchResultLoader } from './components/search/search-result/searchLoader';
 import ErrorBoundary, { RouterErrorCatch } from './components/shared/error-boundary/ErrorBoundary';
@@ -32,6 +34,19 @@ const router = createBrowserRouter(
               path: ':categoryName',
               element: <SearchResult />,
               loader: searchResultLoader,
+              shouldRevalidate: ({ currentParams, nextParams, currentUrl, nextUrl }) => {
+                if (currentParams.categoryName !== nextParams.categoryName) return true;
+                if (currentUrl.search !== nextUrl.search) return true;
+
+                return false;
+              },
+              children: [
+                {
+                  path: ":id",
+                  element: <DetailView />,
+                  loader: detailLoader,
+                }
+              ]
             },
           ],
         },

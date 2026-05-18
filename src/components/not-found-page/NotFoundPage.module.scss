@@ -1,6 +1,6 @@
 .main {
   width: 980px;
-  max-width: 100%;
+  max-width: calc(100% - 3rem);
   padding: 1rem 1.5rem;
   background-image: var(--gradient-container-bg);
   background-blend-mode: screen;

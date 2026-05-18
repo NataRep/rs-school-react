@@ -32,4 +32,26 @@ export class ApiService {
 
     return response.json();
   }
+
+  static async getEntityDetails<K extends keyof CategoryMap>(category: K, id: string) {
+
+    const baseUrl = "https://swapi.py4e.com/api";
+
+    const response = await fetch(
+      `${baseUrl}/${category}/${id}`,
+      {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+        },
+        mode: 'cors',
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status}`);
+    }
+    const result = response.json();
+    return result;
+  }
 }
