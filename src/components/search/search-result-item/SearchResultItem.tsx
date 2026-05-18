@@ -1,20 +1,26 @@
-import { Component } from "react";
-import type { Person, Planet, Starship } from "../../../services/api-service/api-models";
+import { useLocation, useNavigate } from 'react-router-dom';
+import type { Person, Planet, Starship } from '../../../services/api-service/api-models';
+import { getItemId } from '../../../shared/utils/get-id-from-url';
+import { isPerson, isPlanet, isStarship } from '../../../shared/utils/serch-item';
 import style from './SearchResultItem.module.scss';
 
-type SearchItemProps = {
-  item: Person | Planet | Starship
-}
+export type SearchItemProps = {
+  item: SearchItem;
+};
 
-const isPerson = (item: Person | Planet | Starship): item is Person => 'gender' in item;
-const isPlanet = (item: Person | Planet | Starship): item is Planet => 'climate' in item;
-const isStarship = (item: Person | Planet | Starship): item is Starship => 'model' in item;
+export type SearchItem = Person | Planet | Starship;
 
-export default class SearchResultItem extends Component<SearchItemProps> {
+export default function SearchResultItem({ item }: SearchItemProps) {
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  renderDescription() {
-    const { item } = this.props;
+  const selectItem = (item: SearchItem) => {
+    const id = getItemId(item.url);
+    if (!id) return;
+    navigate(`${id}${location.search}`);
+  };
 
+  const renderDescription = () => {
     if (isPerson(item)) {
       return (
         <ul className={style.info}>
@@ -42,13 +48,19 @@ export default class SearchResultItem extends Component<SearchItemProps> {
         </ul>
       );
     }
-  }
 
-  render() {
-    return <div className={style.wrapper}>
-      <h2 className={style.name}><span>Name:</span> {this.props.item.name}</h2>
-      <div className={style.description}><div className={style.subtitle}>Description:</div>
-        {this.renderDescription()}
-      </div></div>
-  }
+    return null;
+  };
+
+  return (
+    <div className={style.wrapper} onClick={() => selectItem(item)}>
+      <h2 className={style.name}>
+        <span>Name:</span> {item.name}
+      </h2>
+      <div className={style.description}>
+        <div className={style.subtitle}>Description:</div>
+        {renderDescription()}
+      </div>
+    </div>
+  );
 }

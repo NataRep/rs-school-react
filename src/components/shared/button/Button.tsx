@@ -1,50 +1,55 @@
-import { Component } from "react";
 import Icon, { type IconName } from "../icon/Icon";
 import style from './Button.module.scss';
 
 interface ButtonProps {
   text: string;
-  callback: () => void;
-  disabled: boolean;
+  type: 'submit' | 'reset' | 'button';
+  callback?: () => void;
+  disabled?: boolean;
   className?: string;
   icon?: IconName;
   iconPosition?: 'left' | 'right';
+  variant?: 'blue' | 'red' | 'base';
 }
 
-export default class Button extends Component<ButtonProps> {
-  static defaultProps = {
-    iconPosition: 'left',
-  };
+function renderIcon(
+  icon: IconName | undefined,
+  iconPosition: 'left' | 'right' | undefined,
+  current: 'left' | 'right'
+) {
+  if (!icon || iconPosition !== current) return null;
 
-  renderIcon(position: 'left' | 'right') {
-    const { icon, iconPosition } = this.props;
+  return <Icon name={icon} className={style.icon} />;
+}
 
-    if (!icon || iconPosition !== position) return null;
+export default function Button({
+  text,
+  type,
+  callback,
+  disabled = false,
+  className = '',
+  icon,
+  iconPosition = 'left',
+  variant = 'blue',
+}: ButtonProps) {
 
-    return (
-      <Icon
-        name={icon}
-        className="center"
-      />
-    );
-  }
+  const classes = [
+    style.button,
+    style[variant],
+    className,
+  ].filter(Boolean).join(' ');
 
-  render() {
-    const { text, callback, disabled, className } = this.props;
-    const btnClass = [style.btn, className].filter(Boolean).join(' ');
-
-    return (
-      <button
-        type="button"
-        onClick={callback}
-        className={`${style.button} ${style[btnClass]}`}
-        disabled={disabled}
-        aria-disabled={disabled}
-      >
-        {this.renderIcon('left')}
-        {text}
-        {this.renderIcon('right')}
-      </button>
-    );
-  }
+  return (
+    <button
+      type={type}
+      onClick={callback}
+      className={classes}
+      disabled={disabled}
+      aria-disabled={disabled}
+    >
+      {renderIcon(icon, iconPosition, 'left')}
+      {text}
+      {renderIcon(icon, iconPosition, 'right')}
+    </button>
+  );
 }

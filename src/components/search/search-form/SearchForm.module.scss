@@ -2,6 +2,11 @@
   display: flex;
   align-items: center;
   width: 100%;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: normal;
+  }
 }
 
 .input {
@@ -13,6 +18,8 @@
   background-color: var(--color-carbon-light);
   border-radius: 0.5rem;
   border: solid 2px rgba(var(--color-jedi-glow-rgb), 0.25);
+
+
 
   &:-webkit-autofill {
     -webkit-box-shadow: 0 0 0 1000px var(--color-carbon-light) inset;
@@ -35,4 +42,10 @@
   position: relative;
   width: calc(100% - 1rem);
   margin-right: 1rem;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
 }

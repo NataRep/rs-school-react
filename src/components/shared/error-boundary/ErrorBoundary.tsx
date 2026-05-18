@@ -1,10 +1,12 @@
-import { Component, type ErrorInfo, type ReactNode } from 'react';
+import { Component } from 'react';
+import { isRouteErrorResponse, useRouteError } from 'react-router-dom';
+import { reloadPage } from '../../../shared/utils/navigation';
+import { NotFoundPage } from '../../not-found-page/NotFoundPage';
 import Button from '../button/Button';
 import style from './ErrorBoundary.module.scss';
 
 interface Props {
-  children: ReactNode;
-  resetCondition: string;
+  children?: React.ReactNode;
 }
 
 interface State {
@@ -16,33 +18,16 @@ export default class ErrorBoundary extends Component<Props, State> {
     hasError: false,
   };
 
-  componentDidUpdate(prevProps: Props) {
-    if (this.state.hasError && prevProps.resetCondition !== this.props.resetCondition) {
-      this.resetError();
-    }
-  }
-
-  resetError = () => {
-    this.setState({ hasError: false });
-  };
-
   handleReload = () => {
-    window.location.reload();
+    reloadPage();
   };
 
   static getDerivedStateFromError(): State {
     return { hasError: true };
   }
 
-
-  static componentDidCatch(error: Error, info: ErrorInfo): void {
+  componentDidCatch(error: Error): void {
     console.error('ErrorBoundary caught an error:', error);
-    console.error('Component stack:', info.componentStack);
-    console.error({
-      message: error.message,
-      stack: error.stack,
-      componentStack: info.componentStack,
-    });
   }
 
   render() {
@@ -51,10 +36,11 @@ export default class ErrorBoundary extends Component<Props, State> {
         <div className={style.wrapper}>
           <h2>Oops! Something went wrong.</h2>
           <Button
+            type='button'
             text="Reload This Page"
             callback={this.handleReload}
             disabled={false}
-            className="blue"
+            variant="blue"
             icon="reload"
             iconPosition="right"
           />
@@ -64,4 +50,25 @@ export default class ErrorBoundary extends Component<Props, State> {
 
     return this.props.children;
   }
+}
+
+export function RouterErrorCatch() {
+  const error = useRouteError();
+
+  if (isRouteErrorResponse(error) && error.status === 404) {
+    return <NotFoundPage />;
+  }
+
+  return (
+    <ErrorBoundary>
+      <TriggerError error={error} />
+    </ErrorBoundary>
+  );
+}
+
+function TriggerError({ error }: { error: unknown }): never {
+  if (error instanceof Error) {
+    throw error;
+  }
+  throw new Error(String(error || 'Rendering Error'));
 }

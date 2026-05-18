@@ -1,20 +1,33 @@
-import { render, screen } from "@testing-library/react";
-import { act } from "react";
+import { render, screen, waitFor } from "@testing-library/react";
 import App from "./App";
+import { ApiService } from "./services/api-service/api-service"; // Проверьте правильность пути до ApiService
 
-jest.mock("./components/search/search-result/SearchResult", () => {
-  return function MockSearchResult() {
-    return <div data-testid="mock-search-result">SearchResult Loaded</div>;
-  };
-});
+jest.mock("./services/api-service/api-service", () => ({
+  ApiService: {
+    getData: jest.fn()
+  }
+}));
 
 describe('App component', () => {
-  it('should render the main', async () => {
-    await act(async () => {
-      render(<App />);
+  beforeEach(() => {
+    (ApiService.getData as jest.Mock).mockResolvedValue({
+      results: [
+        { url: "https://swapi.dev/api/people/1/", name: "Luke Skywalker" }
+      ],
+      count: 1
     });
+  });
 
-    expect(screen.getByRole('main')).toBeInTheDocument();
-    expect(screen.getByText(/Star Wars Universe Search/i)).toBeInTheDocument();
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should render the main', async () => {
+    render(<App />);
+
+    await waitFor(() => {
+      const mainElement = screen.getByRole('main');
+      expect(mainElement).toBeInTheDocument();
+    }, { timeout: 3000 });
   });
 });

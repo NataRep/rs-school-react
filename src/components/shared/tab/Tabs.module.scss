@@ -5,6 +5,7 @@
   padding: 0.5rem;
   background: var(--color-carbon);
   border-radius: 0.5rem;
+  overflow: auto;
 }
 
 .tab {
@@ -17,6 +18,7 @@
   text-transform: uppercase;
   cursor: pointer;
   transition: color 0.5s, border 0.5s;
+  text-decoration: none;
 
   svg {
     width: 1rem;

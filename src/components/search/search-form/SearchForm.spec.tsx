@@ -1,85 +1,82 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { act } from 'react';
+import { MemoryRouter, useSearchParams } from 'react-router-dom';
+import { StorageService } from '../../../services/storage-service/storage-service';
 import SearchForm from './SearchForm';
 
-describe('SearchForm Component', () => {
-  const mockOnInputChange = jest.fn();
-  const mockOnSearch = jest.fn();
+jest.mock('../../../services/storage-service/storage-service', () => ({
+  __esModule: true,
+  StorageService: {
+    saveSearchQuery: jest.fn(),
+  },
+}));
 
+jest.mock('../../shared/button/Button', () => {
+  return function MockButton({ text, type }: { text: string; type: 'submit' | 'button' }) {
+    return <button type={type}>{text}</button>;
+  };
+});
+
+function URLDebugger() {
+  const [searchParams] = useSearchParams();
+  return <div data-testid="url-params">{searchParams.toString()}</div>;
+}
+
+describe('SearchForm Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it('should call onInputChange when typing', async () => {
-    await act(async () => {
-      render(
-        <SearchForm
-          searchQuery=""
-          onInputChange={mockOnInputChange}
-        />
-      );
-    });
+  it('should initialize input value with query from URL', () => {
+    render(
+      <MemoryRouter initialEntries={['/search?search=Yoda&page=3']}>
+        <SearchForm />
+      </MemoryRouter>
+    );
 
-    const input = screen.getByRole('textbox');
-    fireEvent.change(input, { target: { value: 'Luke' } });
-
-    expect(mockOnInputChange).toHaveBeenCalledWith('Luke');
+    const input = screen.getByPlaceholderText(/Find a character/i) as HTMLInputElement;
+    expect(input.value).toBe('Yoda');
   });
 
-  it('should not call onSearch if input is empty or only spaces', async () => {
+  it('should update URL parameters and save query to storage on form submit', () => {
+    render(
+      <MemoryRouter initialEntries={['/search']}>
+        <SearchForm />
+        <URLDebugger />
+      </MemoryRouter>
+    );
 
-    await act(async () => {
-      render(
-        <SearchForm
-          searchQuery="   "
-          onInputChange={mockOnInputChange}
-          onSearch={mockOnSearch}
-        />
-      );
-    });
+    const input = screen.getByPlaceholderText(/Find a character/i);
+    const submitButton = screen.getByRole('button', { name: /Search/i });
 
-    fireEvent.click(screen.getByRole('button', { name: /search/i }));
+    fireEvent.change(input, { target: { value: 'R2-D2' } });
+    fireEvent.click(submitButton);
 
-    const form = screen.getByRole('textbox').closest('form');
-    if (form) fireEvent.submit(form);
+    const urlParams = screen.getByTestId('url-params').textContent;
+    expect(urlParams).toContain('search=R2-D2');
+    expect(urlParams).toContain('page=1');
 
-    expect(mockOnSearch).not.toHaveBeenCalled();
+    const mockSave = StorageService.saveSearchQuery as jest.Mock;
+    expect(mockSave).toHaveBeenCalledWith('R2-D2');
+    expect(mockSave).toHaveBeenCalledTimes(1);
   });
 
-  it('should not call onSearch if the value is the same as last sent', async () => {
-    await act(async () => {
-      render(
-        <SearchForm
-          searchQuery="Vader"
-          onInputChange={mockOnInputChange}
-          onSearch={mockOnSearch}
-        />
-      );
-    })
+  it('should remove search param from URL if query is empty on submit', () => {
+    render(
+      <MemoryRouter initialEntries={['/search?search=Obi-Wan&page=2']}>
+        <SearchForm />
+        <URLDebugger />
+      </MemoryRouter>
+    );
 
-    const button = screen.getByRole('button', { name: /search/i });
+    const input = screen.getByPlaceholderText(/Find a character/i);
+    const submitButton = screen.getByRole('button', { name: /Search/i });
 
-    fireEvent.click(button);
-    expect(mockOnSearch).toHaveBeenCalledTimes(1);
+    fireEvent.change(input, { target: { value: '   ' } });
+    fireEvent.click(submitButton);
 
-    fireEvent.click(button);
-    expect(mockOnSearch).toHaveBeenCalledTimes(1);
+    const urlParams = screen.getByTestId('url-params').textContent;
+    expect(urlParams).not.toContain('search=');
+    expect(urlParams).toContain('page=1');
   });
 
-  it('should submit on Enter key press', async () => {
-    await act(async () => {
-      render(
-        <SearchForm
-          searchQuery="R2-D2"
-          onInputChange={mockOnInputChange}
-          onSearch={mockOnSearch}
-        />
-      );
-    });
-
-    const input = screen.getByRole('textbox');
-    fireEvent.keyDown(input, { key: 'Enter', code: 'Enter' });
-
-    expect(mockOnSearch).toHaveBeenCalledWith('R2-D2');
-  });
 });

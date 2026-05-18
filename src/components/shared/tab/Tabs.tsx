@@ -1,42 +1,34 @@
-import { Component } from "react";
-import type { CategoryMap } from "../../../services/api-service/api-service";
-import Icon, { type IconName } from "../icon/Icon";
+import { NavLink } from 'react-router-dom';
+import Icon, { type IconName } from '../icon/Icon';
 import style from './Tabs.module.scss';
 
-export type TabsProps = {
-  tabs: TabItem[];
-  activeTab: keyof CategoryMap | string;
-  onSelect?: (value: keyof CategoryMap | string) => void;
+type TabItem = {
+  readonly label: string;
+  readonly value: string;
 };
 
-export type TabItem = {
-  label: string;
-  value: keyof CategoryMap | string;
+type TabsProps = {
+  readonly tabs: readonly TabItem[];
 };
 
-
-export default class Tabs extends Component<TabsProps> {
-
-  render() {
-    const { tabs, activeTab, onSelect } = this.props;
-
-    return (
-      <div className={style.container}>
-        {tabs.map((tab) => (
-          <button
-            key={tab.value}
-            className={`${style.tab} ${activeTab === tab.value ? style.active : ""
-              }`}
-            onClick={() => onSelect?.(tab.value)}
-          >
-            <Icon
-              name={tab.value as IconName}
-              className="center"
-            />
-            {tab.label}
-          </button>
-        ))}
-      </div>
-    );
-  }
+export default function Tabs({ tabs }: TabsProps) {
+  return (
+    <div className={style.container}>
+      {tabs.map((tab) => (
+        <NavLink
+          key={tab.value}
+          to={`/search/${tab.value}`}
+          className={({ isActive }) =>
+            `${style.tab} ${isActive ? style.active : ''}`
+          }
+        >
+          <Icon
+            name={tab.value as IconName}
+            className="center"
+          />
+          {tab.label}
+        </NavLink>
+      ))}
+    </div>
+  );
 }

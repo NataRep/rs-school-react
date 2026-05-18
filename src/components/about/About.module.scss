@@ -1,0 +1,29 @@
+.wrapper {
+  display: flow-root;
+
+  .link {
+    color: var(--color-energy-yellow);
+    text-decoration: none;
+
+    @include hover-supported {
+      text-decoration: underline;
+    }
+  }
+
+  svg {
+    width: 6rem;
+    height: 6rem;
+  }
+}
+
+.logo {
+  float: right;
+  width: 7.5rem;
+  height: 7.5rem;
+  display: flex;
+  border-radius: 50%;
+  shape-outside: circle(50%);
+  justify-content: flex-end;
+  align-content: center;
+  align-items: flex-end;
+}
