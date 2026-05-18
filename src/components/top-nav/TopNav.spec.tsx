@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import TopNav, { type NavLinkItem } from "./TopNav";
+import type { NavLinkItem } from "../shared/constants/navLinks";
+import TopNav from "./TopNav";
 
 jest.mock('./../shared/icon/Icon', () => {
   return function MockIcon({ name }: { name: string }) {
