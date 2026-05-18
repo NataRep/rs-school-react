@@ -7,7 +7,7 @@ export default function About() {
     <p>
       Hi! My name is <a href="https://github.com/NataRep" title="GitHub" target="_blank" className={style.link}>Nata Repkina</a>, and this project was created as part of the React course at RS School.</p>
     <p>
-      This app is a small Star Wars search project powered by the SWAPI API. You can search for characters, planets, starships, and other information from the Star Wars universe.</p>
+      This app is a small Star Wars search project powered by the <a href="https://swapi.py4e.com/" title="SWAPI API" target="_blank" className={style.link}>SWAPI API</a >. You can search for characters, planets, starships, and other information from the Star Wars universe.</p>
     <h2>A little about me:</h2>
     <p>I’m a bit of a designer, a bit of an SEO specialist, a bit of a juggler — but mostly a frontend developer. I enjoy building interfaces, learning how applications work under the hood, and turning ideas into interactive web projects.
     </p>

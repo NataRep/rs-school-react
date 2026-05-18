@@ -1,10 +1,11 @@
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
 import About from './components/about/About';
 import Layout from './components/main/Layout';
+import { NotFoundPage } from './components/not-found-page/NotFoundPage';
 import Search from './components/search/Search';
 import SearchResult from './components/search/search-result/SearchResult';
 import { searchResultLoader } from './components/search/search-result/searchLoader';
-import ErrorBoundary from './components/shared/error-boundary/ErrorBoundary';
+import ErrorBoundary, { RouterErrorCatch } from './components/shared/error-boundary/ErrorBoundary';
 import Loader from './components/shared/loader/Loader';
 
 const router = createBrowserRouter(
@@ -13,6 +14,7 @@ const router = createBrowserRouter(
       path: '/',
       element: <Layout />,
       HydrateFallback: () => <Loader />,
+      errorElement: <RouterErrorCatch />,
       children: [
         {
           index: true,
@@ -21,7 +23,6 @@ const router = createBrowserRouter(
         {
           path: 'search',
           element: <Search />,
-          errorElement: <ErrorBoundary />,
           children: [
             {
               index: true,
@@ -37,10 +38,10 @@ const router = createBrowserRouter(
         {
           path: 'about',
           element: <About />,
-          errorElement: <ErrorBoundary />,
         }
       ],
     },
+    { path: "*", element: <NotFoundPage /> }
   ],
   {
     basename: process.env.NODE_ENV === 'test' ? '/' : '/rs-school-react',
@@ -48,5 +49,7 @@ const router = createBrowserRouter(
 );
 
 export default function App() {
-  return <RouterProvider router={router} />;
+  return <ErrorBoundary>
+    <RouterProvider router={router} />
+  </ErrorBoundary>;
 }

@@ -1,5 +1,6 @@
-// ErrorBoundary.tsx
 import { Component } from 'react';
+import { isRouteErrorResponse, useRouteError } from 'react-router-dom';
+import { NotFoundPage } from '../../not-found-page/NotFoundPage';
 import Button from '../button/Button';
 import { reloadPage } from '../utils/navigation';
 import style from './ErrorBoundary.module.scss';
@@ -46,6 +47,28 @@ export default class ErrorBoundary extends Component<Props, State> {
         </div>
       );
     }
-    return this.props.children || null;
+
+    return this.props.children;
   }
+}
+
+export function RouterErrorCatch() {
+  const error = useRouteError();
+
+  if (isRouteErrorResponse(error) && error.status === 404) {
+    return <NotFoundPage />;
+  }
+
+  return (
+    <ErrorBoundary>
+      <TriggerError error={error} />
+    </ErrorBoundary>
+  );
+}
+
+function TriggerError({ error }: { error: unknown }): never {
+  if (error instanceof Error) {
+    throw error;
+  }
+  throw new Error(String(error || 'Rendering Error'));
 }

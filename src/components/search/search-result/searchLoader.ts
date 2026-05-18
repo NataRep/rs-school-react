@@ -3,11 +3,13 @@ import type { Person, Planet, Starship } from "../../../services/api-service/api
 import { ApiService, type CategoryMap } from "../../../services/api-service/api-service";
 
 export interface SearchLoaderData {
-  items: (Person | Planet | Starship)[]
+  items: (Person | Planet | Starship)[];
   totalPages: number;
   searchQuery: string;
   currentPage: number;
 }
+
+const VALID_CATEGORIES: (keyof CategoryMap)[] = ['people', 'planets', 'starships'];
 
 export const searchResultLoader = async ({
   params,
@@ -16,7 +18,13 @@ export const searchResultLoader = async ({
   const url = new URL(request.url);
   const searchQuery = url.searchParams.get('search') || '';
   const currentPage = Number(url.searchParams.get('page')) || 1;
-  const categoryName = (params.categoryName as keyof CategoryMap) || 'people';
+
+  const categoryName = params.categoryName as keyof CategoryMap;
+
+  if (!categoryName || !VALID_CATEGORIES.includes(categoryName)) {
+    console.log('!!!');
+    throw new Response("Not Found", { status: 404, statusText: "Invalid Category" });
+  }
 
   const data = await ApiService.getData(categoryName, searchQuery, currentPage);
 

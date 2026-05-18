@@ -2,6 +2,13 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
+*:focus,
+*:focus-visible,
+*:focus-within,
+{
+outline: none;
+}
+
 body {
   display: flex;
   justify-content: center;
