@@ -32,9 +32,7 @@ export default function Layout() {
     </div>
 
     <main className={style.main}>
-      <Outlet></Outlet>
+      <Outlet />
     </main>
-
-
   </div>;
 }

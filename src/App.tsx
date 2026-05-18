@@ -1,6 +1,6 @@
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
 import About from './components/about/About';
-import Layout from './components/main/Layout';
+import Layout from './components/layout/Layout';
 import { NotFoundPage } from './components/not-found-page/NotFoundPage';
 import Search from './components/search/Search';
 import DetailView from './components/search/detail/Detail';
@@ -33,6 +33,7 @@ const router = createBrowserRouter(
             {
               path: ':categoryName',
               element: <SearchResult />,
+              HydrateFallback: () => <Loader />,
               loader: searchResultLoader,
               shouldRevalidate: ({ currentParams, nextParams, currentUrl, nextUrl }) => {
                 if (currentParams.categoryName !== nextParams.categoryName) return true;
