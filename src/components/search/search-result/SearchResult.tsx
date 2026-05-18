@@ -1,4 +1,4 @@
-import { Outlet, useLoaderData, useLocation, useNavigate, useNavigation } from 'react-router-dom';
+import { Outlet, useLoaderData, useLocation, useNavigate, useNavigation, useParams } from 'react-router-dom';
 import type { Person, Planet, Starship } from '../../../services/api-service/api-models';
 import Loader from '../../shared/loader/Loader';
 import SearchPagination from '../search-pagination/SearchPagination';
@@ -7,6 +7,7 @@ import style from './SearchResult.module.scss';
 
 export default function SearchResult() {
   const { items, totalPages } = useLoaderData() as { items: (Person | Planet | Starship)[]; totalPages: number };
+  const { categoryName } = useParams();
   const navigation = useNavigation();
   const navigate = useNavigate();
   const location = useLocation();
@@ -17,9 +18,9 @@ export default function SearchResult() {
 
   const closeDetails = () => {
     navigate({
-      pathname: '..',
+      pathname: `/search/${categoryName}`,
       search: location.search
-    }, { relative: 'path' });
+    });
   };
 
   return (

@@ -29,8 +29,6 @@ function renderFields(obj: Record<string, unknown>) {
   );
 }
 
-
-
 export default function DetailView() {
   const item = useLoaderData() as Person | Planet | Starship;
   const { closeDetails } = useOutletContext<DetailContextType>();
@@ -42,27 +40,28 @@ export default function DetailView() {
   const wrapperClass = `${style.wrapper} ${style.open}`;
 
   return (
-    <div className={wrapperClass}>
-      <div className={style.row}>
-        <h2 className={style.name}>
-          <span>Name:</span> {item.name}
-        </h2>
-        <Button
-          text=""
-          type="button"
-          callback={closeDetails}
-          disabled={false}
-          variant="base"
-          icon="close"
-          iconPosition="left"
-        />
-      </div>
+    <div className={style.overview} onClick={() => closeDetails()}>
+      <div className={wrapperClass}>
+        <div className={style.row}>
+          <h2 className={style.name}>
+            <span>Name:</span> {item.name}
+          </h2>
+          <Button
+            text=""
+            type="button"
+            callback={closeDetails}
+            disabled={false}
+            variant="base"
+            icon="close"
+            iconPosition="left"
+          />
+        </div>
 
-      <div className={style.information}>
-        <div className={style.subtitle}>Information:</div>
-        {renderFields(item as unknown as Record<string, unknown>)}
+        <div className={style.information}>
+          <div className={style.subtitle}>Information:</div>
+          {renderFields(item as unknown as Record<string, unknown>)}
+        </div>
       </div>
-
     </div>
   );
 }
