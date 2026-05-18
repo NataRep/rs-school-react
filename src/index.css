@@ -4,9 +4,8 @@
 
 *:focus,
 *:focus-visible,
-*:focus-within,
-{
-outline: none;
+*:focus-within {
+  outline: none;
 }
 
 body {
