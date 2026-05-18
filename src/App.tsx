@@ -38,6 +38,7 @@ const router = createBrowserRouter(
               shouldRevalidate: ({ currentParams, nextParams, currentUrl, nextUrl }) => {
                 if (currentParams.categoryName !== nextParams.categoryName) return true;
                 if (currentUrl.search !== nextUrl.search) return true;
+
                 return false;
               },
               children: [
@@ -53,13 +54,10 @@ const router = createBrowserRouter(
         {
           path: 'about',
           element: <About />,
-        },
-        {
-          path: "*",
-          element: <NotFoundPage />
         }
       ],
     },
+    { path: "*", element: <NotFoundPage /> }
   ],
   {
     basename: process.env.NODE_ENV === 'test' ? '/' : '/rs-school-react',
@@ -67,9 +65,7 @@ const router = createBrowserRouter(
 );
 
 export default function App() {
-  return (
-    <ErrorBoundary>
-      <RouterProvider router={router} />
-    </ErrorBoundary>
-  );
+  return <ErrorBoundary>
+    <RouterProvider router={router} />
+  </ErrorBoundary>;
 }
