@@ -27,11 +27,12 @@
   background: rgba(var(--text-secondary-rgb), 0.35);
   border-radius: 8px;
   border: 2px solid rgba(var(--color-carbon-rgb), 0.6);
+
+  @include hover-supported {
+    background: rgba(var(--text-secondary-rgb), 0.55);
+  }
 }
 
-.itemList::-webkit-scrollbar-thumb:hover {
-  background: rgba(var(--text-secondary-rgb), 0.55);
-}
 
 .itemList {
   scrollbar-width: thin;
@@ -39,10 +40,12 @@
     rgba(var(--text-secondary-rgb), 0.4) rgba(var(--color-carbon-rgb), 0.35);
 }
 
-.itemList::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg,
-      var(--color-hologram-purple),
-      var(--color-jedi-glow));
+.itemList::-webkit-scrollbar-thumb {
+  @include hover-supported {
+    background: linear-gradient(180deg,
+        var(--color-hologram-purple),
+        var(--color-jedi-glow));
+  }
 }
 
 .item {

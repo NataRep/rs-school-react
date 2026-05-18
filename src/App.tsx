@@ -1,4 +1,5 @@
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
+import About from './components/about/About';
 import Layout from './components/main/Layout';
 import Search from './components/search/Search';
 import SearchResult from './components/search/search-result/SearchResult';
@@ -33,6 +34,11 @@ const router = createBrowserRouter(
             },
           ],
         },
+        {
+          path: 'about',
+          element: <About />,
+          errorElement: <ErrorBoundary />,
+        }
       ],
     },
   ],
