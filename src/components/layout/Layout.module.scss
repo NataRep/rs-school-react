@@ -1,11 +1,12 @@
+:root {
+  width: 100%;
+}
+
 .container {
-  width: 980px;
-  max-width: 100%;
+  max-width: 980px;
+  width: calc(100% - 3rem);
   padding: 1rem 1.5rem;
 
-  @media (max-width: 1080px) {
-    width: auto;
-  }
 }
 
 .main {
@@ -38,4 +39,10 @@
   justify-content: space-between;
   flex-wrap: wrap;
   margin-bottom: 1rem;
+
+  button {
+    @media (max-width: 768px) {
+      margin-bottom: 1.5rem;
+    }
+  }
 }
