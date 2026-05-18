@@ -1,0 +1,53 @@
+:root {
+   --color-black: #0B0F1A;
+   --color-imperial-blue: #111827;
+   --color-carbon: #1F2937;
+   --color-carbon-light: #2D3B55;
+   --color-grey: #2b363f;
+
+   --color-black-rgb: 11, 15, 26;
+   --color-imperial-blue-rgb: 17, 24, 39;
+   --color-carbon-rgb: 31, 41, 55;
+   --color-grey-rgb: 43, 54, 63;
+
+   --text-primary: #E5E7EB;
+   --text-secondary: #9CA3AF;
+   --text-disabled: #6B7280;
+
+
+   --text-primary-rgb: 229, 231, 235;
+   --text-secondary-rgb: 156, 163, 175;
+   --text-disabled-rgb: 107, 114, 128;
+
+   --color-light-side: #3B82F6;
+   --color-jedi-glow: #22D3EE;
+
+   --color-dark-side: #EF4444;
+   --color-sith-glow: #F43F5E;
+
+   --color-hologram-purple: #8B5CF6;
+   --color-energy-yellow: #FACC15;
+
+   --color-light-side-rgb: 59, 130, 246;
+   --color-jedi-glow-rgb: 34, 211, 238;
+
+   --color-dark-side-rgb: 239, 68, 68;
+   --color-sith-glow-rgb: 244, 63, 94;
+
+   --color-hologram-purple-rgb: 139, 92, 246;
+   --color-energy-yellow-rgb: 250, 204, 21;
+
+   --gradient-container-bg: linear-gradient(180deg,
+         rgba(var(--color-imperial-blue-rgb), 0.65) 0%,
+         rgba(var(--color-black-rgb), 0.85) 55%,
+         rgba(0, 0, 0, 0.9) 100%),
+
+      linear-gradient(90deg,
+         rgba(var(--color-carbon-rgb), 0.7) 0%,
+         rgba(var(--color-light-side-rgb), 0.10) 50%,
+         rgba(var(--color-carbon-rgb), 0.65) 100%);
+
+   --gradient-lightsaber-blue: linear-gradient(90deg, #1D4ED8, #22D3EE);
+   --gradient-lightsaber-red: linear-gradient(90deg, #7F1D1D, #F43F5E);
+   --gradient-hyperspace: linear-gradient(135deg, #0B0F1A, #1E3A8A, #22D3EE);
+}
