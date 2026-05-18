@@ -1,4 +1,14 @@
-.mainContainer {
+.container {
+  width: 980px;
+  max-width: 100%;
+  padding: 1rem 1.5rem;
+
+  @media (max-width: 1080px) {
+    width: auto;
+  }
+}
+
+.main {
   width: 980px;
   max-width: 100%;
   padding: 1rem 1.5rem;

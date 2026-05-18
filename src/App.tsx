@@ -1,5 +1,5 @@
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
-import Main from './components/main/Main';
+import Layout from './components/main/Layout';
 import Search from './components/search/Search';
 import SearchResult from './components/search/search-result/SearchResult';
 import { searchResultLoader } from './components/search/search-result/searchLoader';
@@ -10,7 +10,7 @@ const router = createBrowserRouter(
   [
     {
       path: '/',
-      element: <Main />,
+      element: <Layout />,
       HydrateFallback: () => <Loader />,
       children: [
         {
