@@ -15,8 +15,10 @@ export class ApiService {
 
     const baseUrl = "https://swapi.py4e.com/api";
 
+    const searchParams = (searchQuery !== '' && searchQuery) ? `&search=${encodeURIComponent(searchQuery)}&` : '';
+
     const response = await fetch(
-      `${baseUrl}/${category}/?search=${encodeURIComponent(searchQuery)}&page=${page}`,
+      `${baseUrl}/${category}/?page=${page}${searchParams}`,
       {
         method: 'GET',
         headers: {

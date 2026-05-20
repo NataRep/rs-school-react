@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Button from '../shared/button/Button';
-import TopNav from '../top-nav/TopNav';
 import style from './Layout.module.scss';
+import TopNav from './top-nav/TopNav';
 
 
 export default function Layout() {

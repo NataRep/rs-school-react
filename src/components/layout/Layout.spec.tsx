@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import Layout from "./Layout";
 
-jest.mock('../top-nav/TopNav', () => {
+jest.mock('../../top-nav/TopNav', () => {
   return function MockTopNav() {
     return <nav data-testid="mock-topnav">Navigation</nav>;
   };
