@@ -22,7 +22,7 @@ describe('ApiService service', () => {
     expect(result).toEqual(mockResponse);
 
     expect(fetchMock).toHaveBeenCalledWith(
-      expect.stringContaining('/people/?search=luke'),
+      expect.stringContaining('/people/?page=1&search=luke'),
       expect.any(Object)
     );
   });

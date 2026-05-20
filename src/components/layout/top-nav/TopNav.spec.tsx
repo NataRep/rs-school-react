@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import type { NavLinkItem } from "../../shared/constants/navLinks";
+import type { NavLinkItem } from "../../../shared/constants/navLinks";
 import TopNav from "./TopNav";
 
-jest.mock('./../shared/icon/Icon', () => {
+jest.mock('../../shared/icon/Icon', () => {
   return function MockIcon({ name }: { name: string }) {
     return <span data-testid={`icon-${name}`} />;
   };
