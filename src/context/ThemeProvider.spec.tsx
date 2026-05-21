@@ -1,5 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
-import { ThemeProvider, useTheme } from './ThemeContext';
+import { useTheme } from '../hooks/useTheme';
+import { ThemeProvider } from './ThemeProvider';
 
 describe('ThemeProvider', () => {
   it('should return the default "dark" theme', () => {
