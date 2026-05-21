@@ -2,20 +2,21 @@
   width: 100%;
   padding: 0.5rem 0.75rem;
 
-  background-color: rgba(var(--color-light-side-rgb), 0.05);
-  border-bottom: 1px solid rgba(var(--color-carbon-rgb), 0.6);
+  background-color: var(--search-item-bg);
+  border-bottom: 1px solid var(--search-item-border);
   border-radius: 0;
   box-shadow: none;
   transition: background 0.15s ease;
   display: grid;
   cursor: pointer;
+
+  @include hover-supported {
+    background: var(--search-item-bg--hover);
+    transform: none;
+    border-color: var(--search-item-border--hover);
+  }
 }
 
-.wrapper:hover {
-  background: rgba(var(--color-carbon-rgb), 0.6);
-  transform: none;
-  border-color: transparent;
-}
 
 .name {
   display: inline;
@@ -39,7 +40,7 @@
 .subtitle {
   font-size: 0.7rem;
   text-transform: uppercase;
-  color: var(--text-disabled);
+  color: var(--text-grey);
   margin: 0.25rem 0 0 0;
   white-space: nowrap;
 }

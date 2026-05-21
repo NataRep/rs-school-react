@@ -68,8 +68,8 @@
   .input:not(:checked)+.slider {
     .sun :global(svg) {
       fill: none;
-      fill: var(--color-jedi-light);
-      stroke: var(--color-jedi-light);
+      fill: var(--color-sand-shadow);
+      stroke: var(--color-sand-shadow);
       stroke-width: 2px;
       filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.5));
     }

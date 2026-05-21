@@ -1,0 +1,22 @@
+.appWrapper {
+  display: flex;
+  justify-content: center;
+  width: calc(100vw - 8rem);
+  min-height: calc(100vh - 2rem);
+  margin: 0 auto;
+  padding: 1rem 4rem;
+  background-color: var(--color-black);
+  background-image: var(--theme-bg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  color: var(--text-primary);
+  transition: background-image 2s linear;
+}
+
+@media (max-width: 768px) {
+  .appWrapper {
+    min-height: calc(100vh - 2rem);
+    padding: 1rem;
+  }
+}

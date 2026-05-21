@@ -3,7 +3,7 @@
   gap: 1rem;
   margin: 1rem 0;
   padding: 0.5rem;
-  background: var(--color-carbon);
+  background: var(--tab-bg);
   border-radius: 0.5rem;
   overflow: auto;
 }
@@ -28,6 +28,6 @@
 }
 
 .active {
-  color: var(--color-energy-yellow);
-  border-bottom: 1px solid var(--color-energy-yellow);
+  color: var(--link-text);
+  border-bottom: 1px solid var(--link-text);
 }

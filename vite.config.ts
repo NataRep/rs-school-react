@@ -26,6 +26,8 @@ export default defineConfig({
       scss: {
         additionalData: `
           @use "@/styles/variables.scss" as *;
+          @use "@/styles/theme-dark.scss" as *;
+          @use "@/styles/theme-light.scss" as *;
           @use "@/styles/mixins.scss" as *;`
       },
     },

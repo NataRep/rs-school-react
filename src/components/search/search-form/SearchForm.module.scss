@@ -15,14 +15,14 @@
   padding: 0 0.75rem;
   font-size: 1rem;
   color: var(--text-primary);
-  background-color: var(--color-carbon-light);
+  background-color: var(--input-bg);
   border-radius: 0.5rem;
-  border: solid 2px rgba(var(--color-jedi-glow-rgb), 0.25);
+  border: solid 2px rgba(var(--input-border), 0.25);
 
 
 
   &:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 1000px var(--color-carbon-light) inset;
+    -webkit-box-shadow: 0 0 0 1000px var(--input-bg) inset;
     -webkit-text-fill-color: var(--text-primary);
     caret-color: var(--text-primary);
   }

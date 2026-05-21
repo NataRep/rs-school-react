@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
+import { useTheme } from '../../hooks/useTheme';
 import Button from '../shared/button/Button';
 import style from './Layout.module.scss';
 import { ThemeButton } from './theme-button/ThemeButton';
@@ -9,6 +10,7 @@ import TopNav from './top-nav/TopNav';
 export default function Layout() {
   const [shouldCrash, setShouldCrash] = useState(false);
   const [error] = useState<Error | null>(null);
+  const { theme } = useTheme();
 
   if (shouldCrash) {
     throw new Error('Critical rendering error');
@@ -18,25 +20,27 @@ export default function Layout() {
     return <div className={style.error}>{error.message}. Try another category.</div>;
   }
 
-  return <div className={style.container}>
-    <div className={style.row}>
-      <Button
-        text="Show Error Boundary"
-        callback={() => setShouldCrash(true)}
-        type="button"
-        disabled={false}
-        variant="red"
-        icon="error"
-        iconPosition="left"
-      />
-      <div className={style.tools}>
-        <TopNav></TopNav>
-        <ThemeButton></ThemeButton>
+  return (
+    <div className={style.container} >
+      <div className={style.row}>
+        <Button
+          text="Show Error Boundary"
+          callback={() => setShouldCrash(true)}
+          type="button"
+          disabled={false}
+          variant="red"
+          icon="error"
+          iconPosition="left"
+        />
+        <div className={style.tools}>
+          <TopNav></TopNav>
+          <ThemeButton></ThemeButton>
+        </div>
       </div>
-    </div>
 
-    <main className={style.main}>
-      <Outlet />
-    </main>
-  </div>;
+      <main className={style.main}>
+        <Outlet />
+      </main>
+    </div>
+  );
 }

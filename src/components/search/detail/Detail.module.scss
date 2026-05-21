@@ -4,7 +4,7 @@
   right: 0;
   height: calc(100% - 3rem);
   width: 25rem;
-  background: #0b0f1a;
+  background: var(--card-bg);
   color: var(--text-primary);
   box-shadow: -0.625rem 0 1.875rem rgba(0, 0, 0, 0.4);
   z-index: 1000;
@@ -37,7 +37,7 @@
 .name {
   font-size: 1.25rem;
   margin-bottom: 1rem;
-  color: var(--color-energy-yellow);
+  color: var(--link-text);
 
   span {
     opacity: 0.7;
