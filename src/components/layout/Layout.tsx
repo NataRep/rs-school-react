@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Button from '../shared/button/Button';
 import style from './Layout.module.scss';
+import { ThemeButton } from './theme-button/ThemeButton';
 import TopNav from './top-nav/TopNav';
 
 
@@ -28,7 +29,10 @@ export default function Layout() {
         icon="error"
         iconPosition="left"
       />
-      <TopNav></TopNav>
+      <div className={style.tools}>
+        <TopNav></TopNav>
+        <ThemeButton></ThemeButton>
+      </div>
     </div>
 
     <main className={style.main}>

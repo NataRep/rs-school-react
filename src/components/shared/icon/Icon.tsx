@@ -5,10 +5,12 @@ import PlanetsIcon from '@/assets/icons/death-star.svg?react';
 import ErrorIcon from '@/assets/icons/error.svg?react';
 import InfoIcon from '@/assets/icons/info.svg?react';
 import LogoIcon from '@/assets/icons/logo.svg?react';
+import NightIcon from '@/assets/icons/night.svg?react';
 import PeopleIcon from '@/assets/icons/people.svg?react';
 import ReloadIcon from '@/assets/icons/reload.svg?react';
 import SearchIcon from '@/assets/icons/search.svg?react';
 import StarshipsIcon from '@/assets/icons/starship.svg?react';
+import SunIcon from '@/assets/icons/sun.svg?react';
 
 export type IconName =
   | 'search'
@@ -19,7 +21,9 @@ export type IconName =
   | 'error'
   | 'reload'
   | 'logo'
-  | 'info';
+  | 'info'
+  | 'night'
+  | 'sun';
 
 const iconsMap: Record<IconName, React.FC<React.SVGProps<SVGSVGElement>>> = {
   search: SearchIcon,
@@ -30,7 +34,9 @@ const iconsMap: Record<IconName, React.FC<React.SVGProps<SVGSVGElement>>> = {
   error: ErrorIcon,
   reload: ReloadIcon,
   info: InfoIcon,
-  logo: LogoIcon
+  logo: LogoIcon,
+  night: NightIcon,
+  sun: SunIcon
 };
 
 interface IconProps {
