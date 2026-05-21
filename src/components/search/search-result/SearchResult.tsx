@@ -1,5 +1,4 @@
 import { Suspense } from 'react';
-// В v7 все хуки и компоненты роутера живут в 'react-router'
 import { Await, Outlet, useLoaderData, useLocation, useNavigate, useParams } from 'react-router';
 import type { Person, Planet, Starship } from '../../../services/api-service/api-models';
 import Loader from '../../shared/loader/Loader';

@@ -40,7 +40,7 @@ export default function DetailView() {
   const wrapperClass = `${style.wrapper} ${style.open}`;
 
   return (
-    <div className={style.overview} onClick={() => closeDetails()}>
+    <div className={style.overview} >
       <div className={wrapperClass}>
         <div className={style.row}>
           <h2 className={style.name}>

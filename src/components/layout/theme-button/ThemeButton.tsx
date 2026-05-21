@@ -7,7 +7,7 @@ export const ThemeButton = () => {
   const isDark = theme === "dark";
 
   return (
-    <label className={style.toggle} title="Переключить тему">
+    <label className={style.toggle} title="Toggle theme">
       <input
         type="checkbox"
         checked={isDark}

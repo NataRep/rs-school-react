@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { useTheme } from '../../hooks/useTheme';
 import Button from '../shared/button/Button';
 import style from './Layout.module.scss';
 import { ThemeButton } from './theme-button/ThemeButton';
@@ -10,7 +9,6 @@ import TopNav from './top-nav/TopNav';
 export default function Layout() {
   const [shouldCrash, setShouldCrash] = useState(false);
   const [error] = useState<Error | null>(null);
-  const { theme } = useTheme();
 
   if (shouldCrash) {
     throw new Error('Critical rendering error');
