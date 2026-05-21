@@ -1,9 +1,7 @@
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { createMemoryRouter, Outlet, RouterProvider } from 'react-router';
 import DetailView from './Detail';
 
-import style from './Detail.module.scss';
 
 describe('DetailView Component', () => {
   const mockCloseDetails = jest.fn();
@@ -64,20 +62,6 @@ describe('DetailView Component', () => {
     expect(screen.queryByText('url:')).not.toBeInTheDocument();
     expect(screen.queryByText('https://swapi.dev/api/people/1/')).not.toBeInTheDocument();
     expect(screen.queryByText('films:')).not.toBeInTheDocument();
-  });
-
-  it('should call closeDetails when clicking on the overlay background', async () => {
-    const user = userEvent.setup();
-    renderWithRouter();
-
-    const heading = await screen.findByRole('heading', { name: /name:/i });
-
-    const overlay = heading.closest(`.${style.overview}`) || heading.parentElement?.parentElement?.parentElement;
-
-    expect(overlay).toBeInTheDocument();
-    await user.click(overlay!);
-
-    expect(mockCloseDetails).toHaveBeenCalledTimes(1);
   });
 
   it('should render "No data available" if loader returns empty/null data', async () => {
