@@ -27,6 +27,11 @@ input:-webkit-autofill {
   caret-color: var(--text-primary);
 }
 
+input::placeholder,
+textarea::placeholder {
+  opacity: 0.6;
+}
+
 ul {
   padding: 0;
 }

@@ -50,7 +50,7 @@ describe('DetailView Component', () => {
 
     expect(screen.getByText('height:')).toBeInTheDocument();
     expect(screen.getByText('172')).toBeInTheDocument();
-    expect(screen.getByText('hair_color:')).toBeInTheDocument();
+    expect(screen.getByText('hair color:')).toBeInTheDocument();
     expect(screen.getByText('blond')).toBeInTheDocument();
   });
 

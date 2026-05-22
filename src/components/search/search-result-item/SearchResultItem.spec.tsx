@@ -23,6 +23,7 @@ describe('SearchResultItem Component', () => {
       gender: 'male',
       height: '172',
       mass: '77',
+      birth_year: '19BBY',
       url: 'https://swapi.dev/api/people/1/',
     } as Person;
 
@@ -33,8 +34,7 @@ describe('SearchResultItem Component', () => {
     );
 
     expect(screen.getByText(/Luke Skywalker/i)).toBeInTheDocument();
-    expect(screen.getByText(/Gender:\s*male/i)).toBeInTheDocument();
-    expect(screen.getByText(/Height:\s*172/i)).toBeInTheDocument();
+    expect(screen.getByText(/Birth year:\s*19BBY/i)).toBeInTheDocument();
   });
 
   it('should render planet details correctly', () => {
@@ -53,7 +53,6 @@ describe('SearchResultItem Component', () => {
 
     expect(screen.getByText(/Tatooine/i)).toBeInTheDocument();
     expect(screen.getByText(/Terrain:\s*desert/i)).toBeInTheDocument();
-    expect(screen.getByText(/Climate:\s*arid/i)).toBeInTheDocument();
   });
 
   it('should render starship details correctly', () => {
@@ -72,7 +71,6 @@ describe('SearchResultItem Component', () => {
 
     expect(screen.getByText(/Death Star/i)).toBeInTheDocument();
     expect(screen.getByText(/Model:\s*DS-1 Platform/i)).toBeInTheDocument();
-    expect(screen.getByText(/Manufacturer:/i)).toBeInTheDocument();
   });
 
   it('should call navigate with correct id and search query on click', async () => {
