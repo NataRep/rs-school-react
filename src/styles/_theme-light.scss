@@ -29,11 +29,14 @@
   --text-button: rgb(var(--color-white-milk-rgb));
   --input-bg: var(--color-white);
   --input-border: var(--color-sand-rgb);
-  --tab-bg: var(--color-sand-shadow);
+  --tab-bg: #ebebeb;
   --link-text: var(--color-light-side);
   --search-item-bg: var(--color-white);
   --search-item-bg--hover: #f0f0f0;
   --search-item-border: rgba(var(--input-border), 0.25);
   --search-item-border--hover: rgba(var(--input-border), 0.5);
   --card-bg: var(--color-white);
+
+  --scrollbar-bg-rgb: 164, 164, 164;
+  --scrollbar-track-rgb: 217, 217, 217;
 }

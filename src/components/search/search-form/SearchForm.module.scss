@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   width: 100%;
+  padding: 1rem 0;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -18,8 +19,6 @@
   background-color: var(--input-bg);
   border-radius: 0.5rem;
   border: solid 2px rgba(var(--input-border), 0.25);
-
-
 
   &:-webkit-autofill {
     -webkit-box-shadow: 0 0 0 1000px var(--input-bg) inset;

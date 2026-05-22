@@ -54,6 +54,7 @@ export class ApiService {
       throw new Error(`API error: ${response.status}`);
     }
     const result = response.json();
+
     return result;
   }
 }

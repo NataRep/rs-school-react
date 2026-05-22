@@ -1,7 +1,6 @@
 .wrapper {
   width: 100%;
   padding: 0.5rem 0.75rem;
-
   background-color: var(--search-item-bg);
   border-bottom: 1px solid var(--search-item-border);
   border-radius: 0;
@@ -22,18 +21,16 @@
   display: inline;
   margin: 0;
   margin-right: 1rem;
-
   font-size: 0.8rem;
   font-weight: 600;
   text-transform: uppercase;
-
   color: var(--text-primary);
 
 }
 
 .description {
   display: inline-flex;
-  align-items: center;
+  align-items: flex-end;
   gap: 0.75rem;
 }
 

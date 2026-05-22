@@ -22,12 +22,13 @@ function renderFields(obj: Record<string, unknown>) {
         })
         .map(([key, value]) => (
           <li key={key}>
-            <span>{key}:</span> {String(value)}
+            <span>{key.replace(/_/g, ' ')}:</span> {String(value)}
           </li>
         ))}
     </ul>
   );
 }
+
 
 export default function DetailView() {
   const item = useLoaderData() as Person | Planet | Starship;
@@ -40,8 +41,8 @@ export default function DetailView() {
   const wrapperClass = `${style.wrapper} ${style.open}`;
 
   return (
-    <div className={style.overview} >
-      <div className={wrapperClass}>
+    <div className={wrapperClass}>
+      <div className={style.card}>
         <div className={style.row}>
           <h2 className={style.name}>
             <span>Name:</span> {item.name}

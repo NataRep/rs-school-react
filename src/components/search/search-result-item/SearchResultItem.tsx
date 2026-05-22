@@ -24,9 +24,7 @@ export default function SearchResultItem({ item }: SearchItemProps) {
     if (isPerson(item)) {
       return (
         <ul className={style.info}>
-          <li>Gender: {item.gender}</li>
-          <li>Height: {item.height}</li>
-          <li>Mass: {item.mass}</li>
+          <li>Birth year: {item.birth_year}</li>
         </ul>
       );
     }
@@ -35,7 +33,6 @@ export default function SearchResultItem({ item }: SearchItemProps) {
       return (
         <ul className={style.info}>
           <li>Terrain: {item.terrain}</li>
-          <li>Climate: {item.climate}</li>
         </ul>
       );
     }
@@ -44,7 +41,6 @@ export default function SearchResultItem({ item }: SearchItemProps) {
       return (
         <ul className={style.info}>
           <li>Model: {item.model}</li>
-          <li>Manufacturer: {item.manufacturer}</li>
         </ul>
       );
     }
