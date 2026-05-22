@@ -5,6 +5,7 @@
 .container {
   max-width: 980px;
   width: calc(100% - 3rem);
+  height: fit-content;
   padding: 1rem 1.5rem;
 }
 
@@ -45,4 +46,10 @@
 
 .tools {
   display: flex;
+
+  @media (max-width: 768px) {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
 }

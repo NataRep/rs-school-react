@@ -1,6 +1,7 @@
 .appWrapper {
   display: flex;
   justify-content: center;
+  align-items: center;
   width: calc(100vw - 8rem);
   min-height: calc(100vh - 2rem);
   margin: 0 auto;
@@ -17,6 +18,7 @@
 @media (max-width: 768px) {
   .appWrapper {
     min-height: calc(100vh - 2rem);
+    width: calc(100% - 2rem);
     padding: 1rem;
   }
 }
