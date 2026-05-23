@@ -1,4 +1,5 @@
-import { useLoaderData, useOutletContext } from 'react-router-dom';
+import { Suspense } from 'react';
+import { Await, useLoaderData, useOutletContext } from 'react-router-dom';
 import type { Person, Planet, Starship } from '../../../services/api-service/api-models';
 import Button from '../../shared/button/Button';
 import style from './Detail.module.scss';
@@ -29,24 +30,12 @@ function renderFields(obj: Record<string, unknown>) {
   );
 }
 
-
-export default function DetailView() {
-  const item = useLoaderData() as Person | Planet | Starship;
-  const { closeDetails } = useOutletContext<DetailContextType>();
-
-  if (!item) {
-    return <div className={style.wrapper}>No data available</div>;
-  }
-
-  const wrapperClass = `${style.wrapper} ${style.open}`;
-
+function DetailSkeleton(closeDetails: () => void) {
   return (
-    <div className={wrapperClass}>
+    <>
       <div className={style.card}>
         <div className={style.row}>
-          <h2 className={style.name}>
-            <span>Name:</span> {item.name}
-          </h2>
+          <span className='skeleton'></span>
           <Button
             text=""
             type="button"
@@ -57,12 +46,55 @@ export default function DetailView() {
             iconPosition="left"
           />
         </div>
-
-        <div className={style.information}>
-          <div className={style.subtitle}>Information:</div>
-          {renderFields(item as unknown as Record<string, unknown>)}
-        </div>
+      </div >
+      <div className={style.information}>
+        <ul className={style.info}>
+          {Array.from({ length: 8 }).map((_, index) => (
+            <li key={index}>
+              <span className="skeleton"></span>
+            </li>
+          ))}
+        </ul>
       </div>
+    </>
+  );
+}
+
+export default function DetailView() {
+  const data = useLoaderData() as { details: Promise<Person | Planet | Starship> };
+  const { closeDetails } = useOutletContext<DetailContextType>();
+
+  const wrapperClass = `${style.wrapper} ${style.open}`;
+
+  return (
+    <div className={wrapperClass}>
+      <Suspense fallback={DetailSkeleton(closeDetails)}>
+        <Await resolve={data.details}>
+          {(resolvedItem: Person | Planet | Starship) => {
+            if (!resolvedItem) return <div>No data available</div>;
+
+            return (
+              <div className={style.card}>
+                <div className={style.row}>
+                  <h2 className={style.name}>
+                    <span>Name:</span> {resolvedItem.name}
+                  </h2>
+                  <Button
+                    text=""
+                    type="button"
+                    callback={closeDetails}
+                    disabled={false}
+                    variant="base"
+                    icon="close"
+                    iconPosition="left"
+                  />
+                </div>
+                {renderFields(resolvedItem)}
+              </div>
+            );
+          }}
+        </Await>
+      </Suspense>
     </div>
   );
 }

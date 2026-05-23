@@ -47,6 +47,7 @@ export const router = createBrowserRouter(
                   path: ":id",
                   element: <DetailView />,
                   loader: detailLoader,
+                  HydrateFallback: () => <Loader />,
                 }
               ]
             },

@@ -21,7 +21,7 @@ export default function SearchResult() {
   };
 
   return (
-    <div className={style.container}>
+    <div className={style.container} key={location.key}>
       <div className={style.result}>
         <Suspense fallback={<div className={style.itemList}><Loader /></div>}>
           <Await resolve={deferredData}>
@@ -33,21 +33,18 @@ export default function SearchResult() {
                       <h2>Nothing found matching your request.</h2>
                     </div>
                   )}
-
                   {resolvedData.items.map((item: Person | Planet | Starship) => (
                     <li key={item.url} className={style.item}>
                       <SearchResultItem item={item} />
                     </li>
                   ))}
                 </ul>
-
                 <SearchPagination totalPages={resolvedData.totalPages} />
               </>
             )}
           </Await>
         </Suspense>
       </div>
-
       <Outlet context={{ closeDetails }} />
     </div>
   );

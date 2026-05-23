@@ -1,44 +1,86 @@
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { MemoryRouter, Route, Routes } from "react-router-dom";
-import Layout from "./Layout";
+import { fireEvent, render, screen } from '@testing-library/react';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import Layout from './Layout';
+
+const mockNavigation = jest.fn().mockReturnValue({ state: 'idle' });
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigation: () => mockNavigation(),
+}));
 
 interface MockButtonProps {
   text: string;
   callback: () => void;
 }
 
-jest.mock('../shared/button/Button', () => {
-  return {
-    __esModule: true,
-    default: ({ text, callback }: MockButtonProps) => (
-      <button onClick={callback}>{text}</button>
-    )
-  };
-});
+jest.mock('../shared/button/Button', () => ({
+  __esModule: true,
+  default: ({ text, callback }: MockButtonProps) => (
+    <button onClick={callback}>{text}</button>
+  )
+}));
 
-jest.mock('./theme-button/ThemeButton', () => {
-  return {
-    __esModule: true,
-    ThemeButton: () => <button data-testid="mock-theme">Theme</button>
-  };
-});
+jest.mock('./theme-button/ThemeButton', () => ({
+  __esModule: true,
+  ThemeButton: () => <button data-testid="mock-theme">Theme</button>
+}));
 
-jest.mock('./top-nav/TopNav', () => {
-  return {
-    __esModule: true,
-    default: () => <nav data-testid="mock-topnav">Navigation</nav>
-  };
-});
+jest.mock('./top-nav/TopNav', () => ({
+  __esModule: true,
+  default: () => <nav data-testid="mock-topnav">Navigation</nav>
+}));
+
+jest.mock('../shared/loader/Loader', () => ({
+  __esModule: true,
+  default: () => <div data-testid="mock-loader">Loading...</div>
+}));
 
 describe('Layout Component', () => {
   let consoleSpy: jest.SpyInstance;
+
   beforeAll(() => {
     consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => { });
   });
 
   afterAll(() => {
     consoleSpy.mockRestore();
+  });
+
+  beforeEach(() => {
+    mockNavigation.mockReturnValue({ state: 'idle' });
+  });
+
+  it('should show loader when navigation is loading, and content when idle', () => {
+    mockNavigation.mockReturnValue({ state: 'loading' });
+
+    const { rerender } = render(
+      <MemoryRouter initialEntries={['/']}>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<div data-testid="child-page">Child Content</div>} />
+          </Route>
+        </Routes>
+      </MemoryRouter>
+    );
+
+    expect(screen.getByTestId('mock-loader')).toBeInTheDocument();
+    expect(screen.queryByTestId('child-page')).not.toBeInTheDocument();
+
+    mockNavigation.mockReturnValue({ state: 'idle' });
+
+    rerender(
+      <MemoryRouter initialEntries={['/']}>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<div data-testid="child-page">Child Content</div>} />
+          </Route>
+        </Routes>
+      </MemoryRouter>
+    );
+
+    expect(screen.queryByTestId('mock-loader')).not.toBeInTheDocument();
+    expect(screen.getByTestId('child-page')).toBeInTheDocument();
   });
 
   it('should render the main container and structural elements', () => {
@@ -78,7 +120,7 @@ describe('Layout Component', () => {
     const crashButton = screen.getByText('Show Error Boundary');
 
     await expect(async () => {
-      await userEvent.click(crashButton);
+      fireEvent.click(crashButton);
     }).rejects.toThrow('Critical rendering error');
   });
 });

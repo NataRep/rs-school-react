@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigation } from 'react-router-dom';
 import Button from '../shared/button/Button';
+import Loader from '../shared/loader/Loader';
 import style from './Layout.module.scss';
 import { ThemeButton } from './theme-button/ThemeButton';
 import TopNav from './top-nav/TopNav';
@@ -9,6 +10,8 @@ import TopNav from './top-nav/TopNav';
 export default function Layout() {
   const [shouldCrash, setShouldCrash] = useState(false);
   const [error] = useState<Error | null>(null);
+  const navigation = useNavigation();
+  const isLoading = navigation.state === 'loading';
 
   if (shouldCrash) {
     throw new Error('Critical rendering error');
@@ -37,7 +40,7 @@ export default function Layout() {
       </div>
 
       <main className={style.main}>
-        <Outlet />
+        {isLoading ? <Loader /> : <Outlet />}
       </main>
     </div>
   );

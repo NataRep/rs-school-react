@@ -42,7 +42,7 @@
 .name {
   font-size: 1.25rem;
   margin-top: 0;
-  margin-bottom: 1rem;
+  margin-bottom: 0;
   color: var(--link-text);
 
   span {
@@ -82,4 +82,5 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  margin-bottom: 0.75rem;
 }

@@ -1,9 +1,12 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigation } from 'react-router-dom';
+import Loader from '../shared/loader/Loader';
 import Tabs from '../shared/tab/Tabs';
 import SearchForm from './search-form/SearchForm';
 import style from './Search.module.scss';
 
 export default function Search() {
+  const navigation = useNavigation();
+  const isLoading = navigation.state === 'loading';
 
   return <div className={style.container}>
     <h1>Star Wars Universe Search</h1>
@@ -17,7 +20,7 @@ export default function Search() {
       ] as const}
     />
     <div className={style.resultWrapper}>
-      <Outlet />
+      {isLoading ? <Loader /> : <Outlet />}
     </div>
   </div>
 }
