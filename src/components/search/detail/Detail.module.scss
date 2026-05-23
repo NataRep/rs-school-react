@@ -14,8 +14,10 @@
   overflow: hidden;
 
   @media (max-width: 768px) {
-    width: calc(100% - 2rem);
-    padding: 1rem;
+    position: absolute;
+    top: 0;
+    right: 0;
+    max-width: max-content;
   }
 }
 
@@ -37,6 +39,10 @@
 
 .card {
   width: 18rem;
+
+  @media (max-width: 428px) {
+    width: 12rem;
+  }
 }
 
 .name {
