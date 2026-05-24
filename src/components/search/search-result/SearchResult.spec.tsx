@@ -1,11 +1,29 @@
 import { render, screen } from "@testing-library/react";
+
+import { act } from "react";
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
 import { ApiService } from "../../../services/api-service/api-service";
+import type { RootState } from "../../../store";
 import SearchResult from "./SearchResult";
 import { searchResultLoader } from "./searchLoader"; // Импортируй свой лоадер
 
 jest.mock("../../../services/api-service/api-service");
 
+
+jest.mock('react-redux', () => {
+  const actual = jest.requireActual('react-redux');
+
+  return {
+    ...actual,
+    useDispatch: () => jest.fn(),
+    useSelector: (selector: (state: RootState) => unknown) =>
+      selector({
+        selected: {
+          items: [],
+        },
+      } as RootState),
+  };
+});
 
 describe('SearchResult Component', () => {
   let consoleSpy: jest.SpyInstance;
@@ -57,9 +75,11 @@ describe('SearchResult Component', () => {
   });
 
   it('should render items from api response', async () => {
-    renderWithRouter("/people");
+    await act(async () => {
+      renderWithRouter("/people");
+    });
 
-    expect(await screen.findByText('Character 0')).toBeInTheDocument();
+    expect(await screen.findByText(/Character 0/i)).toBeInTheDocument();
 
     const resultItems = screen.getAllByText(/Character/i);
     expect(resultItems).toHaveLength(9);
@@ -71,7 +91,9 @@ describe('SearchResult Component', () => {
       count: 0,
     });
 
-    renderWithRouter("/people");
+    await act(async () => {
+      renderWithRouter("/people");
+    });
 
     expect(
       await screen.findByText(/Nothing found matching your request/i)

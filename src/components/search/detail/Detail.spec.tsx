@@ -15,6 +15,12 @@ jest.mock('../../shared/button/Button', () => ({
   default: ({ callback }: { callback: () => void }) => <button onClick={callback}>Close</button>
 }));
 
+jest.mock('./../selection-checkbox/SelectionСheckbox', () => {
+  return function MockSelectionCheckbox() {
+    return <div data-testid="mock-checkbox" />;
+  };
+});
+
 describe('DetailView Component', () => {
   const mockItem = {
     name: 'Luke Skywalker',
