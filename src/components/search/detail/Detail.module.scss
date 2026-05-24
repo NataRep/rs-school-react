@@ -38,7 +38,13 @@
 }
 
 .card {
-  width: 18rem;
+  position: relative;
+
+  button {
+    position: absolute;
+    top: -1.5rem;
+    right: -1.75rem;
+  }
 
   @media (max-width: 428px) {
     width: 12rem;
@@ -49,6 +55,7 @@
   font-size: 1.25rem;
   margin-top: 0;
   margin-bottom: 0;
+  margin-left: 0.5rem;
   color: var(--link-text);
 
   span {
@@ -86,7 +93,12 @@
 
 .row {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: flex-start;
   margin-bottom: 0.75rem;
+}
+
+.checkbox {
+  margin-top: 0.325rem;
+  color: var(--checkbox-card);
 }

@@ -3,6 +3,7 @@ import style from './Icon.module.scss';
 import CloseIcon from '@/assets/icons/close.svg?react';
 import PlanetsIcon from '@/assets/icons/death-star.svg?react';
 import ErrorIcon from '@/assets/icons/error.svg?react';
+import FlagIcon from '@/assets/icons/flag.svg?react';
 import InfoIcon from '@/assets/icons/info.svg?react';
 import LogoIcon from '@/assets/icons/logo.svg?react';
 import NightIcon from '@/assets/icons/night.svg?react';
@@ -23,7 +24,8 @@ export type IconName =
   | 'logo'
   | 'info'
   | 'night'
-  | 'sun';
+  | 'sun'
+  | 'flag';
 
 const iconsMap: Record<IconName, React.FC<React.SVGProps<SVGSVGElement>>> = {
   search: SearchIcon,
@@ -36,7 +38,8 @@ const iconsMap: Record<IconName, React.FC<React.SVGProps<SVGSVGElement>>> = {
   info: InfoIcon,
   logo: LogoIcon,
   night: NightIcon,
-  sun: SunIcon
+  sun: SunIcon,
+  flag: FlagIcon,
 };
 
 interface IconProps {

@@ -8,6 +8,7 @@
   transition: background 0.15s ease;
   display: grid;
   cursor: pointer;
+  position: relative;
 
   @include hover-supported {
     background: var(--search-item-bg--hover);
@@ -16,17 +17,25 @@
   }
 }
 
+.topRow {
+  display: flex;
+  justify-content: space-between;
+}
 
 .name {
   display: inline;
   margin: 0;
-  margin-right: 1rem;
+  margin-right: 0.5rem;
   font-size: 0.8rem;
   font-weight: 600;
   text-transform: uppercase;
   color: var(--text-primary);
-
 }
+
+.checkbox {
+  color: var(--checkbox-itemList);
+}
+
 
 .description {
   display: inline-flex;

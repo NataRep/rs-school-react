@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import type { Person, Planet, Starship } from '../../../services/api-service/api-models';
 import { getItemId } from '../../../shared/utils/get-id-from-url';
 import { isPerson, isPlanet, isStarship } from '../../../shared/utils/serch-item';
+import SelectionCheckbox from '../selection-checkbox/SelectionСheckbox';
 import style from './SearchResultItem.module.scss';
 
 export type SearchItemProps = {
@@ -50,9 +51,14 @@ export default function SearchResultItem({ item }: SearchItemProps) {
 
   return (
     <div className={style.wrapper} onClick={() => selectItem(item)}>
-      <h2 className={style.name}>
-        <span>Name:</span> {item.name}
-      </h2>
+      <div className={style.topRow}>
+        <h2 className={style.name}>
+          <span>Name:</span> {item.name}
+        </h2>
+        <div onClick={(e) => e.stopPropagation()} className={style.checkbox}>
+          <SelectionCheckbox data={item} />
+        </div>
+      </div>
       <div className={style.description}>
         <div className={style.subtitle}>Description:</div>
         {renderDescription()}
