@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import { handleDownload } from "../../../shared/utils/handlerDownload";
 import type { RootState } from "../../../store";
 import { clearSelected } from "../../../store/selectedSlice";
 import Button from "../../shared/button/Button";
@@ -8,12 +9,7 @@ export const SelectedItemsFlyout = () => {
   const dispatch = useDispatch();
   const selectedItems = useSelector((state: RootState) => state.selected.items);
 
-
   const clearHandler = () => dispatch(clearSelected());
-
-  const downloadHandler = () => {
-    console.log("Download!");
-  }
 
   if (selectedItems.length < 1) return;
 
@@ -27,7 +23,7 @@ export const SelectedItemsFlyout = () => {
           variant="blue"
           icon="download"
           iconPosition="left"
-          callback={downloadHandler}
+          callback={() => handleDownload(selectedItems)}
           disabled={false}
         />
         <Button
