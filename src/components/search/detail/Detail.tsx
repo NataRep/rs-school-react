@@ -13,20 +13,21 @@ interface DetailContextType {
 
 const excludedFields = new Set(["url", "created", "edited", "homeworld"]);
 
+const filterFields = (obj: Record<string, unknown>) => Object.entries(obj)
+  .filter(([key, value]) => {
+    if (excludedFields.has(key)) return false;
+    if (Array.isArray(value)) return false;
+    return true;
+  });
+
 function renderFields(obj: Record<string, unknown>) {
   return (
     <ul className={style.info}>
-      {Object.entries(obj)
-        .filter(([key, value]) => {
-          if (excludedFields.has(key)) return false;
-          if (Array.isArray(value)) return false;
-          return true;
-        })
-        .map(([key, value]) => (
-          <li key={key}>
-            <span>{key.replace(/_/g, ' ')}:</span> {String(value)}
-          </li>
-        ))}
+      {filterFields(obj).map(([key, value]) => (
+        <li key={key}>
+          <span>{key.replace(/_/g, ' ')}:</span> {String(value)}
+        </li>
+      ))}
     </ul>
   );
 }
