@@ -9,6 +9,10 @@ jest.mock('react-router-dom', () => ({
   useNavigation: () => mockNavigation(),
 }));
 
+jest.mock('../search/selected-items-flyout/SelectedItemsFlyout', () => ({
+  SelectedItemsFlyout: () => <div data-testid="flyout" />
+}));
+
 interface MockButtonProps {
   text: string;
   callback: () => void;
