@@ -13,7 +13,7 @@ export const handleDownload = (selectedItems: SearchItem[]) => {
   const link = document.createElement('a');
   link.href = url;
 
-  link.setAttribute('download', `${selectedItems.length}_star_wars_search.csv`);
+  link.setAttribute('download', `data_star_wars_${selectedItems.length}.csv`);
 
   document.body.appendChild(link);
   link.click();
