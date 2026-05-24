@@ -4,21 +4,13 @@ import type { Person, Planet, Starship } from '../../../services/api-service/api
 import Button from '../../shared/button/Button';
 import SelectionCheckbox from '../selection-checkbox/SelectionСheckbox';
 import style from './Detail.module.scss';
+import { filterFields } from './filterFields.utils';
 
 interface DetailContextType {
   item?: Person | Planet | Starship | undefined;
   isOpen: boolean;
   closeDetails: () => void;
 }
-
-const excludedFields = new Set(["url", "created", "edited", "homeworld"]);
-
-const filterFields = (obj: Record<string, unknown>) => Object.entries(obj)
-  .filter(([key, value]) => {
-    if (excludedFields.has(key)) return false;
-    if (Array.isArray(value)) return false;
-    return true;
-  });
 
 function renderFields(obj: Record<string, unknown>) {
   return (
