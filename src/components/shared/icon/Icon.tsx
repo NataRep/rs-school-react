@@ -2,6 +2,7 @@ import style from './Icon.module.scss';
 
 import CloseIcon from '@/assets/icons/close.svg?react';
 import PlanetsIcon from '@/assets/icons/death-star.svg?react';
+import DownloadIcon from '@/assets/icons/download.svg?react';
 import ErrorIcon from '@/assets/icons/error.svg?react';
 import FlagIcon from '@/assets/icons/flag.svg?react';
 import InfoIcon from '@/assets/icons/info.svg?react';
@@ -25,7 +26,8 @@ export type IconName =
   | 'info'
   | 'night'
   | 'sun'
-  | 'flag';
+  | 'flag'
+  | 'download';
 
 const iconsMap: Record<IconName, React.FC<React.SVGProps<SVGSVGElement>>> = {
   search: SearchIcon,
@@ -40,6 +42,7 @@ const iconsMap: Record<IconName, React.FC<React.SVGProps<SVGSVGElement>>> = {
   night: NightIcon,
   sun: SunIcon,
   flag: FlagIcon,
+  download: DownloadIcon
 };
 
 interface IconProps {
