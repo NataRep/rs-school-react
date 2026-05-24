@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import type { Person, Planet, Starship } from '../../../services/api-service/api-models';
-import { getItemId } from '../../../shared/utils/get-id-from-url';
-import { isPerson, isPlanet, isStarship } from '../../../shared/utils/serch-item';
+import { getItemId } from '../../../utils/get-id-from-url';
+import { isPerson, isPlanet, isStarship } from '../../../utils/search-item';
 import SelectionCheckbox from '../selection-checkbox/SelectionСheckbox';
 import style from './SearchResultItem.module.scss';
 

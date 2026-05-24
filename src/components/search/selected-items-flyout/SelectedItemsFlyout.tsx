@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
-import { handleDownload } from "../../../shared/utils/handlerDownload";
 import type { RootState } from "../../../store";
 import { clearSelected } from "../../../store/selectedSlice";
+import { handleDownload } from "../../../utils/handlerDownload";
 import Button from "../../shared/button/Button";
 import style from './SelectedItemsFlyout.module.scss';
 
