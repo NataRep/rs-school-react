@@ -5,7 +5,7 @@ import { createMemoryRouter, RouterProvider } from "react-router-dom";
 import { ApiService } from "../../../services/api-service/api-service";
 import type { RootState } from "../../../store";
 import SearchResult from "./SearchResult";
-import { searchResultLoader } from "./searchLoader"; // Импортируй свой лоадер
+import { searchResultLoader } from "./searchLoader";
 
 jest.mock("../../../services/api-service/api-service");
 

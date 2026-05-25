@@ -1,4 +1,4 @@
-import type { LoaderFunctionArgs } from "react-router"; // в v7 импортируем из 'react-router'
+import type { LoaderFunctionArgs } from "react-router";
 import type { Person, Planet, Starship } from "../../../services/api-service/api-models";
 import { ApiService, type CategoryMap } from "../../../services/api-service/api-service";
 
