@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
-import Icon from "../shared/icon/Icon";
-import { DEFAULT_NAV_LINKS, type NavLinkItem } from "./../../shared/constants/navLinks";
+import { DEFAULT_NAV_LINKS, type NavLinkItem } from "../../../constants/navLinks";
+import Icon from "../../shared/icon/Icon";
 import style from "./TopNav.module.scss";
 
 interface TopNavProps {

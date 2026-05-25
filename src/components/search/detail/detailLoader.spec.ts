@@ -1,4 +1,3 @@
-import type { LoaderFunctionArgs } from 'react-router';
 import { ApiService } from '../../../services/api-service/api-service';
 import { detailLoader } from './detailLoader';
 
@@ -9,40 +8,119 @@ jest.mock('../../../services/api-service/api-service', () => ({
 }));
 
 describe('detailLoader', () => {
-  const mockParams = { categoryName: 'people', id: '1' };
-
-  beforeEach(() => {
+  afterEach(() => {
     jest.clearAllMocks();
   });
 
-  const createLoaderArgs = (params: Record<string, string | undefined>) => {
-    return {
-      params,
-      request: new Request('http://localhost/'),
-    } as unknown as LoaderFunctionArgs;
-  };
-
-  it('should return data when ApiService fetches details successfully', async () => {
-    const mockData = { name: 'Luke Skywalker', height: '172' };
-    (ApiService.getEntityDetails as jest.Mock).mockResolvedValue(mockData);
-
-    const args = createLoaderArgs(mockParams);
-    const result = await detailLoader(args);
-
-    expect(ApiService.getEntityDetails).toHaveBeenCalledWith('people', '1');
-    expect(result).toEqual(mockData);
+  it('should throw 404 if categoryName is missing', () => {
+    expect(() =>
+      detailLoader({
+        params: { id: '1' },
+        request: {} as Request,
+      }),
+    ).toThrow(Response);
   });
 
-  it('should throw a 500 Response for any other generic server errors', async () => {
-    (ApiService.getEntityDetails as jest.Mock).mockRejectedValue(new Error('Network Timeout'));
-    const args = createLoaderArgs(mockParams);
+  it('should throw 404 if id is missing', () => {
+    expect(() =>
+      detailLoader({
+        params: { categoryName: 'people' },
+        request: {} as Request,
+      }),
+    ).toThrow(Response);
+  });
+
+  it('should return details promise', async () => {
+    const mockData = {
+      name: 'Luke Skywalker',
+    };
+
+    (
+      ApiService.getEntityDetails as jest.Mock
+    ).mockResolvedValue(mockData);
+
+    const result = detailLoader({
+      params: {
+        categoryName: 'people',
+        id: '1',
+      },
+      request: {} as Request,
+    });
+
+    await expect(result.details).resolves.toEqual(mockData);
+
+    expect(ApiService.getEntityDetails).toHaveBeenCalledWith(
+      'people',
+      '1',
+    );
+  });
+
+  it('should throw 404 if api returns null', async () => {
+    (
+      ApiService.getEntityDetails as jest.Mock
+    ).mockResolvedValue(null);
+
+    const result = detailLoader({
+      params: {
+        categoryName: 'people',
+        id: '999',
+      },
+      request: {} as Request,
+    });
+
+    await expect(result.details).rejects.toMatchObject({
+      status: 404,
+    });
+  });
+
+  it('should throw 404 if api throws 404 error', async () => {
+    (
+      ApiService.getEntityDetails as jest.Mock
+    ).mockRejectedValue(new Error('Request failed with status 404'));
+
+    const result = detailLoader({
+      params: {
+        categoryName: 'people',
+        id: '999',
+      },
+      request: {} as Request,
+    });
 
     try {
-      await detailLoader(args);
+      await result.details;
     } catch (error) {
       expect(error).toBeInstanceOf(Response);
-      expect((error as Response).status).toBe(500);
-      expect(await (error as Response).text()).toBe('Failed to load details');
+
+      const response = error as Response;
+
+      expect(response.status).toBe(404);
+      await expect(response.text()).resolves.toBe('Entity Not Found');
+    }
+  });
+  it('should throw 500 for unknown errors', async () => {
+    (
+      ApiService.getEntityDetails as jest.Mock
+    ).mockRejectedValue(new Error('Network error'));
+
+    const result = detailLoader({
+      params: {
+        categoryName: 'people',
+        id: '1',
+      },
+      request: {} as Request,
+    });
+
+    try {
+      await result.details;
+    } catch (error) {
+      expect(error).toBeInstanceOf(Response);
+
+      const response = error as Response;
+
+      expect(response.status).toBe(500);
+      await expect(response.text()).resolves.toBe(
+        'Failed to load details',
+      );
     }
   });
 });

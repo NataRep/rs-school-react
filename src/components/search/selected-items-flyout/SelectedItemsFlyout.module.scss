@@ -1,0 +1,40 @@
+.wrapper {
+  position: sticky;
+  bottom: 1rem;
+  right: 0;
+  padding: 1rem 2rem;
+  width: calc(100% - 4rem);
+  margin-top: 1rem;
+  background: rgba(var(--flyout-bg-rgb), 0.6);
+  border-radius: 1rem;
+  animation: changeTransparency 0.7s ease;
+}
+
+@keyframes changeTransparency {
+  from {
+    opacity: 0
+  }
+
+  to {
+    opacity: 1
+  }
+}
+
+.count {
+  margin-bottom: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  text-align: center;
+
+  span {
+    opacity: 0.7;
+    margin-right: 0.25rem;
+  }
+}
+
+.buttonsRow {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}

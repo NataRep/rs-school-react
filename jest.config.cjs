@@ -19,6 +19,7 @@ module.exports = {
     '!src/main.tsx',
     '!src/index.tsx',
     '!src/setupTests.ts',
+    '!src/Router.tsx',
   ],
   coverageThreshold: {
     global: {

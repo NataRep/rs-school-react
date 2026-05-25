@@ -1,5 +1,4 @@
 import { Suspense } from 'react';
-// В v7 все хуки и компоненты роутера живут в 'react-router'
 import { Await, Outlet, useLoaderData, useLocation, useNavigate, useParams } from 'react-router';
 import type { Person, Planet, Starship } from '../../../services/api-service/api-models';
 import Loader from '../../shared/loader/Loader';
@@ -22,7 +21,7 @@ export default function SearchResult() {
   };
 
   return (
-    <div className={style.container}>
+    <div className={style.container} key={location.key}>
       <div className={style.result}>
         <Suspense fallback={<div className={style.itemList}><Loader /></div>}>
           <Await resolve={deferredData}>
@@ -34,21 +33,18 @@ export default function SearchResult() {
                       <h2>Nothing found matching your request.</h2>
                     </div>
                   )}
-
                   {resolvedData.items.map((item: Person | Planet | Starship) => (
                     <li key={item.url} className={style.item}>
                       <SearchResultItem item={item} />
                     </li>
                   ))}
                 </ul>
-
                 <SearchPagination totalPages={resolvedData.totalPages} />
               </>
             )}
           </Await>
         </Suspense>
       </div>
-
       <Outlet context={{ closeDetails }} />
     </div>
   );

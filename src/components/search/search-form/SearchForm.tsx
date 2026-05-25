@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import { StorageService } from "../../../services/storage-service/storage-service";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchStorage } from "../../../hooks/useSearchStorage";
 import Button from "../../shared/button/Button";
 import style from "./SearchForm.module.scss";
 
@@ -9,6 +9,23 @@ export default function SearchForm() {
   const queryFromUrl = searchParams.get('search') || "";
   const [searchQuery, setSearchQuery] = useState(queryFromUrl);
   const [prevQueryFromUrl, setPrevQueryFromUrl] = useState(queryFromUrl);
+  const { saveSearchQuery } = useSearchStorage();
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleInputClick = () => {
+    const pathParts = location.pathname.split('/').filter(Boolean);
+
+    if (pathParts.length > 2) {
+      const basePath = '/' + pathParts.slice(0, 2).join('/');
+
+      navigate({
+        pathname: basePath,
+        search: location.search
+      });
+    }
+  };
 
   if (queryFromUrl !== prevQueryFromUrl) {
     setSearchQuery(queryFromUrl);
@@ -35,13 +52,14 @@ export default function SearchForm() {
     newParams.delete('details');
     setSearchParams(newParams);
 
-    StorageService.saveSearchQuery(trimmed);
+    saveSearchQuery(trimmed);
   };
 
   return (
     <form
       autoComplete="off"
       className={style.form}
+      onClick={handleInputClick}
       onSubmit={(e) => {
         e.preventDefault();
         submit();

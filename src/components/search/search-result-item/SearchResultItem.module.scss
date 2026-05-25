@@ -1,44 +1,52 @@
 .wrapper {
   width: 100%;
   padding: 0.5rem 0.75rem;
-
-  background-color: rgba(var(--color-light-side-rgb), 0.05);
-  border-bottom: 1px solid rgba(var(--color-carbon-rgb), 0.6);
+  background-color: var(--search-item-bg);
+  border-bottom: 1px solid var(--search-item-border);
   border-radius: 0;
   box-shadow: none;
   transition: background 0.15s ease;
   display: grid;
+  cursor: pointer;
+  position: relative;
+
+  @include hover-supported {
+    background: var(--search-item-bg--hover);
+    transform: none;
+    border-color: var(--search-item-border--hover);
+  }
 }
 
-.wrapper:hover {
-  background: rgba(var(--color-carbon-rgb), 0.6);
-  transform: none;
-  border-color: transparent;
+.topRow {
+  display: flex;
+  justify-content: space-between;
 }
 
 .name {
   display: inline;
   margin: 0;
-  margin-right: 1rem;
-
+  margin-right: 0.5rem;
   font-size: 0.8rem;
   font-weight: 600;
   text-transform: uppercase;
-
   color: var(--text-primary);
-
 }
+
+.checkbox {
+  color: var(--checkbox-itemList);
+}
+
 
 .description {
   display: inline-flex;
-  align-items: center;
+  align-items: flex-end;
   gap: 0.75rem;
 }
 
 .subtitle {
   font-size: 0.7rem;
   text-transform: uppercase;
-  color: var(--text-disabled);
+  color: var(--text-grey);
   margin: 0.25rem 0 0 0;
   white-space: nowrap;
 }

@@ -1,7 +1,8 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import type { Person, Planet, Starship } from '../../../services/api-service/api-models';
-import { getItemId } from '../../../shared/utils/get-id-from-url';
-import { isPerson, isPlanet, isStarship } from '../../../shared/utils/serch-item';
+import { getItemId } from '../../../utils/get-id-from-url';
+import { isPerson, isPlanet, isStarship } from '../../../utils/search-item';
+import SelectionCheckbox from '../selection-checkbox/SelectionСheckbox';
 import style from './SearchResultItem.module.scss';
 
 export type SearchItemProps = {
@@ -24,9 +25,7 @@ export default function SearchResultItem({ item }: SearchItemProps) {
     if (isPerson(item)) {
       return (
         <ul className={style.info}>
-          <li>Gender: {item.gender}</li>
-          <li>Height: {item.height}</li>
-          <li>Mass: {item.mass}</li>
+          <li>Birth year: {item.birth_year}</li>
         </ul>
       );
     }
@@ -35,7 +34,6 @@ export default function SearchResultItem({ item }: SearchItemProps) {
       return (
         <ul className={style.info}>
           <li>Terrain: {item.terrain}</li>
-          <li>Climate: {item.climate}</li>
         </ul>
       );
     }
@@ -44,7 +42,6 @@ export default function SearchResultItem({ item }: SearchItemProps) {
       return (
         <ul className={style.info}>
           <li>Model: {item.model}</li>
-          <li>Manufacturer: {item.manufacturer}</li>
         </ul>
       );
     }
@@ -54,9 +51,14 @@ export default function SearchResultItem({ item }: SearchItemProps) {
 
   return (
     <div className={style.wrapper} onClick={() => selectItem(item)}>
-      <h2 className={style.name}>
-        <span>Name:</span> {item.name}
-      </h2>
+      <div className={style.topRow}>
+        <h2 className={style.name}>
+          <span>Name:</span> {item.name}
+        </h2>
+        <div onClick={(e) => e.stopPropagation()} className={style.checkbox}>
+          <SelectionCheckbox data={item} />
+        </div>
+      </div>
       <div className={style.description}>
         <div className={style.subtitle}>Description:</div>
         {renderDescription()}

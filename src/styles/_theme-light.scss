@@ -1,0 +1,45 @@
+.appWrapper[data-theme='light'] {
+  --theme-bg: url(./../assets/bg-light.png);
+
+  --color-white: #fffdfb;
+  --color-white-milk: #FFFDFA;
+  --color-sand-shadow: #D8D1CB;
+  --color-light-side-cyan: #0EA5E3;
+  --color-white-milk-rgb: 255, 253, 250;
+  --color-sand-shadow-rgb: 216, 209, 203;
+  --color-light-side-cyan-rgb: 14, 165, 233;
+
+  --color-sand: rgb(139, 129, 119);
+  --color-sand-rgb: 139, 129, 119;
+
+  --theme-container-bg: linear-gradient(180deg,
+      rgba(var(--color-white-milk-rgb), 0.75) 0%,
+      rgba(var(--color-white-milk-rgb), 0.85) 55%,
+      rgba(var(--color-sand-shadow-rgb), 0.4) 100%),
+
+    linear-gradient(90deg,
+      rgba(var(--color-sand-shadow-rgb), 0.2) 0%,
+      rgba(var(--color-light-side-cyan-rgb), 0.07) 70%,
+      rgba(var(--color-white-milk-rgb), 0.5) 100%);
+
+  --theme-container-border-rgb: 206 202 199;
+  --theme-container-shadow: 0 0 0 1px rgb(197 174 154 / 27%) inset, 0 10px 40px rgb(0 0 0 / 23%), 0 0 40px rgb(187 168 149 / 10%);
+
+  --text-primary: var(--color-carbon-light);
+  --text-button: rgb(var(--color-white-milk-rgb));
+  --input-bg: var(--color-white);
+  --input-border: var(--color-sand-rgb);
+  --tab-bg: #ebebeb;
+  --link-text: var(--color-light-side);
+  --search-item-bg: var(--color-white);
+  --search-item-bg--hover: #f0f0f0;
+  --search-item-border: rgba(var(--input-border), 0.25);
+  --search-item-border--hover: rgba(var(--input-border), 0.5);
+  --card-bg: var(--color-white);
+
+  --scrollbar-bg-rgb: 164, 164, 164;
+  --scrollbar-track-rgb: 217, 217, 217;
+  --checkbox-itemList: var(--color-sand-shadow);
+  --checkbox-card: var(--color-sand-shadow);
+  --flyout-bg-rgb: var(--color-white-milk-rgb);
+}

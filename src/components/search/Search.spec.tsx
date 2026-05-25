@@ -1,6 +1,29 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import type { RootState } from '../../store';
 import Search from './Search';
+
+const mockNavigation = jest.fn().mockReturnValue({ state: 'idle' });
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigation: () => mockNavigation(),
+}));
+
+jest.mock('react-redux', () => {
+  const actual = jest.requireActual('react-redux');
+
+  return {
+    ...actual,
+    useDispatch: () => jest.fn(),
+    useSelector: (selector: (state: RootState) => unknown) =>
+      selector({
+        selected: {
+          items: [],
+        },
+      } as RootState),
+  };
+});
 
 jest.mock('./search-form/SearchForm', () => {
   return function MockSearchForm() {
@@ -18,7 +41,61 @@ jest.mock('./../shared/tab/Tabs', () => {
   };
 });
 
+jest.mock('../shared/loader/Loader', () => {
+  return function MockLoader() {
+    return <div data-testid="mock-loader">Loading...</div>;
+  };
+});
+
 describe('Search Layout Component', () => {
+  let consoleSpy: jest.SpyInstance;
+
+  beforeAll(() => {
+    consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => { });
+  });
+
+  afterAll(() => {
+    consoleSpy.mockRestore();
+  });
+
+  beforeEach(() => {
+    mockNavigation.mockReturnValue({ state: 'idle' });
+  });
+
+  it('should show loader when navigation is loading', () => {
+    mockNavigation.mockReturnValue({ state: 'loading' });
+
+    render(
+      <MemoryRouter initialEntries={['/search/people']}>
+        <Routes>
+          <Route path="/search" element={<Search />}>
+            <Route path="people" element={<div data-testid="child-route">People Results Content</div>} />
+          </Route>
+        </Routes>
+      </MemoryRouter>
+    );
+
+    expect(screen.getByTestId('mock-loader')).toBeInTheDocument();
+    expect(screen.queryByTestId('child-route')).not.toBeInTheDocument();
+  });
+
+  it('should show content and no loader when navigation is idle', () => {
+    mockNavigation.mockReturnValue({ state: 'idle' });
+
+    render(
+      <MemoryRouter initialEntries={['/search/people']}>
+        <Routes>
+          <Route path="/search" element={<Search />}>
+            <Route path="people" element={<div data-testid="child-route">People Results Content</div>} />
+          </Route>
+        </Routes>
+      </MemoryRouter>
+    );
+
+    expect(screen.queryByTestId('mock-loader')).not.toBeInTheDocument();
+    expect(screen.getByTestId('child-route')).toBeInTheDocument();
+  });
+
   it('should render header, search form, and tabs', () => {
     render(
       <MemoryRouter initialEntries={['/search']}>

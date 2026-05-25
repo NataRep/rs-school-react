@@ -6,6 +6,7 @@ import style from './NotFoundPage.module.scss';
 export const NotFoundPage = () => {
   const navigate = useNavigate();
 
+
   const handleGoHome = () => {
     navigate('/search/people');
   };

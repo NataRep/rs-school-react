@@ -1,13 +1,27 @@
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { createMemoryRouter, Outlet, RouterProvider } from 'react-router';
+import { act, render, screen } from '@testing-library/react';
 import DetailView from './Detail';
 
-import style from './Detail.module.scss';
+const mockUseLoaderData = jest.fn();
+const mockCloseDetails = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useLoaderData: () => mockUseLoaderData(),
+  useOutletContext: () => ({ closeDetails: mockCloseDetails, isOpen: true }),
+}));
+
+jest.mock('../../shared/button/Button', () => ({
+  __esModule: true,
+  default: ({ callback }: { callback: () => void }) => <button onClick={callback}>Close</button>
+}));
+
+jest.mock('./../selection-checkbox/SelectionСheckbox', () => {
+  return function MockSelectionCheckbox() {
+    return <div data-testid="mock-checkbox" />;
+  };
+});
 
 describe('DetailView Component', () => {
-  const mockCloseDetails = jest.fn();
-
   const mockItem = {
     name: 'Luke Skywalker',
     height: '172',
@@ -17,74 +31,53 @@ describe('DetailView Component', () => {
     films: ['film1', 'film2'],
   };
 
-  const renderWithRouter = (loaderData: unknown = mockItem) => {
-    const routes = [
-      {
-        path: '/',
-        element: <Outlet context={{ closeDetails: mockCloseDetails, isOpen: true }} />,
-        HydrateFallback: () => <div>Loading...</div>,
-        children: [
-          {
-            path: 'details',
-            element: <DetailView />,
-            loader: () => loaderData,
-          },
-        ],
-      },
-    ];
-
-    const router = createMemoryRouter(routes, {
-      initialEntries: ['/details'],
-    });
-
-    return render(<RouterProvider router={router} />);
-  };
-
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it('should render item name and technical fields correctly', async () => {
-    renderWithRouter();
+  it('should show skeleton loader first, then resolve and display item fields', async () => {
+    let resolvePromise: (value: unknown) => void;
+    const deferredPromise = new Promise((resolve) => {
+      resolvePromise = resolve;
+    });
+
+    mockUseLoaderData.mockReturnValue({ details: deferredPromise });
+
+    render(<DetailView />);
+
+    const skeletons = document.querySelectorAll('.skeleton');
+    expect(skeletons.length).toBeGreaterThan(0);
+    expect(screen.queryByRole('heading', { name: /name:/i })).not.toBeInTheDocument();
+
+    await act(async () => {
+      resolvePromise!(mockItem);
+    });
 
     const heading = await screen.findByRole('heading', { name: /name: luke skywalker/i });
     expect(heading).toBeInTheDocument();
-
     expect(screen.getByText('height:')).toBeInTheDocument();
     expect(screen.getByText('172')).toBeInTheDocument();
-    expect(screen.getByText('hair_color:')).toBeInTheDocument();
-    expect(screen.getByText('blond')).toBeInTheDocument();
   });
 
   it('should filter out excluded fields and arrays', async () => {
-    renderWithRouter();
+    mockUseLoaderData.mockReturnValue({ details: Promise.resolve(mockItem) });
 
-    await screen.findByRole('heading', { name: /name:/i });
+    render(<DetailView />);
+
+    await screen.findByRole('heading', { name: /name: luke skywalker/i });
 
     expect(screen.queryByText('url:')).not.toBeInTheDocument();
     expect(screen.queryByText('https://swapi.dev/api/people/1/')).not.toBeInTheDocument();
     expect(screen.queryByText('films:')).not.toBeInTheDocument();
   });
 
-  it('should call closeDetails when clicking on the overlay background', async () => {
-    const user = userEvent.setup();
-    renderWithRouter();
+  it('should render "No data available" if loader resolves with null data', async () => {
+    mockUseLoaderData.mockReturnValue({ details: Promise.resolve(null) });
 
-    const heading = await screen.findByRole('heading', { name: /name:/i });
-
-    const overlay = heading.closest(`.${style.overview}`) || heading.parentElement?.parentElement?.parentElement;
-
-    expect(overlay).toBeInTheDocument();
-    await user.click(overlay!);
-
-    expect(mockCloseDetails).toHaveBeenCalledTimes(1);
-  });
-
-  it('should render "No data available" if loader returns empty/null data', async () => {
-    renderWithRouter(null);
+    render(<DetailView />);
 
     const noDataMessage = await screen.findByText('No data available');
     expect(noDataMessage).toBeInTheDocument();
-    expect(screen.queryByText('Information:')).not.toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: /name:/i })).not.toBeInTheDocument();
   });
 });

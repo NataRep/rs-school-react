@@ -1,13 +1,12 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter, useSearchParams } from 'react-router-dom';
-import { StorageService } from '../../../services/storage-service/storage-service';
 import SearchForm from './SearchForm';
 
-jest.mock('../../../services/storage-service/storage-service', () => ({
-  __esModule: true,
-  StorageService: {
-    saveSearchQuery: jest.fn(),
-  },
+const mockSaveSearchQuery = jest.fn();
+jest.mock('../../../hooks/useSearchStorage', () => ({
+  useSearchStorage: () => ({
+    saveSearchQuery: mockSaveSearchQuery,
+  }),
 }));
 
 jest.mock('../../shared/button/Button', () => {
@@ -55,9 +54,8 @@ describe('SearchForm Component', () => {
     expect(urlParams).toContain('search=R2-D2');
     expect(urlParams).toContain('page=1');
 
-    const mockSave = StorageService.saveSearchQuery as jest.Mock;
-    expect(mockSave).toHaveBeenCalledWith('R2-D2');
-    expect(mockSave).toHaveBeenCalledTimes(1);
+    expect(mockSaveSearchQuery).toHaveBeenCalledWith('R2-D2');
+    expect(mockSaveSearchQuery).toHaveBeenCalledTimes(1);
   });
 
   it('should remove search param from URL if query is empty on submit', () => {

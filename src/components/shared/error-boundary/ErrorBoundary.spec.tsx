@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import * as NavigationUtils from '../../../shared/utils/navigation';
+import * as NavigationUtils from '../../../utils/navigation';
 import ErrorBoundary from './ErrorBoundary';
 
 jest.mock('../button/Button', () => {

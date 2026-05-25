@@ -2,7 +2,7 @@
   display: flow-root;
 
   .link {
-    color: var(--color-energy-yellow);
+    color: var(--link-text);
     text-decoration: none;
 
     @include hover-supported {
