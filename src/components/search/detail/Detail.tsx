@@ -1,10 +1,11 @@
 import { Suspense } from 'react';
 import { Await, useLoaderData, useOutletContext } from 'react-router-dom';
 import type { Person, Planet, Starship } from '../../../services/api-service/api-models';
+import { formatKey } from '../../../utils/formatKey';
+import { removeTechnicalFields } from '../../../utils/removeTechnicalField';
 import Button from '../../shared/button/Button';
 import SelectionCheckbox from '../selection-checkbox/SelectionСheckbox';
 import style from './Detail.module.scss';
-import { filterFields } from './filterFields.utils';
 
 interface DetailContextType {
   item?: Person | Planet | Starship | undefined;
@@ -13,11 +14,12 @@ interface DetailContextType {
 }
 
 function renderFields(obj: Record<string, unknown>) {
+  const publicFieldsEntries = removeTechnicalFields(obj);
   return (
     <ul className={style.info}>
-      {filterFields(obj).map(([key, value]) => (
+      {publicFieldsEntries.map(([key, value]) => (
         <li key={key}>
-          <span>{key.replace(/_/g, ' ')}:</span> {String(value)}
+          <span>{formatKey(key)}:</span> {value}
         </li>
       ))}
     </ul>

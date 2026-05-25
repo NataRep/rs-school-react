@@ -1,4 +1,4 @@
-import type { SearchItem } from "../../components/search/search-result-item/SearchResultItem";
+import type { SearchItem } from "../components/search/search-result-item/SearchResultItem";
 import { convertDataToCSV } from "./convertDataToCSV";
 
 export const handleDownload = (selectedItems: SearchItem[]) => {
