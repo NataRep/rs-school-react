@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import type { RootState } from '../../store';
 import Search from './Search';
 
 const mockNavigation = jest.fn().mockReturnValue({ state: 'idle' });
@@ -8,6 +9,21 @@ jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useNavigation: () => mockNavigation(),
 }));
+
+jest.mock('react-redux', () => {
+  const actual = jest.requireActual('react-redux');
+
+  return {
+    ...actual,
+    useDispatch: () => jest.fn(),
+    useSelector: (selector: (state: RootState) => unknown) =>
+      selector({
+        selected: {
+          items: [],
+        },
+      } as RootState),
+  };
+});
 
 jest.mock('./search-form/SearchForm', () => {
   return function MockSearchForm() {
