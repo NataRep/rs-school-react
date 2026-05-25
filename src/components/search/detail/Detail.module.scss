@@ -6,8 +6,7 @@
   margin: 1rem 1.5rem;
   background: var(--card-bg);
   color: var(--text-primary);
-  box-shadow: -0.625rem 0 1.875rem rgba(0, 0, 0, 0.4);
-  box-shadow: var(--theme-container-shadow);
+  box-shadow: 0 0 1.25rem rgb(0 0 0 / 24%);
   transform: translateX(100%);
   will-change: transform;
   border-radius: 0.75rem;
