@@ -1,4 +1,4 @@
-import type { SearchItem } from "../../components/search/search-result-item/SearchResultItem";
+import type { SearchItem } from "../components/search/search-result-item/SearchResultItem";
 
 export const convertDataToCSV = (items: SearchItem[]): string => {
   if (items.length === 0) return '';
