@@ -6,8 +6,7 @@ interface SelectedState {
 }
 
 const initialState: SelectedState = {
-  items: [],
-  //TODO вернуть после кросс-чека items: JSON.parse(localStorage.getItem('sw_selected_items') || '[]'),
+  items: JSON.parse(localStorage.getItem('sw_selected_items') || '[]'),
 };
 
 const selectedSlice = createSlice({
@@ -23,7 +22,7 @@ const selectedSlice = createSlice({
         state.items.push(action.payload);
       }
 
-      //TODO вернуть после кросс-чека localStorage.setItem('sw_selected_items', JSON.stringify(state.items));
+      localStorage.setItem('sw_selected_items', JSON.stringify(state.items));
     },
 
     clearSelected: (state) => {
