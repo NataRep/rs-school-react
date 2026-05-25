@@ -1,13 +1,12 @@
 .wrapper {
-  position: fixed;
-  bottom: 2rem;
-  right: 8%;
+  position: sticky;
+  bottom: 1rem;
+  right: 0;
   padding: 1rem 2rem;
-  width: 20rem;
-  max-width: calc(100% - 4rem - 8%);
+  width: calc(100% - 4rem);
+  margin-top: 1rem;
   background: rgba(var(--flyout-bg-rgb), 0.6);
   border-radius: 1rem;
-
   animation: changeTransparency 0.7s ease;
 }
 
@@ -25,6 +24,7 @@
   margin-bottom: 1rem;
   font-weight: 600;
   text-transform: uppercase;
+  text-align: center;
 
   span {
     opacity: 0.7;
@@ -34,7 +34,7 @@
 
 .buttonsRow {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   flex-wrap: wrap;
   gap: 1rem;
 }

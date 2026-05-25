@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Outlet, useNavigation } from 'react-router-dom';
-import { SelectedItemsFlyout } from '../search/selected-items-flyout/SelectedItemsFlyout';
 import Button from '../shared/button/Button';
 import Loader from '../shared/loader/Loader';
 import style from './Layout.module.scss';
@@ -43,7 +42,6 @@ export default function Layout() {
       <main className={style.main}>
         {isLoading ? <Loader /> : <Outlet />}
       </main>
-      <SelectedItemsFlyout />
     </div>
   );
 }

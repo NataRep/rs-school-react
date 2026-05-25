@@ -3,6 +3,7 @@ import Loader from '../shared/loader/Loader';
 import Tabs from '../shared/tab/Tabs';
 import SearchForm from './search-form/SearchForm';
 import style from './Search.module.scss';
+import { SelectedItemsFlyout } from './selected-items-flyout/SelectedItemsFlyout';
 
 export default function Search() {
   const navigation = useNavigation();
@@ -22,5 +23,6 @@ export default function Search() {
     <div className={style.resultWrapper}>
       {isLoading ? <Loader /> : <Outlet />}
     </div>
+    <SelectedItemsFlyout />
   </div>
 }

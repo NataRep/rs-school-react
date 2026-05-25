@@ -22,7 +22,7 @@
   box-shadow: var(--theme-container-shadow);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   color: var(--text-primary);
-  overflow: hidden;
+  position: relative;
 
 
   @media (max-width: 1080px) {
