@@ -1,5 +1,5 @@
 import { Component } from "react";
-import type { Person, Planet, Starship } from "../../../services/api-models";
+import type { Person, Planet, Starship } from "../../../services/api-service/api-models";
 import style from './SearchResultItem.module.scss';
 
 type SearchItemProps = {

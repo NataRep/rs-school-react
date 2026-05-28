@@ -1,6 +1,6 @@
 import { Component } from 'react';
-import { type CategoryMap } from '../../services/api-service';
-import { StorageService } from '../../services/storage-service';
+import { type CategoryMap } from '../../services/api-service/api-service';
+import { StorageService } from '../../services/storage-service/storage-service';
 import SearchForm from '../search/search-form/SearchForm';
 import ErrorBoundary from '../shared/error-boundary/ErrorBoundary';
 import Tabs from '../shared/tab/Tabs';
@@ -11,27 +11,38 @@ type SearchState = {
   category: keyof CategoryMap;
   searchQuery: string;
   searchTerm: string;
+  isLoading: boolean;
+  error: unknown
 };
 
-export default class Search extends Component {
+type SearchProps = Record<string, never>;
+
+export default class Search extends Component<SearchProps, SearchState> {
   state: SearchState = {
     category: "people",
     searchQuery: '',
-    searchTerm: ''
+    searchTerm: '',
+    isLoading: false,
+    error: null
   };
 
-  componentDidMount() {
+  constructor(props: SearchProps) {
+    super(props);
+
     const storageData = StorageService.getSearchQuery();
-    if (storageData.category) {
-      this.setState(
-        {
-          searchQuery: storageData.query || '',
-          category: storageData.category,
-        },
-        () => {
-          this.search(this.state.searchQuery);
-        }
-      );
+
+    this.state = {
+      category: storageData.category || "people",
+      searchQuery: storageData.query || '',
+      searchTerm: storageData.query || '',
+      isLoading: false,
+      error: null
+    };
+  }
+
+  componentDidMount() {
+    if (this.state.searchTerm) {
+      this.search(this.state.searchTerm);
     }
   }
 
