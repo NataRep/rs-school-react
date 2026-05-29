@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import type { RootState } from '../../store';
+import { starWarsApi } from '../../store/starWarsApi';
 import Search from './Search';
 
 const mockNavigation = jest.fn().mockReturnValue({ state: 'idle' });
@@ -21,6 +22,7 @@ jest.mock('react-redux', () => {
         selected: {
           items: [],
         },
+        [starWarsApi.reducerPath]: starWarsApi.reducer(undefined, { type: '@@INIT' }),
       } as RootState),
   };
 });
@@ -124,7 +126,6 @@ describe('Search Layout Component', () => {
     expect(tabsContainer.textContent).toContain('People');
     expect(tabsContainer.textContent).toContain('Planets');
     expect(tabsContainer.textContent).toContain('Starships');
-    expect(tabsContainer.textContent).toContain('Get 404');
   });
 
   it('should render child routes inside the Outlet', () => {

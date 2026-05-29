@@ -6,6 +6,11 @@ jest.mock('react-router-dom', () => ({
   RouterProvider: () => <main>mock app</main>,
 }));
 
+jest.mock("./store/starWarsApi", () => ({
+  useGetDataQuery: jest.fn(),
+}));
+
+
 describe('App component', () => {
 
   it('should render app wrapper', () => {

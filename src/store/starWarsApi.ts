@@ -7,6 +7,15 @@ export type CategoryMap = {
   starships: Starship;
 };
 
+const getCacheTTL = (): number => {
+  try {
+    const metaEnv = (new Function('return import.meta.env'))();
+    return Number(metaEnv?.VITE_CACHE_TTL) || 120;
+  } catch {
+    return 120;
+  }
+};
+
 export const starWarsApi = createApi({
   reducerPath: 'starWarsApi',
   baseQuery: fetchBaseQuery({
@@ -18,7 +27,8 @@ export const starWarsApi = createApi({
 
   }),
 
-  keepUnusedDataFor: Number(import.meta.env.VITE_CACHE_TTL) || 120,
+  keepUnusedDataFor: getCacheTTL(),
+
   tagTypes: ['SwapiData'],
 
   endpoints: (builder) => ({
