@@ -18,7 +18,7 @@ export const starWarsApi = createApi({
 
   }),
 
-  keepUnusedDataFor: Number(process.env.VITE_CACHE_TTL) || 60,
+  keepUnusedDataFor: Number(import.meta.env.VITE_CACHE_TTL) || 120,
   tagTypes: ['SwapiData'],
 
   endpoints: (builder) => ({
@@ -46,3 +46,5 @@ export const starWarsApi = createApi({
     }),
   }),
 });
+
+export const { useGetDataQuery, useGetEntityDetailsQuery } = starWarsApi;

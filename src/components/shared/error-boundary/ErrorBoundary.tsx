@@ -55,7 +55,7 @@ export default class ErrorBoundary extends Component<Props, State> {
 export function RouterErrorCatch() {
   const error = useRouteError();
 
-  if (isRouteErrorResponse(error) && error.status === 404) {
+  if ((isRouteErrorResponse(error) || error instanceof Response) && error?.status === 404) {
     return <NotFoundPage />;
   }
 

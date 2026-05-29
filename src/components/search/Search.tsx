@@ -17,7 +17,6 @@ export default function Search() {
         { label: "People", value: "people" },
         { label: "Planets", value: "planets" },
         { label: "Starships", value: "starships" },
-        { label: "Get 404", value: "error" }
       ] as const}
     />
     <div className={style.resultWrapper}>

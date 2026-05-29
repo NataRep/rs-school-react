@@ -10,7 +10,6 @@ import { searchResultLoader } from './components/search/search-result/searchLoad
 import { RouterErrorCatch } from './components/shared/error-boundary/ErrorBoundary';
 import Loader from './components/shared/loader/Loader';
 
-
 export const router = createBrowserRouter(
   [
     {

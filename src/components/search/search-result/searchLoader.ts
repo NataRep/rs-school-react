@@ -1,6 +1,6 @@
 import type { LoaderFunctionArgs } from "react-router"; // в v7 импортируем из 'react-router'
 import type { Person, Planet, Starship } from "../../../services/api-service/api-models";
-import { ApiService, type CategoryMap } from "../../../services/api-service/api-service";
+import { type CategoryMap } from "../../../services/api-service/api-service";
 
 export interface SearchLoaderData {
   deferredData: Promise<{
@@ -26,14 +26,9 @@ export const searchResultLoader = ({
     throw new Response("Not Found", { status: 404, statusText: "Invalid Category" });
   }
 
-  const apiPromise = ApiService.getData(categoryName, searchQuery, currentPage).then((data) => ({
-    items: data.results || [],
-    totalPages: Math.ceil((data.count || 0) / 10),
-  }));
-
   return {
-    deferredData: apiPromise,
     searchQuery,
-    currentPage
+    currentPage,
+    categoryName
   };
 };
