@@ -1,5 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
+import type { RootState } from "../../../store";
+import { starWarsApi } from "../../../store/starWarsApi";
 import Tabs from "./Tabs";
 
 jest.mock('../icon/Icon', () => {
@@ -7,6 +9,23 @@ jest.mock('../icon/Icon', () => {
     return <span data-testid={`icon-${name}`} />;
   };
 });
+
+jest.mock('react-redux', () => {
+  const actual = jest.requireActual('react-redux');
+
+  return {
+    ...actual,
+    useDispatch: () => jest.fn(),
+    useSelector: (selector: (state: RootState) => unknown) =>
+      selector({
+        selected: {
+          items: [],
+        },
+        [starWarsApi.reducerPath]: starWarsApi.reducer(undefined, { type: '@@INIT' }),
+      } as RootState),
+  };
+});
+
 
 describe('Tabs Component', () => {
   const mockTabs = [

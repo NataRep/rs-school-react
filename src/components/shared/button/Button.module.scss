@@ -18,7 +18,8 @@
   }
 }
 
-.blue {
+.blue,
+.blue-round {
   background-image: var(--gradient-lightsaber-blue);
   color: var(--text-button);
 
@@ -41,6 +42,7 @@
     }
   }
 }
+
 
 .red {
   background-image: var(--gradient-lightsaber-red);
@@ -71,4 +73,8 @@
     }
   }
 
+}
+
+.small {
+  padding: 0.25rem;
 }

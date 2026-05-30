@@ -9,7 +9,8 @@ interface ButtonProps {
   className?: string;
   icon?: IconName;
   iconPosition?: 'left' | 'right';
-  variant?: 'blue' | 'red' | 'base';
+  variant?: 'blue' | 'red' | 'base' | 'blue small';
+  title?: string;
 }
 
 function renderIcon(
@@ -31,11 +32,14 @@ export default function Button({
   icon,
   iconPosition = 'left',
   variant = 'blue',
+  title = ""
 }: ButtonProps) {
 
+  const variantClasses = variant.split(" ").map(v => style[v]).filter(Boolean);
+
   const classes = [
+    ...variantClasses,
     style.button,
-    style[variant],
     className,
   ].filter(Boolean).join(' ');
 
@@ -46,6 +50,7 @@ export default function Button({
       className={classes}
       disabled={disabled}
       aria-disabled={disabled}
+      title={title}
     >
       {renderIcon(icon, iconPosition, 'left')}
       {text}
