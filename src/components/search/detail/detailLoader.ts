@@ -1,6 +1,5 @@
 import type { Params } from 'react-router-dom';
 
-
 interface LoaderArgs {
   params: Params<string>;
   request: Request;
