@@ -1,4 +1,4 @@
-import type { Person } from "../services/api-service/api-models";
+import type { Person } from "./api-models";
 import reducer, { clearSelected, toggleSelected } from "./selectedSlice";
 
 

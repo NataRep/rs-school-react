@@ -1,6 +1,6 @@
-import { Suspense } from 'react';
-import { Await, useLoaderData, useOutletContext } from 'react-router-dom';
-import type { Person, Planet, Starship } from '../../../services/api-service/api-models';
+import { useLoaderData, useOutletContext } from 'react-router-dom';
+import type { Person, Planet, Starship } from '../../../store/api-models';
+import { useGetEntityDetailsQuery } from '../../../store/starWarsApi';
 import { formatKey } from '../../../utils/formatKey';
 import { removeTechnicalFields } from '../../../utils/removeTechnicalField';
 import Button from '../../shared/button/Button';
@@ -19,19 +19,19 @@ function renderFields(obj: Record<string, unknown>) {
     <ul className={style.info}>
       {publicFieldsEntries.map(([key, value]) => (
         <li key={key}>
-          <span>{formatKey(key)}:</span> {value}
+          <span>{formatKey(key)}:</span> {String(value)}
         </li>
       ))}
     </ul>
   );
 }
 
-function DetailSkeleton(closeDetails: () => void) {
+function DetailSkeleton({ closeDetails }: { closeDetails: () => void }) {
   return (
     <>
       <div className={style.card}>
         <div className={style.row}>
-          <span className='skeleton'></span>
+          <span className="skeleton" style={{ width: '50%', height: '20px' }}></span>
           <Button
             text=""
             type="button"
@@ -42,12 +42,12 @@ function DetailSkeleton(closeDetails: () => void) {
             iconPosition="left"
           />
         </div>
-      </div >
+      </div>
       <div className={style.information}>
         <ul className={style.info}>
           {Array.from({ length: 8 }).map((_, index) => (
             <li key={index}>
-              <span className="skeleton"></span>
+              <span className="skeleton" style={{ width: '100%', height: '15px' }}></span>
             </li>
           ))}
         </ul>
@@ -57,43 +57,57 @@ function DetailSkeleton(closeDetails: () => void) {
 }
 
 export default function DetailView() {
-  const data = useLoaderData() as { details: Promise<Person | Planet | Starship> };
   const { closeDetails } = useOutletContext<DetailContextType>();
+  const { categoryName, id } = useLoaderData() as {
+    categoryName: string;
+    id: string;
+  };
+  const { data, isLoading, isError } = useGetEntityDetailsQuery({ category: categoryName, id });
 
   const wrapperClass = `${style.wrapper} ${style.open}`;
 
   return (
     <div className={wrapperClass}>
-      <Suspense fallback={DetailSkeleton(closeDetails)}>
-        <Await resolve={data.details}>
-          {(resolvedItem: Person | Planet | Starship) => {
-            if (!resolvedItem) return <div>No data available</div>;
+      {isLoading && <DetailSkeleton closeDetails={closeDetails} />}
 
-            return (
-              <div className={style.card}>
-                <Button
-                  text=""
-                  type="button"
-                  callback={closeDetails}
-                  disabled={false}
-                  variant="base"
-                  icon="close"
-                  iconPosition="left"
-                />
-                <div className={style.row}>
-                  <div className={style.checkbox}>
-                    <SelectionCheckbox data={resolvedItem} />
-                  </div>
-                  <h2 className={style.name}>
-                    <span>Name:</span> {resolvedItem.name}
-                  </h2>
-                </div>
-                {renderFields(resolvedItem)}
-              </div>
-            );
-          }}
-        </Await>
-      </Suspense>
+      {isError && (
+        <div className={style.errorBlock}>
+          <div className={style.row}>
+            <h3>Failed to load details. Please try again.</h3>
+            <Button text="" type="button" callback={closeDetails} variant="base" icon="close" />
+          </div>
+        </div>
+      )}
+
+      {!isLoading && !isError && data && (
+        <div className={style.card}>
+          <Button
+            text=""
+            type="button"
+            callback={closeDetails}
+            disabled={false}
+            variant="base"
+            icon="close"
+            iconPosition="left"
+          />
+          <div className={style.row}>
+            <div className={style.checkbox}>
+              <SelectionCheckbox data={data} />
+            </div>
+            <h2 className={style.name}>
+              <span>Name:</span> {(data as { name?: string }).name || 'Unknown'}
+            </h2>
+          </div>
+          {renderFields(data as Record<string, unknown>)}
+        </div>
+      )}
+
+      {!isLoading && !isError && !data && (
+        <div className={style.row}>
+          <div>No data available</div>
+          <Button text="" type="button" callback={closeDetails} variant="base" icon="close" />
+        </div>
+      )}
     </div>
   );
 }

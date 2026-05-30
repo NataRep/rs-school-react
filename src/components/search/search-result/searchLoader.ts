@@ -1,6 +1,6 @@
 import type { LoaderFunctionArgs } from "react-router"; // в v7 импортируем из 'react-router'
-import type { Person, Planet, Starship } from "../../../services/api-service/api-models";
-import { type CategoryMap } from "../../../services/api-service/api-service";
+import type { Person, Planet, Starship } from "../../../store/api-models";
+import type { CategoryMap } from "../../../store/starWarsApi";
 
 export interface SearchLoaderData {
   deferredData: Promise<{

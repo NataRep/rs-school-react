@@ -1,4 +1,4 @@
-import type { Person, Planet, Starship } from "../services/api-service/api-models";
+import type { Person, Planet, Starship } from "../store/api-models";
 
 export const isPerson = (
   item: Person | Planet | Starship

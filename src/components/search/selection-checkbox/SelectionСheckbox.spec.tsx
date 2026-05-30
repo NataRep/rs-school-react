@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import type { Person } from '../../../services/api-service/api-models';
 import type { RootState } from '../../../store';
+import type { Person } from '../../../store/api-models';
 import { toggleSelected } from '../../../store/selectedSlice';
 import { starWarsApi } from '../../../store/starWarsApi';
 import type { SearchItem } from '../search-result-item/SearchResultItem';

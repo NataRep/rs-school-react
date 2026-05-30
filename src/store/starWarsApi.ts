@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import type { Person, Planet, Starship } from "../services/api-service/api-models";
+import type { Person, Planet, Starship } from "./api-models";
 
 export type CategoryMap = {
   people: Person;

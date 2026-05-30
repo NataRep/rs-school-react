@@ -1,5 +1,5 @@
 import { Outlet, useLoaderData, useLocation, useNavigate } from 'react-router';
-import type { Person, Planet, Starship } from '../../../services/api-service/api-models';
+import type { Person, Planet, Starship } from '../../../store/api-models';
 import { useGetDataQuery } from '../../../store/starWarsApi';
 import Loader from '../../shared/loader/Loader';
 import SearchPagination from '../search-pagination/SearchPagination';

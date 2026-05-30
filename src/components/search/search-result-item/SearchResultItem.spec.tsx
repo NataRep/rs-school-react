@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import type { Person, Planet, Starship } from '../../../services/api-service/api-models';
+import type { Person, Planet, Starship } from '../../../store/api-models';
 import SearchResultItem from './SearchResultItem';
 
 const mockNavigate = jest.fn();

@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useDispatch, useSelector } from "react-redux";
-import type { Person, Planet } from "../../../services/api-service/api-models";
+import type { Person, Planet } from "../../../store/api-models";
 import { clearSelected } from "../../../store/selectedSlice";
 import { handleDownload } from "../../../utils/handlerDownload";
 import { SelectedItemsFlyout } from "./SelectedItemsFlyout";
