@@ -1,0 +1,25 @@
+.errorNotification {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text {
+  margin: 1rem auto;
+  padding: 1rem 1.25rem;
+  border-radius: 1rem;
+  border: solid 1px rgba(var(--color-dark-side-rgb), 0.3);
+  background: rgba(var(--color-dark-side-rgb), 0.1);
+  display: flex;
+
+  h2 {
+    margin: 0;
+    font-size: 1.25rem;
+  }
+}
+
+.icon {
+  margin-top: 0.25rem;
+  margin-right: 0.5rem;
+  color: var(--color-dark-side);
+}

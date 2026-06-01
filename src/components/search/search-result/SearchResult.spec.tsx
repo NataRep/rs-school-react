@@ -176,21 +176,4 @@ describe("SearchResult Component", () => {
       });
     });
   });
-
-  it("should throw 404 response and render router error boundary", async () => {
-    mockedUseGetDataQuery.mockReturnValue({
-      data: undefined,
-      isLoading: false,
-      isError: true,
-      error: {
-        status: 404,
-      },
-    });
-
-    renderWithRouter();
-
-    expect(
-      await screen.findByText(/Error: 404 Page Not Found/i)
-    ).toBeInTheDocument();
-  });
 });

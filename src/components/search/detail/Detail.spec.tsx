@@ -88,6 +88,7 @@ describe('DetailView Component with RTK Query', () => {
       data: undefined,
       isLoading: false,
       isError: true,
+      error: { status: 500 }
     });
 
     render(<DetailView />);

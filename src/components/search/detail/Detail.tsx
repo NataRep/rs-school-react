@@ -4,6 +4,7 @@ import { useGetEntityDetailsQuery } from '../../../store/starWarsApi';
 import { formatKey } from '../../../utils/formatKey';
 import { removeTechnicalFields } from '../../../utils/removeTechnicalField';
 import Button from '../../shared/button/Button';
+import ErrorNotification from '../../shared/error-notification/ErrorNotification';
 import SelectionCheckbox from '../selection-checkbox/SelectionСheckbox';
 import style from './Detail.module.scss';
 
@@ -62,7 +63,12 @@ export default function DetailView() {
     categoryName: string;
     id: string;
   };
-  const { data, isLoading, isError } = useGetEntityDetailsQuery({ category: categoryName, id });
+  const { data, isLoading, isError, error } = useGetEntityDetailsQuery({ category: categoryName, id });
+
+  const getErrorContent = () => {
+    if (!error) return null;
+    return "Failed to load details. Please try again.";
+  };
 
   const wrapperClass = `${style.wrapper} ${style.open}`;
 
@@ -70,10 +76,12 @@ export default function DetailView() {
     <div className={wrapperClass}>
       {isLoading && <DetailSkeleton closeDetails={closeDetails} />}
 
-      {isError && (
+      {!isLoading && isError && (
         <div className={style.errorBlock}>
           <div className={style.row}>
-            <h3>Failed to load details. Please try again.</h3>
+            <ErrorNotification>
+              {getErrorContent()}
+            </ErrorNotification>
             <Button text="" type="button" callback={closeDetails} variant="base" icon="close" />
           </div>
         </div>

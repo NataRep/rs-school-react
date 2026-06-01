@@ -1,6 +1,7 @@
 import { Outlet, useLoaderData, useLocation, useNavigate } from 'react-router';
 import type { Person, Planet, Starship } from '../../../store/api-models';
 import { useGetDataQuery } from '../../../store/starWarsApi';
+import ErrorNotification from '../../shared/error-notification/ErrorNotification';
 import Loader from '../../shared/loader/Loader';
 import SearchPagination from '../search-pagination/SearchPagination';
 import SearchResultItem from "../search-result-item/SearchResultItem";
@@ -19,9 +20,15 @@ export default function SearchResult() {
     page: currentPage
   });
 
-  if (isError && 'status' in error && error.status === 404) {
-    throw new Response("Not Found", { status: 404, statusText: "Page Not Found" });
-  }
+  const getErrorContent = () => {
+    if (!error) return null;
+
+    if ('status' in error && error.status === 404) {
+      return "The requested category or page was not found.";
+    }
+
+    return "Something went wrong. Please try again later.";
+  };
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -65,15 +72,17 @@ export default function SearchResult() {
 
   return (
     <div className={style.container} key={location.key}>
-      {isError && (
-        <div className={style.errorNotification}>
-          <h2>Something went wrong. Please try again later.</h2>
-        </div>
-      )}
 
       {isLoading && (<div className={style.result}>
         <Loader />
       </div>)}
+
+      {!isLoading && isError && (
+        <ErrorNotification>
+          {getErrorContent()}
+        </ErrorNotification>
+      )}
+
       {!isLoading && !isError && data && renderConstant(data)}
       <Outlet context={{ closeDetails }} />
     </div>
