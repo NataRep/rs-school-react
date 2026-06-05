@@ -32,4 +32,10 @@
     box-shadow:
       0 6px 14px rgba(255, 170, 0, 0.15);
   }
+
+  &:disabled {
+    background: var(--color-yellow-light);
+    color: var(--color-surface-alt);
+    box-shadow: none;
+  }
 }
