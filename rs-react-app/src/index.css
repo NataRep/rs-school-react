@@ -6,6 +6,7 @@
 
   /* Акценты */
   --color-accent: #ffaa00;
+  --color-accent-hover: #ff9000;
 
   /* Оттенки */
   --color-blue: #0099ff;
@@ -13,7 +14,7 @@
   --color-yellow-light: #ecd9a8;
 
   /* Текст */
-  --color-text: #4f4a43;
+  --color-text: #2c2a27;
   --color-text-soft: #7d766d;
 }
 
