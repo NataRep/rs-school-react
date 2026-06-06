@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import Button from '../../../../UI/Button/Button';
 import Modal from '../../../../UI/Modal/Modal';
+import ControlledForm from '../../../forms/components/hook-form/ControlledForm';
+import UncontrolledForm from '../../../forms/components/uncontrolled-form/UncontrolledForm';
 import style from './ToolsBar.module.scss';
 
 export default function ToolsBar() {
@@ -40,11 +42,11 @@ export default function ToolsBar() {
       title={activeForm === 'uncontrolled' ? 'Uncontrolled Form' : 'React Hook Form'}
     >
       {activeForm === 'uncontrolled' && (
-        '<UncontrolledForm onSuccess={handleCloseModal} />'
+        <UncontrolledForm onSubmitSuccess={handleCloseModal} onCloseModal={handleCloseModal} />
       )}
 
       {activeForm === 'hook-form' && (
-        '<HookForm onSuccess={handleCloseModal} />'
+        <ControlledForm onSubmitSuccess={handleCloseModal} onCloseModal={handleCloseModal} />
       )}
     </Modal>
   </>);

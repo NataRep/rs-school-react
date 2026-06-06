@@ -1,6 +1,11 @@
-import { createSlice, type PayloadAction, } from '@reduxjs/toolkit';
-import { COUNTRIES_DICTIONARY } from '../constants/countries';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import type { RootState } from '.';
+import { COUNTRIES_DICTIONARY } from '../components/features/forms/constants/countries';
 import type { SubmittedForm, UserFormData } from '../types/user';
+
+export interface Base64UserFormData extends Omit<UserFormData, 'profileImage'> {
+  profileImage: string;
+}
 
 interface UserState {
   submissions: SubmittedForm[];
@@ -16,7 +21,7 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    addSubmission: (state, action: PayloadAction<UserFormData>) => {
+    addSubmission: (state, action: PayloadAction<Base64UserFormData>) => {
       const newSubmission: SubmittedForm = {
         ...action.payload,
         id: crypto.randomUUID(),
@@ -31,5 +36,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { addSubmission, removeSubmission } = userSlice.actions;
+export const selectCountries = (state: RootState) => state.user.countries;
+export const selectSubmissions = (state: RootState) => state.user.submissions;
 export default userSlice.reducer;

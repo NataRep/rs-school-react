@@ -1,5 +1,4 @@
 import * as yup from 'yup';
-import { COUNTRIES_DICTIONARY, type CountryName } from '../../../../constants/countries';
 
 const MAX_FILE_SIZE = 2 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
@@ -25,7 +24,14 @@ export const userFormSchema = yup.object({
   email: yup
     .string()
     .required('Email is required')
-    .email('You have entered an incorrect email'),
+    .test('basic-email-check', 'You have entered an incorrect email', (value) => {
+      if (!value) return false;
+      const parts = value.split('@');
+      if (parts.length !== 2) return false;
+      const [local, domain] = parts;
+      if (!local || !domain) return false;
+      return domain.includes('.') && domain.lastIndexOf('.') < domain.length - 1;
+    }),
 
   password: yup
     .string()
@@ -51,7 +57,15 @@ export const userFormSchema = yup.object({
     .test(
       'is-valid-country',
       'Select a country from the list',
-      (value) => !value || COUNTRIES_DICTIONARY.includes(value as CountryName)
+      function (value) {
+        if (!value) return true;
+
+        const { allowedCountries } = this.options.context as { allowedCountries?: string[] };
+
+        if (!allowedCountries) return false;
+
+        return allowedCountries.includes(value);
+      }
     ),
 
   acceptTerms: yup
@@ -61,8 +75,6 @@ export const userFormSchema = yup.object({
 
   profileImage: yup
     .mixed<FileList | File>()
-    .nullable()
-    .optional()
     .test('file-size', 'Maximum file size — 2MB', (value) => {
       if (!value) return true;
       if (value instanceof FileList && value.length === 0) return true;
@@ -78,7 +90,8 @@ export const userFormSchema = yup.object({
 
       const file = value instanceof FileList ? value[0] : value;
       return file ? ACCEPTED_IMAGE_TYPES.includes(file.type) : false;
-    }),
+    })
+    .defined(),
 });
 
 export type UserFormData = yup.InferType<typeof userFormSchema>;
