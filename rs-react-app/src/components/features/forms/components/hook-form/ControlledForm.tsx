@@ -1,9 +1,13 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { selectCountries } from '../../../../../store/userSlice';
 import style from '../../styles/Form.module.scss';
+import { getPasswordStrength } from '../../utils/passwordStrength';
 import { userFormSchema, type UserFormData } from '../../validation/validationSchema';
+import eyeClosedIcon from './../../../../../assets/eye-closed.svg';
+import eyeOpenIcon from './../../../../../assets/eye-open.svg';
 
 interface ControlledFormProps {
   onSubmitSuccess: (data: UserFormData) => void;
@@ -12,6 +16,9 @@ interface ControlledFormProps {
 
 export default function ControlledForm({ onSubmitSuccess, onCloseModal }: ControlledFormProps) {
   const countryList = useSelector(selectCountries);
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const {
     register,
@@ -39,10 +46,7 @@ export default function ControlledForm({ onSubmitSuccess, onCloseModal }: Contro
 
   const passwordValue = watch('password') || '';
 
-  const hasNumber = /\d/.test(passwordValue);
-  const hasUppercase = /[A-Z]/.test(passwordValue);
-  const hasLowercase = /[a-z]/.test(passwordValue);
-  const hasSpecial = /[^A-Za-z0-9]/.test(passwordValue);
+  const { hasNumber, hasUppercase, hasLowercase, hasSpecial, hasMinLength } = getPasswordStrength(passwordValue);
 
   const onSubmit = (data: UserFormData) => {
     onSubmitSuccess(data);
@@ -69,7 +73,7 @@ export default function ControlledForm({ onSubmitSuccess, onCloseModal }: Contro
       </div>
 
       <div className={style.row}>
-        <label htmlFor="rhf-mail">Mail</label>
+        <label htmlFor="rhf-mail">Email</label>
         <div className={style.inputContainer}>
           <input id="rhf-mail" type="email" {...register('email')} />
           <div className={style.error}>{errors.email?.message}</div>
@@ -119,7 +123,23 @@ export default function ControlledForm({ onSubmitSuccess, onCloseModal }: Contro
       <div className={style.row}>
         <label htmlFor="rhf-password">Password</label>
         <div className={style.inputContainer}>
-          <input id="rhf-password" type="password" {...register('password')} />
+          <div className={style.passwordWrapper}>
+            <input
+              id="rhf-password"
+              type={showPassword ? 'text' : 'password'}
+              {...register('password')}
+            />
+            <button
+              type="button"
+              className={style.eyeBtn}
+              onClick={() => setShowPassword((prev) => !prev)}
+            >
+              <img
+                src={showPassword ? eyeOpenIcon : eyeClosedIcon}
+                alt={showPassword ? "Hide password" : "Show password"}
+              />
+            </button>
+          </div>
           <div className={style.error}>{errors.password?.message}</div>
         </div>
       </div>
@@ -129,6 +149,7 @@ export default function ControlledForm({ onSubmitSuccess, onCloseModal }: Contro
         <div className={style.passwordStrength}>
           <p>Password must contain:</p>
           <ul>
+            <li className={hasMinLength ? style.valid : style.invalid}>✓ Length at least 8</li>
             <li className={hasUppercase ? style.valid : style.invalid}>✓ 1 uppercase letter</li>
             <li className={hasLowercase ? style.valid : style.invalid}>✓ 1 lowercase letter</li>
             <li className={hasNumber ? style.valid : style.invalid}>✓ 1 number</li>
@@ -140,7 +161,23 @@ export default function ControlledForm({ onSubmitSuccess, onCloseModal }: Contro
       <div className={style.row}>
         <label htmlFor="rhf-repeat-password">Repeat your password</label>
         <div className={style.inputContainer}>
-          <input id="rhf-repeat-password" type="password" {...register('confirmPassword')} />
+          <div className={style.passwordWrapper}>
+            <input
+              id="rhf-repeat-password"
+              type={showConfirmPassword ? 'text' : 'password'}
+              {...register('confirmPassword')}
+            />
+            <button
+              type="button"
+              className={style.eyeBtn}
+              onClick={() => setShowConfirmPassword((prev) => !prev)}
+            >
+              <img
+                src={showConfirmPassword ? eyeOpenIcon : eyeClosedIcon}
+                alt={showConfirmPassword ? "Hide password" : "Show password"}
+              />
+            </button>
+          </div>
           <div className={style.error}>{errors.confirmPassword?.message}</div>
         </div>
       </div>

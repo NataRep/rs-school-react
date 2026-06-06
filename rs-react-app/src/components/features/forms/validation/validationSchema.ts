@@ -8,6 +8,11 @@ export const userFormSchema = yup.object({
     .string()
     .required('Name is required for assistance')
     .test(
+      'no-numbers-or-special',
+      'Name must contain only letters.',
+      (value) => !value || /^[А-ЯЁA-Zа-яёa-z\s-]+$/.test(value)
+    )
+    .test(
       'first-letter-capital',
       'Please capitalize your name.',
       (value) => !value || /^[А-ЯЁA-Z]/.test(value)

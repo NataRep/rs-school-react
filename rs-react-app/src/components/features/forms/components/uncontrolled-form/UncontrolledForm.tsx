@@ -3,7 +3,10 @@ import { useSelector } from 'react-redux';
 import * as yup from 'yup';
 import { selectCountries } from '../../../../../store/userSlice';
 import style from '../../styles/Form.module.scss';
+import { getPasswordStrength } from '../../utils/passwordStrength';
 import { userFormSchema, type UserFormData } from '../../validation/validationSchema';
+import eyeClosedIcon from './../../../../../assets/eye-closed.svg';
+import eyeOpenIcon from './../../../../../assets/eye-open.svg';
 
 interface UncontrolledFormProps {
   onSubmitSuccess: (data: UserFormData) => void;
@@ -15,17 +18,17 @@ type FormErrors = {
 };
 
 export default function UncontrolledForm({ onSubmitSuccess, onCloseModal }: UncontrolledFormProps) {
+
   const formRef = useRef<HTMLFormElement>(null);
   const [errors, setErrors] = useState<FormErrors>({});
 
   const [passwordValue, setPasswordValue] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const countryList = useSelector(selectCountries);
 
-  const hasNumber = /\d/.test(passwordValue);
-  const hasUppercase = /[A-Z]/.test(passwordValue);
-  const hasLowercase = /[a-z]/.test(passwordValue);
-  const hasSpecial = /[^A-Za-z0-9]/.test(passwordValue);
+  const { hasNumber, hasUppercase, hasLowercase, hasSpecial, hasMinLength } = getPasswordStrength(passwordValue);
 
   const handleFormAction = async (formData: FormData) => {
     setErrors({});
@@ -90,7 +93,7 @@ export default function UncontrolledForm({ onSubmitSuccess, onCloseModal }: Unco
       </div>
 
       <div className={style.row}>
-        <label htmlFor="unc-mail">Mail</label>
+        <label htmlFor="unc-mail">Email</label>
         <div className={style.inputContainer}>
           <input type="email" id="unc-mail" name="email" />
           <div className={style.error}>{errors.email}</div>
@@ -140,12 +143,24 @@ export default function UncontrolledForm({ onSubmitSuccess, onCloseModal }: Unco
       <div className={style.row}>
         <label htmlFor="unc-password">Password</label>
         <div className={style.inputContainer}>
-          <input
-            id="unc-password"
-            type="password"
-            name="password"
-            onChange={(e) => setPasswordValue(e.target.value)}
-          />
+          <div className={style.passwordWrapper}>
+            <input
+              id="unc-password"
+              type={showPassword ? 'text' : 'password'} // Динамический тип
+              name="password"
+              onChange={(e) => setPasswordValue(e.target.value)}
+            />
+            <button
+              type="button"
+              className={style.eyeBtn}
+              onClick={() => setShowPassword((prev) => !prev)}
+            >
+              <img
+                src={showPassword ? eyeOpenIcon : eyeClosedIcon}
+                alt={showPassword ? "Hide password" : "Show password"}
+              />
+            </button>
+          </div>
           <div className={style.error}>{errors.password}</div>
         </div>
       </div>
@@ -159,6 +174,7 @@ export default function UncontrolledForm({ onSubmitSuccess, onCloseModal }: Unco
             <li className={hasLowercase ? style.valid : style.invalid}>✓ 1 lowercase letter</li>
             <li className={hasNumber ? style.valid : style.invalid}>✓ 1 number</li>
             <li className={hasSpecial ? style.valid : style.invalid}>✓ 1 special character</li>
+            <li className={hasMinLength ? style.valid : style.invalid}>✓ Length more than 7</li>
           </ul>
         </div>
       </div>
@@ -166,12 +182,28 @@ export default function UncontrolledForm({ onSubmitSuccess, onCloseModal }: Unco
       <div className={style.row}>
         <label htmlFor="unc-repeat-password">Repeat your password</label>
         <div className={style.inputContainer}>
-          <input type="password" id="unc-repeat-password" name="confirmPassword" />
+          <div className={style.passwordWrapper}>
+            <input
+              id="unc-repeat-password"
+              type={showConfirmPassword ? 'text' : 'password'} // Динамический тип
+              name="confirmPassword"
+            />
+            <button
+              type="button"
+              className={style.eyeBtn}
+              onClick={() => setShowConfirmPassword((prev) => !prev)}
+            >
+              <img
+                src={showConfirmPassword ? eyeOpenIcon : eyeClosedIcon}
+                alt={showConfirmPassword ? "Hide password" : "Show password"}
+              />
+            </button>
+          </div>
           <div className={style.error}>{errors.confirmPassword}</div>
         </div>
       </div>
 
-      <div className={style.row}>
+      <div className={style.rowFull}>
         <div className={style.checkboxContainer}>
           <input type="checkbox" id="unc-confirm" name="acceptTerms" />
           <label htmlFor="unc-confirm">Terms & Conditions</label>
