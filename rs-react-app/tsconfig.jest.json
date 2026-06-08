@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowImportingTsExtensions": false,
+    "noEmit": false,
+    "verbatimModuleSyntax": false,
+    "types": ["jest", "node", "jest-fetch-mock", "@testing-library/jest-dom"]
+  },
+  "include": ["src/**/*", "src/setupTests.ts"]
+}
