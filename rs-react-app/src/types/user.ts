@@ -14,3 +14,8 @@ export interface SubmittedForm extends UserFormData<string> {
   id: string;
   submittedAt: string;
 }
+
+export interface UserCardProps {
+  user: SubmittedForm;
+  onDelete: (id: string) => void;
+}

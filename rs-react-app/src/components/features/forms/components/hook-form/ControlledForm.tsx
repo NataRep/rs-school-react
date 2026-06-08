@@ -69,7 +69,7 @@ export default function ControlledForm({ onSubmitSuccess, onCloseModal }: FormPr
 
   return (
     <form className={style.form} onSubmit={handleSubmit(onSubmit)} noValidate>
-      <div className={style.row}>
+      <div className={style.field}>
         <label htmlFor="rhf-name">Name</label>
         <div className={style.inputContainer}>
           <input id="rhf-name" type="text" {...register('name')} />
@@ -77,7 +77,7 @@ export default function ControlledForm({ onSubmitSuccess, onCloseModal }: FormPr
         </div>
       </div>
 
-      <div className={style.row}>
+      <div className={style.field}>
         <label htmlFor="rhf-age">Age</label>
         <div className={style.inputContainer}>
           <input id="rhf-age" type="number" {...register('age', { valueAsNumber: true })} />
@@ -85,7 +85,7 @@ export default function ControlledForm({ onSubmitSuccess, onCloseModal }: FormPr
         </div>
       </div>
 
-      <div className={style.row}>
+      <div className={style.field}>
         <label htmlFor="rhf-mail">Email</label>
         <div className={style.inputContainer}>
           <input id="rhf-mail" type="email" {...register('email')} />
@@ -93,7 +93,7 @@ export default function ControlledForm({ onSubmitSuccess, onCloseModal }: FormPr
         </div>
       </div>
 
-      <div className={style.row}>
+      <div className={style.field}>
         <label htmlFor="rhf-gender">Gender</label>
         <div className={style.inputContainer}>
           <select id="rhf-gender" {...register('gender')}>
@@ -106,7 +106,7 @@ export default function ControlledForm({ onSubmitSuccess, onCloseModal }: FormPr
         </div>
       </div>
 
-      <div className={style.row}>
+      <div className={style.field}>
         <label htmlFor="rhf-country">Country</label>
         <div className={style.inputContainer}>
           <input
@@ -125,7 +125,7 @@ export default function ControlledForm({ onSubmitSuccess, onCloseModal }: FormPr
         </div>
       </div>
 
-      <div className={style.row}>
+      <div className={style.field}>
         <label htmlFor="rhf-avatar">Avatar</label>
         <div className={style.inputContainer}>
           <input id="rhf-avatar" type="file" accept=".jpg,.jpeg,.png" {...register('profileImage')} />
@@ -133,7 +133,7 @@ export default function ControlledForm({ onSubmitSuccess, onCloseModal }: FormPr
         </div>
       </div>
 
-      <div className={style.row}>
+      <div className={style.field}>
         <label htmlFor="rhf-password">Password</label>
         <div className={style.inputContainer}>
           <div className={style.passwordWrapper}>
@@ -157,7 +157,7 @@ export default function ControlledForm({ onSubmitSuccess, onCloseModal }: FormPr
         </div>
       </div>
 
-      <div className={style.row}>
+      <div className={style.field}>
         <div className={style.labelPlaceholder}></div>
         <div className={style.passwordStrength}>
           <p>Password must contain:</p>
@@ -171,7 +171,7 @@ export default function ControlledForm({ onSubmitSuccess, onCloseModal }: FormPr
         </div>
       </div>
 
-      <div className={style.row}>
+      <div className={style.field}>
         <label htmlFor="rhf-repeat-password">Repeat your password</label>
         <div className={style.inputContainer}>
           <div className={style.passwordWrapper}>
@@ -195,7 +195,7 @@ export default function ControlledForm({ onSubmitSuccess, onCloseModal }: FormPr
         </div>
       </div>
 
-      <div className={style.row}>
+      <div className={style.field}>
         <div className={style.checkboxContainer}>
           <input id="rhf-confirm" type="checkbox" {...register('acceptTerms')} />
           <label htmlFor="rhf-confirm">Terms & Conditions</label>

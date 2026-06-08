@@ -11,7 +11,21 @@
 
   .row {
     display: grid;
-    grid-template-columns: 140px 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    max-width: 600px;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .fullWidth {
+    grid-column: span 2;
+  }
+
+  .field {
+    display: flex;
     align-items: start;
     gap: 1rem;
 
@@ -22,6 +36,7 @@
 
     label {
       padding-top: 0.5rem;
+      margin-right: 0.5rem;
       font-weight: 500;
       font-size: 0.95rem;
       color: var(--color-text);
@@ -179,7 +194,7 @@
       transition: color 0.2s ease;
 
       &.valid {
-        color: #10b981;
+        color: var(--color-green);
         font-weight: 500;
       }
 
@@ -253,6 +268,8 @@
 
 .rowFull {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   margin-top: 1rem;
+  align-items: center;
+  width: 100%;
 }

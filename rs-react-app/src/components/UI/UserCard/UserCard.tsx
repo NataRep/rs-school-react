@@ -1,0 +1,76 @@
+import { useEffect, useState } from 'react';
+import type { UserCardProps } from '../../../types/user';
+import style from './UserCard.module.scss';
+
+export default function UserCard({ user, onDelete }: UserCardProps) {
+  const { id, name, age, email, gender, country, profileImage, submittedAt } = user;
+
+  const [isNew, setIsNew] = useState(false);
+
+  useEffect(() => {
+    const creationTime = new Date(submittedAt).getTime();
+    const now = Date.now();
+    const eplapsedTime = now - creationTime;
+
+    if (eplapsedTime < 4000) {
+      setIsNew(true);
+
+      const timer = setTimeout(() => {
+        setIsNew(false);
+      }, 4000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [submittedAt]);
+
+  const formattedDate = new Date(submittedAt).toLocaleDateString('ru-RU', {
+    day: 'numeric',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+
+  const cardClassName = `${style.card} ${isNew ? style.newCardHighlight : ''}`;
+
+  return (
+    <div className={cardClassName}>
+      <button
+        type="button"
+        className={style.deleteBtn}
+        onClick={() => onDelete(id)}
+        title="Delete user"
+      >
+        &times;
+      </button>
+
+      <div className={style.avatarWrapper}>
+        {profileImage ? (
+          <img src={profileImage} alt={`${name}'s avatar`} className={style.avatar} />
+        ) : (
+          <div className={`${style.avatarPlaceholder} ${style[gender || 'other']}`}>
+            {name.charAt(0).toUpperCase()}
+          </div>
+        )}
+      </div>
+
+      <div className={style.content}>
+        <h3 className={style.name} title={name}>{name}</h3>
+        <p className={style.email}>{email}</p>
+
+        <div className={style.badges}>
+          <span className={style.badge}>{country}</span>
+          <span className={style.badge}>{age} years</span>
+          <span className={`${style.badge} ${style[`gender-${gender}`]}`}>
+            {gender}
+          </span>
+        </div>
+      </div>
+
+      <div className={style.footer}>
+        <span className={style.dateLabel}>Created:</span>
+        <time className={style.dateValue} dateTime={submittedAt}>{formattedDate}</time>
+      </div>
+    </div>
+  );
+}
