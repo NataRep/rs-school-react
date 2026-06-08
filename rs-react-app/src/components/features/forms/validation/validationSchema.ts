@@ -3,6 +3,16 @@ import * as yup from 'yup';
 const MAX_FILE_SIZE = 2 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
 
+const getFile = (value: unknown): File | null => {
+  if (value instanceof FileList) {
+    return value.item(0);
+  }
+  if (value instanceof File) {
+    return value;
+  }
+  return null;
+};
+
 export const userFormSchema = yup.object({
   name: yup
     .string()
@@ -24,7 +34,7 @@ export const userFormSchema = yup.object({
     .typeError('Please check that age is written as a number.')
     .required('Age is required')
     .integer('Please check that age is written as an integer')
-    .positive('Not a valid value'),
+    .min(0, 'Age cannot be negative'),
 
   email: yup
     .string()
@@ -40,9 +50,10 @@ export const userFormSchema = yup.object({
 
   password: yup
     .string()
-    .required('Password  is required')
+    .required('Password is required')
     .min(8, 'The password must be at least 8 characters long.')
     .matches(/[A-Z]/, 'The password must contain at least one uppercase letter')
+    .matches(/[a-z]/, 'The password must contain at least one lowercase letter') // Добавлено по ТЗ
     .matches(/[0-9]/, 'The password must contain at least one number.')
     .matches(/[^A-Za-z0-9]/, 'The password must contain at least one special character.'),
 
@@ -64,12 +75,9 @@ export const userFormSchema = yup.object({
       'is-valid-country',
       'Select a country from the list',
       function (value) {
-        if (!value) return true;
-
+        if (!value) return false;
         const { allowedCountries } = this.options.context as { allowedCountries?: string[] };
-
         if (!allowedCountries) return false;
-
         return allowedCountries.includes(value);
       }
     ),
@@ -82,21 +90,19 @@ export const userFormSchema = yup.object({
 
   profileImage: yup
     .mixed<FileList | File>()
+    .required('Profile image is required')
+    .test('is-file-present', 'Profile image is required', (value) => {
+      return !!getFile(value);
+    })
     .test('file-size', 'Maximum file size — 2MB', (value) => {
-      if (!value) return true;
-      if (value instanceof FileList && value.length === 0) return true;
-      if (value instanceof File && value.size === 0) return true;
-
-      const file = value instanceof FileList ? value[0] : value;
-      return file ? file.size <= MAX_FILE_SIZE : false;
+      const file = getFile(value);
+      if (!file) return false;
+      return file.size <= MAX_FILE_SIZE;
     })
     .test('file-type', 'Acceptable formats: .jpg, .jpeg, .png', (value) => {
-      if (!value) return true;
-      if (value instanceof FileList && value.length === 0) return true;
-      if (value instanceof File && value.size === 0) return true;
-
-      const file = value instanceof FileList ? value[0] : value;
-      return file ? ACCEPTED_IMAGE_TYPES.includes(file.type) : false;
+      const file = getFile(value);
+      if (!file) return false;
+      return ACCEPTED_IMAGE_TYPES.includes(file.type);
     })
     .defined(),
 });

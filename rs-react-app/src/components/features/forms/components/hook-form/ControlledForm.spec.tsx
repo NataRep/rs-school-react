@@ -22,6 +22,7 @@ jest.mock('../../utils/passwordStrength', () => ({
 describe('ControlledForm', () => {
   const mockOnSubmitSuccess = jest.fn();
   const mockOnCloseModal = jest.fn();
+  const mockFile = new File([''], 'avatar.png', { type: 'image/png' });
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -99,6 +100,9 @@ describe('ControlledForm', () => {
     await user.type(screen.getByLabelText('Repeat your password'), 'ValidPass123!');
     await user.click(screen.getByLabelText('Terms & Conditions'));
 
+    const fileInput = screen.getByLabelText('Avatar');
+    await user.upload(fileInput, mockFile);
+
     const submitBtn = screen.getByRole('button', { name: 'Submit' });
 
     await waitFor(() => {
@@ -144,6 +148,9 @@ describe('ControlledForm', () => {
     await user.type(screen.getByLabelText('Password'), 'FalconFly123!');
     await user.type(screen.getByLabelText('Repeat your password'), 'FalconFly123!');
     await user.click(screen.getByLabelText('Terms & Conditions'));
+
+    const fileInput = screen.getByLabelText('Avatar');
+    await user.upload(fileInput, mockFile);
 
     const submitBtn = screen.getByRole('button', { name: 'Submit' });
 

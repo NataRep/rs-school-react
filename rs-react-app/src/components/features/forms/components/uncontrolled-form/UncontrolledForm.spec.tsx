@@ -7,11 +7,16 @@ import { getPasswordStrength } from '../../utils/passwordStrength';
 import { userFormSchema } from '../../validation/validationSchema';
 import UncontrolledForm from './UncontrolledForm';
 
-jest.mock('../../validation/validationSchema', () => ({
-  userFormSchema: {
-    validate: jest.fn(),
-  },
-}));
+jest.mock('../../validation/validationSchema', () => {
+  const originalModule = jest.requireActual('../../validation/validationSchema');
+  return {
+    __esModule: true,
+    ...originalModule,
+    userFormSchema: {
+      validate: jest.fn(),
+    },
+  };
+});
 
 jest.mock('../../../../../utils/fileToBase64', () => ({
   fileToBase64: jest.fn(),
@@ -73,6 +78,8 @@ describe('UncontrolledForm', () => {
 
     const passwordInput = screen.getByLabelText('Password');
     const confirmPasswordInput = screen.getByLabelText('Repeat');
+
+    // Ищем кнопки по роли, используя регулярное выражение, учитывающее alt вложенных картинок
     const [passwordEyeBtn, confirmPasswordEyeBtn] = screen.getAllByRole('button', { name: /show password/i });
 
     expect(passwordInput).toHaveAttribute('type', 'password');
@@ -86,15 +93,13 @@ describe('UncontrolledForm', () => {
 
   it('should display validation error messages from yup on submit failure', async () => {
     const user = userEvent.setup();
-    const mockValidationError = new yup.ValidationError([
-      { path: 'name', message: 'Name is required' },
-      { path: 'email', message: 'Email is invalid' },
-    ] as unknown as string, {}, '');
 
+    // Конструируем честный инстанс ValidationError, чтобы блок catch (err instanceof yup.ValidationError) сработал
+    const mockValidationError = new yup.ValidationError('Validation failed', null, 'form');
     mockValidationError.inner = [
-      { path: 'name', message: 'Name is required' },
-      { path: 'email', message: 'Email is invalid' },
-    ] as yup.ValidationError[];
+      new yup.ValidationError('Name is required', '', 'name'),
+      new yup.ValidationError('Email is invalid', '', 'email'),
+    ];
 
     (userFormSchema.validate as jest.Mock).mockRejectedValueOnce(mockValidationError);
 
@@ -117,6 +122,8 @@ describe('UncontrolledForm', () => {
 
   it('should execute callbacks with parsed data on a successful form submit', async () => {
     const user = userEvent.setup();
+    const mockFile = new File([''], 'avatar.png', { type: 'image/png' });
+
     const mockValidData = {
       name: 'Anakin Skywalker',
       age: '22',
@@ -126,7 +133,7 @@ describe('UncontrolledForm', () => {
       password: 'Password1!',
       confirmPassword: 'Password1!',
       acceptTerms: true,
-      profileImage: new File([''], 'avatar.png', { type: 'image/png' }),
+      profileImage: mockFile,
     };
 
     (userFormSchema.validate as jest.Mock).mockResolvedValueOnce(mockValidData);
@@ -139,6 +146,7 @@ describe('UncontrolledForm', () => {
       />
     );
 
+    // Заполняем элементы интерфейса, чтобы FormData внутри компонента не читал пустоту
     await user.type(screen.getByLabelText('Name'), 'Anakin Skywalker');
     await user.type(screen.getByLabelText('Age'), '22');
     await user.type(screen.getByLabelText('Email'), 'anakin@tatooine.com');
@@ -147,6 +155,10 @@ describe('UncontrolledForm', () => {
     await user.type(screen.getByLabelText('Password'), 'Password1!');
     await user.type(screen.getByLabelText('Repeat'), 'Password1!');
     await user.click(screen.getByLabelText('Terms & Conditions'));
+
+    // Эмулируем загрузку файла, как прописано в требованиях FAQ к таске
+    const fileInput = screen.getByLabelText('Avatar');
+    await user.upload(fileInput, mockFile);
 
     await user.click(screen.getByRole('button', { name: 'Submit' }));
 
@@ -161,8 +173,10 @@ describe('UncontrolledForm', () => {
 
   it('should trigger inline file conversion error handling when base64 transformation fails', async () => {
     const user = userEvent.setup();
+    const mockFile = new File([''], 'broken.png', { type: 'image/png' });
+
     const mockValidData = {
-      profileImage: new File([''], 'broken.png', { type: 'image/png' }),
+      profileImage: mockFile,
     };
 
     (userFormSchema.validate as jest.Mock).mockResolvedValueOnce(mockValidData);
@@ -174,6 +188,10 @@ describe('UncontrolledForm', () => {
         onCloseModal={mockOnCloseModal}
       />
     );
+
+    // Обязательно загружаем файл в инпут, чтобы e.currentTarget нашел его в FormData
+    const fileInput = screen.getByLabelText('Avatar');
+    await user.upload(fileInput, mockFile);
 
     await user.click(screen.getByRole('button', { name: 'Submit' }));
 
