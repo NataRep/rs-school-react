@@ -1,11 +1,10 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
-import { selectCountries } from '../../../../../store/userSlice';
 import type { FormProps } from '../../../../../types/form';
 import type { UserFormData } from '../../../../../types/user';
 import { fileToBase64 } from '../../../../../utils/fileToBase64';
+import { COUNTRIES_DICTIONARY } from '../../constants/countries';
 import style from '../../styles/Form.module.scss';
 import { getPasswordStrength } from '../../utils/passwordStrength';
 import { userFormSchema } from '../../validation/validationSchema';
@@ -13,7 +12,7 @@ import eyeClosedIcon from './../../../../../assets/eye-closed.svg';
 import eyeOpenIcon from './../../../../../assets/eye-open.svg';
 
 export default function ControlledForm({ onSubmitSuccess, onCloseModal }: FormProps) {
-  const countryList = useSelector(selectCountries);
+  const countryList = COUNTRIES_DICTIONARY;
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);

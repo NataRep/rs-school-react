@@ -1,10 +1,9 @@
 import { useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
 import * as yup from 'yup';
-import { selectCountries } from '../../../../../store/userSlice';
 import type { FormProps } from '../../../../../types/form';
 import type { UserFormData } from '../../../../../types/user';
 import { fileToBase64 } from '../../../../../utils/fileToBase64';
+import { COUNTRIES_DICTIONARY } from '../../constants/countries';
 import style from '../../styles/Form.module.scss';
 import { getPasswordStrength } from '../../utils/passwordStrength';
 import { userFormSchema } from '../../validation/validationSchema';
@@ -24,7 +23,7 @@ export default function UncontrolledForm({ onSubmitSuccess, onCloseModal }: Form
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const countryList = useSelector(selectCountries);
+  const countryList = COUNTRIES_DICTIONARY;
 
   const { hasNumber, hasUppercase, hasLowercase, hasSpecial, hasMinLength } = getPasswordStrength(passwordValue);
 
