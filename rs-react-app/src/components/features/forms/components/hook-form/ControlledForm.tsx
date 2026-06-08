@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form'; // Импортируем useWatch
 import type { FormProps } from '../../../../../types/form';
 import type { UserFormData } from '../../../../../types/user';
 import { fileToBase64 } from '../../../../../utils/fileToBase64';
@@ -20,7 +20,7 @@ export default function ControlledForm({ onSubmitSuccess, onCloseModal }: FormPr
   const {
     register,
     handleSubmit,
-    watch,
+    control,
     reset,
     setError,
     formState: { errors, isValid },
@@ -41,7 +41,7 @@ export default function ControlledForm({ onSubmitSuccess, onCloseModal }: FormPr
     },
   });
 
-  const passwordValue = watch('password') || '';
+  const passwordValue = useWatch({ control, name: 'password' }) || '';
 
   const { hasNumber, hasUppercase, hasLowercase, hasSpecial, hasMinLength } = getPasswordStrength(passwordValue);
 

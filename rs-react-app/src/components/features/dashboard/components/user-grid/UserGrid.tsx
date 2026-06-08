@@ -12,7 +12,7 @@ export default function UserGrid() {
   };
 
   if (users.length === 0) {
-    return <div className={style.empty}>Список пользователей пуст</div>;
+    return <div className={style.empty}>The user list is empty</div>;
   }
 
   return (

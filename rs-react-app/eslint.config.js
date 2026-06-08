@@ -1,6 +1,5 @@
 import js from '@eslint/js';
-import eslintConfigPrettier from 'eslint-config-prettier/flat';
-import reactPlugin from 'eslint-plugin-react';
+import reactPlugin from 'eslint-plugin-react'; // Импортируем сам плагин React
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import { defineConfig, globalIgnores } from 'eslint/config';
@@ -8,7 +7,7 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores(['dist', 'coverage']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
@@ -16,12 +15,20 @@ export default defineConfig([
       tseslint.configs.recommended,
       reactHooks.configs.flat.recommended,
       reactRefresh.configs.vite,
-      reactPlugin.configs.flat.recommended,
-      reactPlugin.configs.flat['jsx-runtime'],
-      eslintConfigPrettier,
     ],
+    plugins: {
+      react: reactPlugin,
+    },
     languageOptions: {
-      globals: globals.browser,
+      globals: {
+        ...globals.browser,
+        ...globals.jest,
+      },
+    },
+    settings: {
+      react: {
+        version: 'detect',
+      },
     },
   },
-]);
+])

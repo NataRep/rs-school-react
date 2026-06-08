@@ -5,23 +5,25 @@ import style from './UserCard.module.scss';
 export default function UserCard({ user, onDelete }: UserCardProps) {
   const { id, name, age, email, gender, country, profileImage, submittedAt } = user;
 
-  const [isNew, setIsNew] = useState(false);
+  const [isNew, setIsNew] = useState(() => {
+    const creationTime = new Date(submittedAt).getTime();
+    const elapsedTime = Date.now() - creationTime;
+    return elapsedTime < 4000;
+  });
 
   useEffect(() => {
+    if (!isNew) return;
+
     const creationTime = new Date(submittedAt).getTime();
-    const now = Date.now();
-    const eplapsedTime = now - creationTime;
+    const elapsedTime = Date.now() - creationTime;
+    const remainingTime = 4000 - elapsedTime;
 
-    if (eplapsedTime < 4000) {
-      setIsNew(true);
+    const timer = setTimeout(() => {
+      setIsNew(false);
+    }, remainingTime > 0 ? remainingTime : 0);
 
-      const timer = setTimeout(() => {
-        setIsNew(false);
-      }, 4000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [submittedAt]);
+    return () => clearTimeout(timer);
+  }, [isNew, submittedAt]);
 
   const formattedDate = new Date(submittedAt).toLocaleDateString('ru-RU', {
     day: 'numeric',
