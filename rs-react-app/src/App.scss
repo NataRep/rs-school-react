@@ -1,0 +1,39 @@
+header {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--color-blue-light);
+  padding: 2rem;
+}
+
+main {
+  flex: 1;
+  padding: 2rem;
+}
+
+footer {
+  padding: 1rem 2rem;
+  border-radius: 0 0 2rem 2rem;
+
+  background: rgba(168, 199, 219, 0.25);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  border-top: 1px solid rgba(221, 215, 204, 0.6);
+
+  p {
+    margin: 0.25rem 0;
+    font-size: 0.75rem;
+    color: var(--color-text-soft);
+  }
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+
+  @media (hover: hover) {
+    &:hover {
+      color: var(--color-blue)
+    }
+  }
+}

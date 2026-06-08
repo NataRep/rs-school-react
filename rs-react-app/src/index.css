@@ -1,0 +1,44 @@
+:root {
+  /* Фоны */
+  --color-bg: #f8f6f1;
+  --color-surface: #fffdf9;
+  --color-surface-alt: #f2efe7;
+
+  /* Акценты */
+  --color-accent: #ffaa00;
+  --color-accent-hover: #ff9000;
+
+  /* Оттенки */
+  --color-blue: #0099ff;
+  --color-blue-light: #a8c7db;
+  --color-yellow-light: #ecd9a8;
+  --color-green: #10b981;
+
+  /* Текст */
+  --color-text: #2c2a27;
+  --color-text-soft: #7d766d;
+  --color-error: #e02424;
+}
+
+
+#root {
+  width: 1126px;
+  max-width: 100%;
+  margin: 2rem auto;
+  text-align: center;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  background-color: var(--color-surface);
+  border-radius: 2rem;
+  box-shadow:
+    0 12px 30px rgba(79, 74, 67, 0.06),
+    0 4px 10px rgba(79, 74, 67, 0.04);
+}
+
+body {
+  font-family: Verdana, Geneva, sans-serif;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
