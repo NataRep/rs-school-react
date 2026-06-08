@@ -24,7 +24,7 @@ export const userFormSchema = yup.object({
     .typeError('Please check that age is written as a number.')
     .required('Age is required')
     .integer('Please check that age is written as an integer')
-    .positive('Are you sure you live in reverse?'),
+    .positive('Not a valid value'),
 
   email: yup
     .string()
