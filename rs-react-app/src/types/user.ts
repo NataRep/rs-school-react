@@ -1,4 +1,4 @@
-export interface UserFormData {
+export interface UserFormData<T = FileList | File> {
   name: string;
   age: number;
   email: string;
@@ -6,11 +6,11 @@ export interface UserFormData {
   country: string;
   password: string;
   confirmPassword: string;
-  acceptTermsConditions: boolean;
-  image: string;
+  acceptTerms: boolean;
+  profileImage: T;
 }
 
-export interface SubmittedForm extends UserFormData {
+export interface SubmittedForm extends UserFormData<string> {
   id: string;
   submittedAt: string;
 }

@@ -3,18 +3,16 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { selectCountries } from '../../../../../store/userSlice';
+import type { FormProps } from '../../../../../types/form';
+import type { UserFormData } from '../../../../../types/user';
+import { fileToBase64 } from '../../../../../utils/fileToBase64';
 import style from '../../styles/Form.module.scss';
 import { getPasswordStrength } from '../../utils/passwordStrength';
-import { userFormSchema, type UserFormData } from '../../validation/validationSchema';
+import { userFormSchema } from '../../validation/validationSchema';
 import eyeClosedIcon from './../../../../../assets/eye-closed.svg';
 import eyeOpenIcon from './../../../../../assets/eye-open.svg';
 
-interface ControlledFormProps {
-  onSubmitSuccess: (data: UserFormData) => void;
-  onCloseModal: () => void;
-}
-
-export default function ControlledForm({ onSubmitSuccess, onCloseModal }: ControlledFormProps) {
+export default function ControlledForm({ onSubmitSuccess, onCloseModal }: FormProps) {
   const countryList = useSelector(selectCountries);
 
   const [showPassword, setShowPassword] = useState(false);
@@ -25,6 +23,7 @@ export default function ControlledForm({ onSubmitSuccess, onCloseModal }: Contro
     handleSubmit,
     watch,
     reset,
+    setError,
     formState: { errors, isValid },
   } = useForm<UserFormData>({
     resolver: yupResolver(userFormSchema, {
@@ -35,7 +34,7 @@ export default function ControlledForm({ onSubmitSuccess, onCloseModal }: Contro
       name: '',
       age: undefined,
       email: '',
-      gender: '',
+      gender: undefined,
       country: '',
       password: '',
       confirmPassword: '',
@@ -48,10 +47,26 @@ export default function ControlledForm({ onSubmitSuccess, onCloseModal }: Contro
 
   const { hasNumber, hasUppercase, hasLowercase, hasSpecial, hasMinLength } = getPasswordStrength(passwordValue);
 
-  const onSubmit = (data: UserFormData) => {
-    onSubmitSuccess(data);
-    onCloseModal();
-    reset();
+  const onSubmit = async (data: UserFormData) => {
+    try {
+      const base64Image = await fileToBase64(data.profileImage);
+
+      const dataForStore: UserFormData<string> = {
+        ...data,
+        profileImage: base64Image,
+      };
+
+      onSubmitSuccess(dataForStore);
+      onCloseModal();
+      reset();
+    } catch (fileError) {
+      const errorMessage = fileError instanceof Error ? fileError.message : 'Failed to read file';
+
+      setError('profileImage', {
+        type: 'manual',
+        message: errorMessage,
+      });
+    }
   };
 
   return (

@@ -2,22 +2,20 @@ import { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import * as yup from 'yup';
 import { selectCountries } from '../../../../../store/userSlice';
+import type { FormProps } from '../../../../../types/form';
+import type { UserFormData } from '../../../../../types/user';
+import { fileToBase64 } from '../../../../../utils/fileToBase64';
 import style from '../../styles/Form.module.scss';
 import { getPasswordStrength } from '../../utils/passwordStrength';
-import { userFormSchema, type UserFormData } from '../../validation/validationSchema';
+import { userFormSchema } from '../../validation/validationSchema';
 import eyeClosedIcon from './../../../../../assets/eye-closed.svg';
 import eyeOpenIcon from './../../../../../assets/eye-open.svg';
 
-interface UncontrolledFormProps {
-  onSubmitSuccess: (data: UserFormData) => void;
-  onCloseModal: () => void;
-}
-
 type FormErrors = {
-  [key in keyof yup.InferType<typeof userFormSchema>]?: string;
+  [key in keyof UserFormData]?: string;
 };
 
-export default function UncontrolledForm({ onSubmitSuccess, onCloseModal }: UncontrolledFormProps) {
+export default function UncontrolledForm({ onSubmitSuccess, onCloseModal }: FormProps) {
 
   const formRef = useRef<HTMLFormElement>(null);
   const [errors, setErrors] = useState<FormErrors>({});
@@ -53,22 +51,36 @@ export default function UncontrolledForm({ onSubmitSuccess, onCloseModal }: Unco
         context: { allowedCountries: countryList }
       });
 
-      await onSubmitSuccess(validData);
+      let base64Image = '';
 
+      try {
+        base64Image = await fileToBase64(validData.profileImage);
+      } catch (fileError) {
+        setErrors((prev) => ({
+          ...prev,
+          profileImage: fileError instanceof Error ? fileError.message : 'Error reading file',
+        }));
+        return;
+      }
+
+      const dataForStore = {
+        ...validData,
+        profileImage: base64Image,
+      };
+
+      onSubmitSuccess(dataForStore);
       formRef.current?.reset();
       setPasswordValue('');
-
       onCloseModal();
+
     } catch (err) {
       if (err instanceof yup.ValidationError) {
         const validationErrors: FormErrors = {};
-
         err.inner.forEach((error) => {
           if (error.path) {
             validationErrors[error.path as keyof FormErrors] = error.message;
           }
         });
-
         setErrors(validationErrors);
       }
     }
@@ -146,7 +158,8 @@ export default function UncontrolledForm({ onSubmitSuccess, onCloseModal }: Unco
           <div className={style.passwordWrapper}>
             <input
               id="unc-password"
-              type={showPassword ? 'text' : 'password'} // Динамический тип
+              type={showPassword ? 'text' : 'password'}
+              value={passwordValue}
               name="password"
               onChange={(e) => setPasswordValue(e.target.value)}
             />
@@ -185,7 +198,7 @@ export default function UncontrolledForm({ onSubmitSuccess, onCloseModal }: Unco
           <div className={style.passwordWrapper}>
             <input
               id="unc-repeat-password"
-              type={showConfirmPassword ? 'text' : 'password'} // Динамический тип
+              type={showConfirmPassword ? 'text' : 'password'}
               name="confirmPassword"
             />
             <button

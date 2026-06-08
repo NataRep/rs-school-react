@@ -54,7 +54,8 @@ export const userFormSchema = yup.object({
   gender: yup
     .string()
     .required('Select gender')
-    .oneOf(['male', 'female', 'other'], 'Please select the correct gender value'),
+    .oneOf(['male', 'female', 'other'] as const, 'Please select the correct gender value')
+    .defined(),
 
   country: yup
     .string()
@@ -76,7 +77,8 @@ export const userFormSchema = yup.object({
   acceptTerms: yup
     .boolean()
     .required('You must agree to the terms and conditions')
-    .oneOf([true], 'You must agree to the terms and conditions'),
+    .oneOf([true], 'You must agree to the terms and conditions')
+    .defined(),
 
   profileImage: yup
     .mixed<FileList | File>()
@@ -98,5 +100,3 @@ export const userFormSchema = yup.object({
     })
     .defined(),
 });
-
-export type UserFormData = yup.InferType<typeof userFormSchema>;
