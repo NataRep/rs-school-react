@@ -28,8 +28,11 @@ export default function UncontrolledForm({ onSubmitSuccess, onCloseModal }: Form
 
   const { hasNumber, hasUppercase, hasLowercase, hasSpecial, hasMinLength } = getPasswordStrength(passwordValue);
 
-  const handleFormAction = async (formData: FormData) => {
+  const handleFormAction = async (e: React.SyntheticEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setErrors({});
+
+    const formData = new FormData(e.currentTarget);
 
     const file = formData.get('profileImage') as File;
 
@@ -87,7 +90,7 @@ export default function UncontrolledForm({ onSubmitSuccess, onCloseModal }: Form
   };
 
   return (
-    <form ref={formRef} className={style.form} action={handleFormAction} noValidate>
+    <form ref={formRef} className={style.form} onSubmit={handleFormAction} noValidate>
       <div className={style.row}>
         <label htmlFor="unc-name">Name</label>
         <div className={style.inputContainer}>

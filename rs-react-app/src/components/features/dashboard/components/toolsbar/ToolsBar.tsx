@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addSubmission } from '../../../../../store/userSlice';
+import type { UserFormData } from '../../../../../types/user';
 import Button from '../../../../UI/Button/Button';
 import Modal from '../../../../UI/Modal/Modal';
 import ControlledForm from '../../../forms/components/hook-form/ControlledForm';
@@ -7,6 +10,7 @@ import style from './ToolsBar.module.scss';
 
 export default function ToolsBar() {
   const [activeForm, setActiveForm] = useState<'uncontrolled' | 'hook-form' | null>(null);
+  const dispatch = useDispatch();
 
   const handleOpenModal = (type: 'uncontrolled' | 'hook-form') => {
     setActiveForm(type);
@@ -14,6 +18,11 @@ export default function ToolsBar() {
 
   const handleCloseModal = () => {
     setActiveForm(null);
+  };
+
+  const handleFormSubmit = (data: UserFormData<string>) => {
+    dispatch(addSubmission(data));
+    handleCloseModal();
   };
 
   return (<>
@@ -42,13 +51,12 @@ export default function ToolsBar() {
       title={activeForm === 'uncontrolled' ? 'Uncontrolled Form' : 'React Hook Form'}
     >
       {activeForm === 'uncontrolled' && (
-        <UncontrolledForm onSubmitSuccess={handleCloseModal} onCloseModal={handleCloseModal} />
+        <UncontrolledForm onSubmitSuccess={handleFormSubmit} onCloseModal={handleCloseModal} />
       )}
 
       {activeForm === 'hook-form' && (
-        <ControlledForm onSubmitSuccess={handleCloseModal} onCloseModal={handleCloseModal} />
+        <ControlledForm onSubmitSuccess={handleFormSubmit} onCloseModal={handleCloseModal} />
       )}
     </Modal>
   </>);
-
 }

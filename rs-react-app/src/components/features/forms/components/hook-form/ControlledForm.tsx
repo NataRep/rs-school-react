@@ -26,10 +26,9 @@ export default function ControlledForm({ onSubmitSuccess, onCloseModal }: FormPr
     setError,
     formState: { errors, isValid },
   } = useForm<UserFormData>({
-    resolver: yupResolver(userFormSchema, {
-      context: { allowedCountries: countryList },
-    }),
+    resolver: yupResolver(userFormSchema),
     mode: 'onChange',
+    context: { allowedCountries: countryList },
     defaultValues: {
       name: '',
       age: undefined,
