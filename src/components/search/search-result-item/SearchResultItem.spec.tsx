@@ -12,7 +12,7 @@ jest.mock('react-router-dom', () => ({
   useLocation: () => ({ search: '?page=1' }),
 }));
 
-jest.mock('./../selection-checkbox/SelectionСheckbox', () => {
+jest.mock('./../selection-checkbox/SelectionCheckbox', () => {
   return function MockSelectionCheckbox() {
     return <div data-testid="mock-checkbox" />;
   };

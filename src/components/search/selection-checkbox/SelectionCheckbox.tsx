@@ -4,7 +4,7 @@ import type { RootState } from '../../../store';
 import { toggleSelected } from '../../../store/selectedSlice';
 import Icon from '../../shared/icon/Icon';
 import type { SearchItem } from '../search-result-item/SearchResultItem';
-import style from './SelectionСheckbox.module.scss';
+import style from './SelectionCheckbox.module.scss';
 
 interface SelectionCheckboxProps {
   data: SearchItem;
