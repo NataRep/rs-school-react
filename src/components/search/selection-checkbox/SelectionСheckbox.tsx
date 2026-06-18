@@ -1,4 +1,3 @@
-
 import { useId } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../../../store';
@@ -16,25 +15,31 @@ export default function SelectionCheckbox({ data }: SelectionCheckboxProps) {
   const dispatch = useDispatch();
 
   const isChecked = useSelector((state: RootState) =>
-    state.selected.items.some(selectedItem => selectedItem.name === data.name)
+    state.selected.items.some(
+      (selectedItem) => selectedItem.name === data.name,
+    ),
   );
 
   const handleChange = () => {
     dispatch(toggleSelected(data));
   };
 
-  return <div className={style.wrapper}>
-    <input type='checkbox'
-      id={`${reactId}-checkbox`}
-      className={style.checkbox}
-      checked={isChecked}
-      onChange={handleChange}
-    ></input>
-    <label
-      htmlFor={`${reactId}-checkbox`}
-      className={style.label}
-      title="Save">
-      <Icon name="flag"></Icon>
-    </label>
-  </div>
+  return (
+    <div className={style.wrapper}>
+      <input
+        type="checkbox"
+        id={`${reactId}-checkbox`}
+        className={style.checkbox}
+        checked={isChecked}
+        onChange={handleChange}
+      ></input>
+      <label
+        htmlFor={`${reactId}-checkbox`}
+        className={style.label}
+        title="Save"
+      >
+        <Icon name="flag"></Icon>
+      </label>
+    </div>
+  );
 }

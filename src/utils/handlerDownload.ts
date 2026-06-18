@@ -1,12 +1,14 @@
-import type { SearchItem } from "../components/search/search-result-item/SearchResultItem";
-import { convertDataToCSV } from "./convertDataToCSV";
+import type { SearchItem } from '../components/search/search-result-item/SearchResultItem';
+import { convertDataToCSV } from './convertDataToCSV';
 
 export const handleDownload = (selectedItems: SearchItem[]) => {
   if (selectedItems.length === 0) return;
 
   const csvContent = convertDataToCSV(selectedItems);
 
-  const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+  const blob = new Blob(['\uFEFF' + csvContent], {
+    type: 'text/csv;charset=utf-8;',
+  });
 
   const url = URL.createObjectURL(blob);
 

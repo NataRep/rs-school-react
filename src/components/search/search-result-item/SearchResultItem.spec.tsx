@@ -36,7 +36,7 @@ describe('SearchResultItem Component', () => {
     render(
       <MemoryRouter>
         <SearchResultItem item={mockPerson} />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(screen.getByText(/Luke Skywalker/i)).toBeInTheDocument();
@@ -54,7 +54,7 @@ describe('SearchResultItem Component', () => {
     render(
       <MemoryRouter>
         <SearchResultItem item={mockPlanet} />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(screen.getByText(/Tatooine/i)).toBeInTheDocument();
@@ -72,7 +72,7 @@ describe('SearchResultItem Component', () => {
     render(
       <MemoryRouter>
         <SearchResultItem item={mockStarship} />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(screen.getByText(/Death Star/i)).toBeInTheDocument();
@@ -91,7 +91,7 @@ describe('SearchResultItem Component', () => {
     render(
       <MemoryRouter>
         <SearchResultItem item={mockPerson} />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     const card = screen.getByText(/Luke Skywalker/i).closest('div');

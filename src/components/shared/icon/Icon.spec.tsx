@@ -1,5 +1,5 @@
-import { render, screen } from "@testing-library/react";
-import Icon from "./Icon";
+import { render, screen } from '@testing-library/react';
+import Icon from './Icon';
 
 describe('Icon component', () => {
   it('should render the icon after loading', async () => {
@@ -9,5 +9,4 @@ describe('Icon component', () => {
 
     expect(icon).toBeInTheDocument();
   });
-
-})
+});

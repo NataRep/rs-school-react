@@ -1,10 +1,9 @@
-import { useEffect, useState, type ReactNode } from "react";
-import { ThemeContext, type Theme } from "./ThemeContext";
+import { useEffect, useState, type ReactNode } from 'react';
+import { ThemeContext, type Theme } from './ThemeContext';
 
 const LOCAL_STORAGE_THEME_KEY = 'star-wars-user-theme';
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
-
   const [theme, setTheme] = useState<Theme>(() => {
     const savedTheme = localStorage.getItem(LOCAL_STORAGE_THEME_KEY);
 

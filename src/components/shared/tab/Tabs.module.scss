@@ -23,7 +23,9 @@
   color: var(--text-secondary);
   text-transform: uppercase;
   cursor: pointer;
-  transition: color 0.5s, border 0.5s;
+  transition:
+    color 0.5s,
+    border 0.5s;
   text-decoration: none;
 
   svg {

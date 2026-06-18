@@ -42,7 +42,7 @@ const iconsMap: Record<IconName, React.FC<React.SVGProps<SVGSVGElement>>> = {
   night: NightIcon,
   sun: SunIcon,
   flag: FlagIcon,
-  download: DownloadIcon
+  download: DownloadIcon,
 };
 
 interface IconProps {

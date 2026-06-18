@@ -9,19 +9,23 @@ export default function Search() {
   const navigation = useNavigation();
   const isLoading = navigation.state === 'loading';
 
-  return <div className={style.container}>
-    <h1>Star Wars Universe Search</h1>
-    <SearchForm />
-    <Tabs
-      tabs={[
-        { label: "People", value: "people" },
-        { label: "Planets", value: "planets" },
-        { label: "Starships", value: "starships" },
-      ] as const}
-    />
-    <div className={style.resultWrapper}>
-      {isLoading ? <Loader /> : <Outlet />}
+  return (
+    <div className={style.container}>
+      <h1>Star Wars Universe Search</h1>
+      <SearchForm />
+      <Tabs
+        tabs={
+          [
+            { label: 'People', value: 'people' },
+            { label: 'Planets', value: 'planets' },
+            { label: 'Starships', value: 'starships' },
+          ] as const
+        }
+      />
+      <div className={style.resultWrapper}>
+        {isLoading ? <Loader /> : <Outlet />}
+      </div>
+      <SelectedItemsFlyout />
     </div>
-    <SelectedItemsFlyout />
-  </div>
+  );
 }

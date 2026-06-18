@@ -31,10 +31,7 @@ export default function Tabs({ tabs }: TabsProps) {
               `${style.tab} ${isActive ? style.active : ''}`
             }
           >
-            <Icon
-              name={tab.value as IconName}
-              className="center"
-            />
+            <Icon name={tab.value as IconName} className="center" />
             {tab.label}
           </NavLink>
         ))}

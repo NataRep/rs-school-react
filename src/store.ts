@@ -6,7 +6,7 @@ import { starWarsApi } from './store/starWarsApi';
 export const store = configureStore({
   reducer: {
     selected: selectedReducer,
-    [starWarsApi.reducerPath]: starWarsApi.reducer
+    [starWarsApi.reducerPath]: starWarsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(starWarsApi.middleware),

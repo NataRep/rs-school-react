@@ -43,7 +43,6 @@
   }
 }
 
-
 .red {
   background-image: var(--gradient-lightsaber-red);
   color: var(--text-button);
@@ -67,12 +66,10 @@
   color: inherit;
 
   @include hover-supported {
-
     svg {
       opacity: 1;
     }
   }
-
 }
 
 .small {

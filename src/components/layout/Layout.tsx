@@ -6,7 +6,6 @@ import style from './Layout.module.scss';
 import { ThemeButton } from './theme-button/ThemeButton';
 import TopNav from './top-nav/TopNav';
 
-
 export default function Layout() {
   const [shouldCrash, setShouldCrash] = useState(false);
   const [error] = useState<Error | null>(null);
@@ -18,11 +17,13 @@ export default function Layout() {
   }
 
   if (error) {
-    return <div className={style.error}>{error.message}. Try another category.</div>;
+    return (
+      <div className={style.error}>{error.message}. Try another category.</div>
+    );
   }
 
   return (
-    <div className={style.container} >
+    <div className={style.container}>
       <div className={style.row}>
         <Button
           text="Show Error Boundary"
@@ -39,9 +40,7 @@ export default function Layout() {
         </div>
       </div>
 
-      <main className={style.main}>
-        {isLoading ? <Loader /> : <Outlet />}
-      </main>
+      <main className={style.main}>{isLoading ? <Loader /> : <Outlet />}</main>
     </div>
   );
 }

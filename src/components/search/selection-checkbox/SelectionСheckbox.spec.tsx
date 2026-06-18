@@ -16,23 +16,27 @@ jest.mock('react-redux', () => {
     ...actual,
     useDispatch: () => mockDispatch,
     useSelector: <TSelected,>(
-      selector: (state: RootState) => TSelected
+      selector: (state: RootState) => TSelected,
     ): TSelected =>
       selector({
         selected: {
           items: mockSelectedItems,
         },
-        [starWarsApi.reducerPath]: starWarsApi.reducer(undefined, { type: '@@INIT' }),
+        [starWarsApi.reducerPath]: starWarsApi.reducer(undefined, {
+          type: '@@INIT',
+        }),
       } as RootState),
   };
 });
-
 
 jest.mock('../../../store/selectedSlice', () => {
   const actual = jest.requireActual('../../../store/selectedSlice');
   return {
     ...actual,
-    toggleSelected: jest.fn((payload) => ({ type: 'selected/toggleSelected', payload })),
+    toggleSelected: jest.fn((payload) => ({
+      type: 'selected/toggleSelected',
+      payload,
+    })),
   };
 });
 

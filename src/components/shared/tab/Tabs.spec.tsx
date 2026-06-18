@@ -1,8 +1,8 @@
-import { render, screen } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
-import type { RootState } from "../../../store";
-import { starWarsApi } from "../../../store/starWarsApi";
-import Tabs from "./Tabs";
+import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
+import type { RootState } from '../../../store';
+import { starWarsApi } from '../../../store/starWarsApi';
+import Tabs from './Tabs';
 
 jest.mock('../icon/Icon', () => {
   return function MockIcon({ name }: { name: string }) {
@@ -21,11 +21,12 @@ jest.mock('react-redux', () => {
         selected: {
           items: [],
         },
-        [starWarsApi.reducerPath]: starWarsApi.reducer(undefined, { type: '@@INIT' }),
+        [starWarsApi.reducerPath]: starWarsApi.reducer(undefined, {
+          type: '@@INIT',
+        }),
       } as RootState),
   };
 });
-
 
 describe('Tabs Component', () => {
   const mockTabs = [
@@ -38,7 +39,7 @@ describe('Tabs Component', () => {
     render(
       <MemoryRouter>
         <Tabs tabs={mockTabs} />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     mockTabs.forEach((tab) => {
@@ -51,7 +52,7 @@ describe('Tabs Component', () => {
     render(
       <MemoryRouter initialEntries={['/search/planets']}>
         <Tabs tabs={mockTabs} />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     const peopleLink = screen.getByRole('link', { name: /people/i });
@@ -63,9 +64,11 @@ describe('Tabs Component', () => {
 
   it('should remain active when on a sub-route or when query parameters are present ', () => {
     render(
-      <MemoryRouter initialEntries={['/search/planets/tatooine?page=2&sort=desc']}>
+      <MemoryRouter
+        initialEntries={['/search/planets/tatooine?page=2&sort=desc']}
+      >
         <Tabs tabs={mockTabs} />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     const planetsLink = screen.getByRole('link', { name: /planets/i });
@@ -74,5 +77,4 @@ describe('Tabs Component', () => {
     expect(planetsLink.className).toContain('active');
     expect(peopleLink.className).not.toContain('active');
   });
-
-})
+});

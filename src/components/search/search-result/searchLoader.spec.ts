@@ -2,7 +2,10 @@ import type { LoaderFunctionArgs } from 'react-router';
 import { searchResultLoader } from './searchLoader';
 
 describe('searchResultLoader', () => {
-  const createMockArgs = (urlStr: string, params: Record<string, string> = {}): LoaderFunctionArgs => {
+  const createMockArgs = (
+    urlStr: string,
+    params: Record<string, string> = {},
+  ): LoaderFunctionArgs => {
     return {
       params,
       request: new Request(urlStr),
@@ -10,7 +13,9 @@ describe('searchResultLoader', () => {
   };
 
   it('should successfully return default parameters if query parameters are missing', () => {
-    const mockArgs = createMockArgs('http://localhost/search', { categoryName: 'people' });
+    const mockArgs = createMockArgs('http://localhost/search', {
+      categoryName: 'people',
+    });
 
     const result = searchResultLoader(mockArgs);
 
@@ -24,7 +29,7 @@ describe('searchResultLoader', () => {
   it('should correctly parse searchQuery and currentPage from the URL', () => {
     const mockArgs = createMockArgs(
       'http://localhost/search?search=skywalker&page=3',
-      { categoryName: 'planets' }
+      { categoryName: 'planets' },
     );
 
     const result = searchResultLoader(mockArgs);
@@ -37,7 +42,9 @@ describe('searchResultLoader', () => {
   });
 
   it('should throw Response 404 if the category is invalid', () => {
-    const mockArgs = createMockArgs('http://localhost/search', { categoryName: 'unknown-category' });
+    const mockArgs = createMockArgs('http://localhost/search', {
+      categoryName: 'unknown-category',
+    });
 
     expect(() => searchResultLoader(mockArgs)).toThrow();
 

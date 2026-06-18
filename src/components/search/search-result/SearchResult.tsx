@@ -4,7 +4,7 @@ import { useGetDataQuery } from '../../../store/starWarsApi';
 import ErrorNotification from '../../shared/error-notification/ErrorNotification';
 import Loader from '../../shared/loader/Loader';
 import SearchPagination from '../search-pagination/SearchPagination';
-import SearchResultItem from "../search-result-item/SearchResultItem";
+import SearchResultItem from '../search-result-item/SearchResultItem';
 import style from './SearchResult.module.scss';
 
 export default function SearchResult() {
@@ -16,18 +16,18 @@ export default function SearchResult() {
 
   const { data, isLoading, isError, error } = useGetDataQuery({
     category: categoryName || 'people',
-    searchQuery: searchQuery || "",
-    page: currentPage
+    searchQuery: searchQuery || '',
+    page: currentPage,
   });
 
   const getErrorContent = () => {
     if (!error) return null;
 
     if ('status' in error && error.status === 404) {
-      return "The requested category or page was not found.";
+      return 'The requested category or page was not found.';
     }
 
-    return "Something went wrong. Please try again later.";
+    return 'Something went wrong. Please try again later.';
   };
 
   const navigate = useNavigate();
@@ -36,7 +36,7 @@ export default function SearchResult() {
   const closeDetails = () => {
     navigate({
       pathname: `/search/${categoryName}`,
-      search: location.search
+      search: location.search,
     });
   };
 
@@ -68,19 +68,18 @@ export default function SearchResult() {
         )}
       </div>
     );
-  }
+  };
 
   return (
     <div className={style.container} key={location.key}>
-
-      {isLoading && (<div className={style.result}>
-        <Loader />
-      </div>)}
+      {isLoading && (
+        <div className={style.result}>
+          <Loader />
+        </div>
+      )}
 
       {!isLoading && isError && (
-        <ErrorNotification>
-          {getErrorContent()}
-        </ErrorNotification>
+        <ErrorNotification>{getErrorContent()}</ErrorNotification>
       )}
 
       {!isLoading && !isError && data && renderConstant(data)}

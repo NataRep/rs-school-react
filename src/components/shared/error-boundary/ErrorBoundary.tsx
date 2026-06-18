@@ -36,7 +36,7 @@ export default class ErrorBoundary extends Component<Props, State> {
         <div className={style.wrapper}>
           <h2>Oops! Something went wrong.</h2>
           <Button
-            type='button'
+            type="button"
             text="Reload This Page"
             callback={this.handleReload}
             disabled={false}
@@ -55,7 +55,10 @@ export default class ErrorBoundary extends Component<Props, State> {
 export function RouterErrorCatch() {
   const error = useRouteError();
 
-  if ((isRouteErrorResponse(error) || error instanceof Response) && error?.status === 404) {
+  if (
+    (isRouteErrorResponse(error) || error instanceof Response) &&
+    error?.status === 404
+  ) {
     return <NotFoundPage />;
   }
 

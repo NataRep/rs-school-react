@@ -30,10 +30,7 @@ describe('useSearchStorage', () => {
       result.current.saveSearchQuery('vader');
     });
 
-    expect(setItemSpy).toHaveBeenCalledWith(
-      'search-query-key',
-      'vader',
-    );
+    expect(setItemSpy).toHaveBeenCalledWith('search-query-key', 'vader');
 
     expect(localStorage.getItem('search-query-key')).toBe('vader');
   });

@@ -7,7 +7,13 @@ jest.mock('react-router-dom', () => ({
 }));
 
 jest.mock('../shared/button/Button', () => {
-  return function MockButton({ text, callback }: { text: string; callback: () => void }) {
+  return function MockButton({
+    text,
+    callback,
+  }: {
+    text: string;
+    callback: () => void;
+  }) {
     return <button onClick={callback}>{text}</button>;
   };
 });
@@ -17,12 +23,10 @@ describe('NotFoundPage', () => {
     render(<NotFoundPage />);
 
     expect(
-      screen.getByText(/THIS IS NOT THE PAGE YOU ARE LOOKING FOR/i)
+      screen.getByText(/THIS IS NOT THE PAGE YOU ARE LOOKING FOR/i),
     ).toBeInTheDocument();
 
-    expect(
-      screen.getByText(/Go to home/i)
-    ).toBeInTheDocument();
+    expect(screen.getByText(/Go to home/i)).toBeInTheDocument();
   });
 
   it('should navigate to home on button click', () => {

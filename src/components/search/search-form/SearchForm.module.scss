@@ -29,7 +29,10 @@
   &:focus {
     outline: none;
     border: solid 2px var(--color-jedi-glow);
-    box-shadow: 0 0 0 1px rgba(var(--color-light-side-rgb), 0.4) inset, 0 0 12px rgba(var(--color-light-side-rgb), 0.5), 0 0 24px rgba(var(--color-jedi-glow-rgb), 0.3);
+    box-shadow:
+      0 0 0 1px rgba(var(--color-light-side-rgb), 0.4) inset,
+      0 0 12px rgba(var(--color-light-side-rgb), 0.5),
+      0 0 24px rgba(var(--color-jedi-glow-rgb), 0.3);
   }
 
   &::placeholder {

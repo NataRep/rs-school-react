@@ -6,7 +6,6 @@ import style from './NotFoundPage.module.scss';
 export const NotFoundPage = () => {
   const navigate = useNavigate();
 
-
   const handleGoHome = () => {
     navigate('/search/people');
   };
@@ -19,10 +18,13 @@ export const NotFoundPage = () => {
         <div className={style.info}>
           <div className={style.text}>
             <p>THE PATHWAY LOST. THIS SECTOR CONTAINS NO DATA.</p>
-            <p>Return to the beginning of your journey, traveller. The galaxy is vast, but not every path leads to the destination.</p>
+            <p>
+              Return to the beginning of your journey, traveller. The galaxy is
+              vast, but not every path leads to the destination.
+            </p>
           </div>
           <Button
-            type='button'
+            type="button"
             text="Go to home"
             callback={handleGoHome}
             disabled={false}

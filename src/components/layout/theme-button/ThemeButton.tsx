@@ -1,10 +1,10 @@
-import { useTheme } from "../../../hooks/useTheme";
-import Icon from "../../shared/icon/Icon";
-import style from "./ThemeButton.module.scss";
+import { useTheme } from '../../../hooks/useTheme';
+import Icon from '../../shared/icon/Icon';
+import style from './ThemeButton.module.scss';
 
 export const ThemeButton = () => {
   const { theme, toggleTheme } = useTheme();
-  const isDark = theme === "dark";
+  const isDark = theme === 'dark';
 
   return (
     <label className={style.toggle} title="Toggle theme">
@@ -22,7 +22,6 @@ export const ThemeButton = () => {
         <span className={`${style.icon} ${style.night}`}>
           <Icon name="night" />
         </span>
-
       </div>
     </label>
   );

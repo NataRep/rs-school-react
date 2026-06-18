@@ -13,25 +13,24 @@ jest.mock('../icon/Icon', () => {
 
 describe('Button component', () => {
   let mockCallback: jest.Mock;
-  const iconName = 'search'
+  const iconName = 'search';
   const buttonText = 'Click me';
 
   const renderButton = (props = {}) => {
     return render(
       <Button
         text={buttonText}
-        type='button'
+        type="button"
         callback={mockCallback}
         disabled={false}
         {...props}
-      />
+      />,
     );
   };
 
   beforeEach(() => {
     mockCallback = jest.fn();
   });
-
 
   it('should render the button with correct text', () => {
     renderButton();
@@ -54,12 +53,12 @@ describe('Button component', () => {
     const iconElement = screen.getByTestId('mock-icon');
     expect(iconElement).toBeInTheDocument();
     expect(iconElement).toHaveTextContent(iconName);
-  })
+  });
 
   it('should not render icon without prop', () => {
     renderButton();
 
     const iconElement = screen.queryByTestId('mock-icon');
     expect(iconElement).toBeNull();
-  })
+  });
 });

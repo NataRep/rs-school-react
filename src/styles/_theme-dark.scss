@@ -1,24 +1,36 @@
 .appWrapper[data-theme='dark'] {
-  --theme-bg: linear-gradient(180deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4)),
-    radial-gradient(circle at 70% 20%, rgba(3, 117, 161, 0.6) 0%, #00000021 60%),
+  --theme-bg:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4)),
+    radial-gradient(
+      circle at 70% 20%,
+      rgba(3, 117, 161, 0.6) 0%,
+      #00000021 60%
+    ),
     radial-gradient(circle at 25% 60%, rgba(0, 0, 0, 0.123) 0%, #00000021 70%),
-    radial-gradient(circle at 65% 80%, rgba(4, 35, 173, 0.1) 0%, transparent 50%),
+    radial-gradient(
+      circle at 65% 80%,
+      rgba(4, 35, 173, 0.1) 0%,
+      transparent 50%
+    ),
     url(./../assets/bg-dark.png);
 
-  --theme-container-bg: linear-gradient(180deg,
+  --theme-container-bg:
+    linear-gradient(
+      180deg,
       rgba(var(--color-imperial-blue-rgb), 0.65) 0%,
       rgba(var(--color-black-rgb), 0.85) 55%,
-      rgba(0, 0, 0, 0.9) 100%),
-
-    linear-gradient(90deg,
+      rgba(0, 0, 0, 0.9) 100%
+    ),
+    linear-gradient(
+      90deg,
       rgba(var(--color-carbon-rgb), 0.7) 0%,
-      rgba(var(--color-light-side-rgb), 0.10) 50%,
-      rgba(var(--color-carbon-rgb), 0.65) 100%);
+      rgba(var(--color-light-side-rgb), 0.1) 50%,
+      rgba(var(--color-carbon-rgb), 0.65) 100%
+    );
 
   --theme-container-border-rgb: var(--color-grey-rgb);
   --theme-container-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.08) inset,
-    0 10px 40px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset, 0 10px 40px rgba(0, 0, 0, 0.6),
     0 0 40px rgba(var(--color-light-side-rgb), 0.1);
 
   --text-primary: var(--text-white);

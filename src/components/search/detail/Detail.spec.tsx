@@ -17,7 +17,9 @@ jest.mock('../../../store/starWarsApi', () => ({
 
 jest.mock('../../shared/button/Button', () => ({
   __esModule: true,
-  default: ({ callback }: { callback: () => void }) => <button onClick={callback}>Close</button>
+  default: ({ callback }: { callback: () => void }) => (
+    <button onClick={callback}>Close</button>
+  ),
 }));
 
 jest.mock('./../selection-checkbox/SelectionСheckbox', () => {
@@ -52,7 +54,9 @@ describe('DetailView Component with RTK Query', () => {
 
     const skeletons = document.querySelectorAll('.skeleton');
     expect(skeletons.length).toBeGreaterThan(0);
-    expect(screen.queryByRole('heading', { name: /name:/i })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole('heading', { name: /name:/i }),
+    ).not.toBeInTheDocument();
   });
 
   it('should display item fields when data is loaded successfully', () => {
@@ -64,7 +68,9 @@ describe('DetailView Component with RTK Query', () => {
 
     render(<DetailView />);
 
-    const heading = screen.getByRole('heading', { name: /name: luke skywalker/i });
+    const heading = screen.getByRole('heading', {
+      name: /name: luke skywalker/i,
+    });
     expect(heading).toBeInTheDocument();
     expect(screen.getByText(/height/i)).toBeInTheDocument();
     expect(screen.getByText('172')).toBeInTheDocument();
@@ -88,13 +94,17 @@ describe('DetailView Component with RTK Query', () => {
       data: undefined,
       isLoading: false,
       isError: true,
-      error: { status: 500 }
+      error: { status: 500 },
     });
 
     render(<DetailView />);
 
-    expect(screen.getByText('Failed to load details. Please try again.')).toBeInTheDocument();
-    expect(screen.queryByRole('heading', { name: /name:/i })).not.toBeInTheDocument();
+    expect(
+      screen.getByText('Failed to load details. Please try again.'),
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByRole('heading', { name: /name:/i }),
+    ).not.toBeInTheDocument();
   });
 
   it('should render "No data available" if data is empty', () => {

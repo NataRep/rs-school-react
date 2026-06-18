@@ -10,7 +10,13 @@ jest.mock('../../../hooks/useSearchStorage', () => ({
 }));
 
 jest.mock('../../shared/button/Button', () => {
-  return function MockButton({ text, type }: { text: string; type: 'submit' | 'button' }) {
+  return function MockButton({
+    text,
+    type,
+  }: {
+    text: string;
+    type: 'submit' | 'button';
+  }) {
     return <button type={type}>{text}</button>;
   };
 });
@@ -29,10 +35,12 @@ describe('SearchForm Component', () => {
     render(
       <MemoryRouter initialEntries={['/search?search=Yoda&page=3']}>
         <SearchForm />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
-    const input = screen.getByPlaceholderText(/Find a character/i) as HTMLInputElement;
+    const input = screen.getByPlaceholderText(
+      /Find a character/i,
+    ) as HTMLInputElement;
     expect(input.value).toBe('Yoda');
   });
 
@@ -41,7 +49,7 @@ describe('SearchForm Component', () => {
       <MemoryRouter initialEntries={['/search']}>
         <SearchForm />
         <URLDebugger />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     const input = screen.getByPlaceholderText(/Find a character/i);
@@ -63,7 +71,7 @@ describe('SearchForm Component', () => {
       <MemoryRouter initialEntries={['/search?search=Obi-Wan&page=2']}>
         <SearchForm />
         <URLDebugger />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     const input = screen.getByPlaceholderText(/Find a character/i);
@@ -76,5 +84,4 @@ describe('SearchForm Component', () => {
     expect(urlParams).not.toContain('search=');
     expect(urlParams).toContain('page=1');
   });
-
 });

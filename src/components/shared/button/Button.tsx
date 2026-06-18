@@ -1,4 +1,4 @@
-import Icon, { type IconName } from "../icon/Icon";
+import Icon, { type IconName } from '../icon/Icon';
 import style from './Button.module.scss';
 
 interface ButtonProps {
@@ -16,7 +16,7 @@ interface ButtonProps {
 function renderIcon(
   icon: IconName | undefined,
   iconPosition: 'left' | 'right' | undefined,
-  current: 'left' | 'right'
+  current: 'left' | 'right',
 ) {
   if (!icon || iconPosition !== current) return null;
 
@@ -32,16 +32,16 @@ export default function Button({
   icon,
   iconPosition = 'left',
   variant = 'blue',
-  title = ""
+  title = '',
 }: ButtonProps) {
+  const variantClasses = variant
+    .split(' ')
+    .map((v) => style[v])
+    .filter(Boolean);
 
-  const variantClasses = variant.split(" ").map(v => style[v]).filter(Boolean);
-
-  const classes = [
-    ...variantClasses,
-    style.button,
-    className,
-  ].filter(Boolean).join(' ');
+  const classes = [...variantClasses, style.button, className]
+    .filter(Boolean)
+    .join(' ');
 
   return (
     <button

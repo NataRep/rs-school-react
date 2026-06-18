@@ -1,12 +1,14 @@
 import { useSearchParams } from 'react-router-dom';
-import Button from "../../shared/button/Button";
+import Button from '../../shared/button/Button';
 import style from './SearchPagination.module.scss';
 
 export interface SearchPaginationProps {
   totalPages: number;
 }
 
-export default function SearchPagination({ totalPages }: SearchPaginationProps) {
+export default function SearchPagination({
+  totalPages,
+}: SearchPaginationProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = Number(searchParams.get('page')) || 1;
 
@@ -30,23 +32,25 @@ export default function SearchPagination({ totalPages }: SearchPaginationProps) 
 
   if (totalPages <= 1) return null;
 
-  return <div className={style.pagination}>
-    <Button
-      text="Prev"
-      type='button'
-      variant="blue"
-      callback={goToPrevPage}
-      disabled={currentPage === 1}
-    />
-    <span>
-      {currentPage} / {totalPages}
-    </span>
-    <Button
-      text="Next"
-      type='button'
-      variant="blue"
-      callback={goToNextPage}
-      disabled={currentPage === totalPages}
-    />
-  </div>
+  return (
+    <div className={style.pagination}>
+      <Button
+        text="Prev"
+        type="button"
+        variant="blue"
+        callback={goToPrevPage}
+        disabled={currentPage === 1}
+      />
+      <span>
+        {currentPage} / {totalPages}
+      </span>
+      <Button
+        text="Next"
+        type="button"
+        variant="blue"
+        callback={goToNextPage}
+        disabled={currentPage === totalPages}
+      />
+    </div>
+  );
 }

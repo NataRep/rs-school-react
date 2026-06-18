@@ -1,32 +1,32 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from '@testing-library/react';
 import {
   createMemoryRouter,
   RouterProvider,
   useRouteError,
-} from "react-router-dom";
+} from 'react-router-dom';
 
-import { useGetDataQuery } from "../../../store/starWarsApi";
-import SearchResult from "./SearchResult";
+import { useGetDataQuery } from '../../../store/starWarsApi';
+import SearchResult from './SearchResult';
 
-jest.mock("../../../store/starWarsApi", () => ({
+jest.mock('../../../store/starWarsApi', () => ({
   useGetDataQuery: jest.fn(),
 }));
 
-jest.mock("../search-result-item/SearchResultItem", () => ({
+jest.mock('../search-result-item/SearchResultItem', () => ({
   __esModule: true,
   default: ({ item }: { item: { name?: string; title?: string } }) => (
     <div>{item.name || item.title}</div>
   ),
 }));
 
-jest.mock("../search-pagination/SearchPagination", () => ({
+jest.mock('../search-pagination/SearchPagination', () => ({
   __esModule: true,
   default: ({ totalPages }: { totalPages: number }) => (
     <div>{`Pagination ${totalPages}`}</div>
   ),
 }));
 
-jest.mock("../../shared/loader/Loader", () => ({
+jest.mock('../../shared/loader/Loader', () => ({
   __esModule: true,
   default: () => <div>Loading...</div>,
 }));
@@ -45,7 +45,7 @@ function TestErrorBoundary() {
   return <div>Unknown error</div>;
 }
 
-describe("SearchResult Component", () => {
+describe('SearchResult Component', () => {
   const mockedUseGetDataQuery = useGetDataQuery as jest.Mock;
 
   const mockSuccessData = {
@@ -57,16 +57,16 @@ describe("SearchResult Component", () => {
   };
 
   const renderWithRouter = (
-    initialPath = "/search/people",
+    initialPath = '/search/people',
     loaderData = {
-      searchQuery: "",
+      searchQuery: '',
       currentPage: 1,
-      categoryName: "people",
-    }
+      categoryName: 'people',
+    },
   ) => {
     const routes = [
       {
-        path: "/search/:categoryName",
+        path: '/search/:categoryName',
         element: <SearchResult />,
         errorElement: <TestErrorBoundary />,
         loader: async () => loaderData,
@@ -91,7 +91,7 @@ describe("SearchResult Component", () => {
     });
   });
 
-  it("should render items from api response", async () => {
+  it('should render items from api response', async () => {
     renderWithRouter();
 
     expect(await screen.findByText(/Character 0/i)).toBeInTheDocument();
@@ -101,7 +101,7 @@ describe("SearchResult Component", () => {
     expect(resultItems).toHaveLength(9);
   });
 
-  it("should render user message if data is empty", async () => {
+  it('should render user message if data is empty', async () => {
     mockedUseGetDataQuery.mockReturnValue({
       data: {
         results: [],
@@ -115,11 +115,11 @@ describe("SearchResult Component", () => {
     renderWithRouter();
 
     expect(
-      await screen.findByText(/Nothing found matching your request/i)
+      await screen.findByText(/Nothing found matching your request/i),
     ).toBeInTheDocument();
   });
 
-  it("should render loader while loading", async () => {
+  it('should render loader while loading', async () => {
     mockedUseGetDataQuery.mockReturnValue({
       data: undefined,
       isLoading: true,
@@ -132,7 +132,7 @@ describe("SearchResult Component", () => {
     expect(await screen.findByText(/Loading/i)).toBeInTheDocument();
   });
 
-  it("should render error message", async () => {
+  it('should render error message', async () => {
     mockedUseGetDataQuery.mockReturnValue({
       data: undefined,
       isLoading: false,
@@ -145,33 +145,31 @@ describe("SearchResult Component", () => {
     renderWithRouter();
 
     expect(
-      await screen.findByText(
-        /Something went wrong. Please try again later/i
-      )
+      await screen.findByText(/Something went wrong. Please try again later/i),
     ).toBeInTheDocument();
   });
 
-  it("should render correct pagination count", async () => {
-    renderWithRouter("/search/people?page=2", {
-      searchQuery: "",
+  it('should render correct pagination count', async () => {
+    renderWithRouter('/search/people?page=2', {
+      searchQuery: '',
       currentPage: 2,
-      categoryName: "people",
+      categoryName: 'people',
     });
 
     expect(await screen.findByText(/Pagination 3/i)).toBeInTheDocument();
   });
 
-  it("should call query hook with correct params", async () => {
-    renderWithRouter("/search/starships?page=3", {
-      searchQuery: "falcon",
+  it('should call query hook with correct params', async () => {
+    renderWithRouter('/search/starships?page=3', {
+      searchQuery: 'falcon',
       currentPage: 3,
-      categoryName: "starships",
+      categoryName: 'starships',
     });
 
     await waitFor(() => {
       expect(mockedUseGetDataQuery).toHaveBeenCalledWith({
-        category: "starships",
-        searchQuery: "falcon",
+        category: 'starships',
+        searchQuery: 'falcon',
         page: 3,
       });
     });

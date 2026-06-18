@@ -9,10 +9,10 @@ export const detailLoader = ({ params }: LoaderArgs) => {
   const { categoryName, id } = params;
 
   if (!categoryName || !id) {
-    throw new Response("Not Found", { status: 404 });
+    throw new Response('Not Found', { status: 404 });
   }
   return {
     categoryName,
-    id
+    id,
   };
 };

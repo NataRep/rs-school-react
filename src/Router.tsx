@@ -35,32 +35,38 @@ export const router = createBrowserRouter(
               element: <SearchResult />,
               HydrateFallback: () => <Loader />,
               loader: searchResultLoader,
-              shouldRevalidate: ({ currentParams, nextParams, currentUrl, nextUrl }) => {
-                if (currentParams.categoryName !== nextParams.categoryName) return true;
+              shouldRevalidate: ({
+                currentParams,
+                nextParams,
+                currentUrl,
+                nextUrl,
+              }) => {
+                if (currentParams.categoryName !== nextParams.categoryName)
+                  return true;
                 if (currentUrl.search !== nextUrl.search) return true;
 
                 return false;
               },
               children: [
                 {
-                  path: ":id",
+                  path: ':id',
                   element: <DetailView />,
                   loader: detailLoader,
                   HydrateFallback: () => <Loader />,
-                }
-              ]
+                },
+              ],
             },
           ],
         },
         {
           path: 'about',
           element: <About />,
-        }
+        },
       ],
     },
-    { path: "*", element: <NotFoundPage /> }
+    { path: '*', element: <NotFoundPage /> },
   ],
   {
     basename: process.env.NODE_ENV === 'test' ? '/' : '/rs-school-react',
-  }
+  },
 );

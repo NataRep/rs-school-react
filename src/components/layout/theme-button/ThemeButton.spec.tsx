@@ -1,7 +1,7 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { useTheme } from "../../../hooks/useTheme";
-import { ThemeButton } from "./ThemeButton";
+import { useTheme } from '../../../hooks/useTheme';
+import { ThemeButton } from './ThemeButton';
 
 jest.mock('../../shared/icon/Icon', () => {
   return function MockIcon({ name }: { name: string }) {
@@ -40,5 +40,5 @@ describe('ThemeButton component', () => {
     await userEvent.click(checkbox);
 
     expect(mockToggleTheme).toHaveBeenCalledTimes(1);
-  })
-})
+  });
+});

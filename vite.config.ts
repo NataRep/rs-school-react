@@ -13,11 +13,11 @@ export default defineConfig({
   base: '/rs-school-react/',
   server: {
     proxy: {
-      "/api": {
-        target: "https://swapi.dev/api",
+      '/api': {
+        target: 'https://swapi.dev/api',
         changeOrigin: true,
         secure: false,
-        rewrite: (path) => path.replace(/^\/api/, ""),
+        rewrite: (path) => path.replace(/^\/api/, ''),
       },
     },
   },
@@ -28,7 +28,7 @@ export default defineConfig({
           @use "@/styles/variables.scss" as *;
           @use "@/styles/theme-dark.scss" as *;
           @use "@/styles/theme-light.scss" as *;
-          @use "@/styles/mixins.scss" as *;`
+          @use "@/styles/mixins.scss" as *;`,
       },
     },
   },

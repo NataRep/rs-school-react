@@ -34,5 +34,4 @@ describe('detailLoader', () => {
       id: '1',
     });
   });
-
 });

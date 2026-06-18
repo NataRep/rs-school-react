@@ -32,7 +32,10 @@ function DetailSkeleton({ closeDetails }: { closeDetails: () => void }) {
     <>
       <div className={style.card}>
         <div className={style.row}>
-          <span className="skeleton" style={{ width: '50%', height: '20px' }}></span>
+          <span
+            className="skeleton"
+            style={{ width: '50%', height: '20px' }}
+          ></span>
           <Button
             text=""
             type="button"
@@ -48,7 +51,10 @@ function DetailSkeleton({ closeDetails }: { closeDetails: () => void }) {
         <ul className={style.info}>
           {Array.from({ length: 8 }).map((_, index) => (
             <li key={index}>
-              <span className="skeleton" style={{ width: '100%', height: '15px' }}></span>
+              <span
+                className="skeleton"
+                style={{ width: '100%', height: '15px' }}
+              ></span>
             </li>
           ))}
         </ul>
@@ -63,11 +69,14 @@ export default function DetailView() {
     categoryName: string;
     id: string;
   };
-  const { data, isLoading, isError, error } = useGetEntityDetailsQuery({ category: categoryName, id });
+  const { data, isLoading, isError, error } = useGetEntityDetailsQuery({
+    category: categoryName,
+    id,
+  });
 
   const getErrorContent = () => {
     if (!error) return null;
-    return "Failed to load details. Please try again.";
+    return 'Failed to load details. Please try again.';
   };
 
   const wrapperClass = `${style.wrapper} ${style.open}`;
@@ -79,10 +88,14 @@ export default function DetailView() {
       {!isLoading && isError && (
         <div className={style.errorBlock}>
           <div className={style.row}>
-            <ErrorNotification>
-              {getErrorContent()}
-            </ErrorNotification>
-            <Button text="" type="button" callback={closeDetails} variant="base" icon="close" />
+            <ErrorNotification>{getErrorContent()}</ErrorNotification>
+            <Button
+              text=""
+              type="button"
+              callback={closeDetails}
+              variant="base"
+              icon="close"
+            />
           </div>
         </div>
       )}
@@ -113,7 +126,13 @@ export default function DetailView() {
       {!isLoading && !isError && !data && (
         <div className={style.row}>
           <div>No data available</div>
-          <Button text="" type="button" callback={closeDetails} variant="base" icon="close" />
+          <Button
+            text=""
+            type="button"
+            callback={closeDetails}
+            variant="base"
+            icon="close"
+          />
         </div>
       )}
     </div>

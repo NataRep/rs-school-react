@@ -3,7 +3,13 @@ import * as NavigationUtils from '../../../utils/navigation';
 import ErrorBoundary from './ErrorBoundary';
 
 jest.mock('../button/Button', () => {
-  return function MockButton({ text, callback }: { text: string; callback: () => void }) {
+  return function MockButton({
+    text,
+    callback,
+  }: {
+    text: string;
+    callback: () => void;
+  }) {
     return <button onClick={callback}>{text}</button>;
   };
 });
@@ -19,7 +25,7 @@ describe('ErrorBoundary Component', () => {
   let consoleSpy: jest.SpyInstance;
 
   beforeAll(() => {
-    consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => { });
+    consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
   });
 
   afterAll(() => {
@@ -30,7 +36,7 @@ describe('ErrorBoundary Component', () => {
     render(
       <ErrorBoundary>
         <ProblematicChild shouldThrow={false} />
-      </ErrorBoundary>
+      </ErrorBoundary>,
     );
     expect(screen.getByText('Everything is fine')).toBeInTheDocument();
   });
@@ -39,36 +45,42 @@ describe('ErrorBoundary Component', () => {
     render(
       <ErrorBoundary>
         <ProblematicChild shouldThrow={true} />
-      </ErrorBoundary>
+      </ErrorBoundary>,
     );
 
     expect(screen.getByText(/Oops! Something went wrong/i)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Reload This Page/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /Reload This Page/i }),
+    ).toBeInTheDocument();
   });
 
   it('should log the error to the console when caught', () => {
     render(
       <ErrorBoundary>
         <ProblematicChild shouldThrow={true} />
-      </ErrorBoundary>
+      </ErrorBoundary>,
     );
 
     expect(consoleSpy).toHaveBeenCalledWith(
       expect.stringContaining('ErrorBoundary caught an error:'),
-      expect.any(Error)
+      expect.any(Error),
     );
   });
 
   it('should trigger window.location.reload when the reload button is clicked', () => {
-    const reloadSpy = jest.spyOn(NavigationUtils, 'reloadPage').mockImplementation(() => { });
+    const reloadSpy = jest
+      .spyOn(NavigationUtils, 'reloadPage')
+      .mockImplementation(() => {});
 
     render(
       <ErrorBoundary>
         <ProblematicChild shouldThrow={true} />
-      </ErrorBoundary>
+      </ErrorBoundary>,
     );
 
-    const reloadButton = screen.getByRole('button', { name: /Reload This Page/i });
+    const reloadButton = screen.getByRole('button', {
+      name: /Reload This Page/i,
+    });
     reloadButton.click();
 
     expect(reloadSpy).toHaveBeenCalledTimes(1);
