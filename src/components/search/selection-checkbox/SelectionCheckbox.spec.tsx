@@ -4,7 +4,7 @@ import type { Person } from '../../../store/api-models';
 import { toggleSelected } from '../../../store/selectedSlice';
 import { starWarsApi } from '../../../store/starWarsApi';
 import type { SearchItem } from '../search-result-item/SearchResultItem';
-import SelectionCheckbox from './SelectionСheckbox';
+import SelectionCheckbox from './SelectionCheckbox';
 
 const mockDispatch = jest.fn();
 let mockSelectedItems: SearchItem[] = [];

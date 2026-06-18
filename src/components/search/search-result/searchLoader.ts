@@ -1,15 +1,5 @@
-import type { LoaderFunctionArgs } from 'react-router'; // в v7 импортируем из 'react-router'
-import type { Person, Planet, Starship } from '../../../store/api-models';
+import type { LoaderFunctionArgs } from 'react-router';
 import type { CategoryMap } from '../../../store/starWarsApi';
-
-export interface SearchLoaderData {
-  deferredData: Promise<{
-    items: (Person | Planet | Starship)[];
-    totalPages: number;
-  }>;
-  searchQuery: string;
-  currentPage: number;
-}
 
 const VALID_CATEGORIES: (keyof CategoryMap)[] = [
   'people',

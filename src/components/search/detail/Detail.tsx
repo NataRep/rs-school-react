@@ -1,16 +1,13 @@
 import { useLoaderData, useOutletContext } from 'react-router-dom';
-import type { Person, Planet, Starship } from '../../../store/api-models';
 import { useGetEntityDetailsQuery } from '../../../store/starWarsApi';
 import { formatKey } from '../../../utils/formatKey';
 import { removeTechnicalFields } from '../../../utils/removeTechnicalField';
 import Button from '../../shared/button/Button';
 import ErrorNotification from '../../shared/error-notification/ErrorNotification';
-import SelectionCheckbox from '../selection-checkbox/SelectionСheckbox';
+import SelectionCheckbox from '../selection-checkbox/SelectionCheckbox';
 import style from './Detail.module.scss';
 
 interface DetailContextType {
-  item?: Person | Planet | Starship | undefined;
-  isOpen: boolean;
   closeDetails: () => void;
 }
 
