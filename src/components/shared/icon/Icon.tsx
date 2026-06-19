@@ -1,18 +1,18 @@
 import style from './Icon.module.scss';
 
-import CloseIcon from '@/assets/icons/close.svg?react';
-import PlanetsIcon from '@/assets/icons/death-star.svg?react';
-import DownloadIcon from '@/assets/icons/download.svg?react';
-import ErrorIcon from '@/assets/icons/error.svg?react';
-import FlagIcon from '@/assets/icons/flag.svg?react';
-import InfoIcon from '@/assets/icons/info.svg?react';
-import LogoIcon from '@/assets/icons/logo.svg?react';
-import NightIcon from '@/assets/icons/night.svg?react';
-import PeopleIcon from '@/assets/icons/people.svg?react';
-import ReloadIcon from '@/assets/icons/reload.svg?react';
-import SearchIcon from '@/assets/icons/search.svg?react';
-import StarshipsIcon from '@/assets/icons/starship.svg?react';
-import SunIcon from '@/assets/icons/sun.svg?react';
+import CloseIcon from '@/assets/icons/close.svg';
+import PlanetsIcon from '@/assets/icons/death-star.svg';
+import DownloadIcon from '@/assets/icons/download.svg';
+import ErrorIcon from '@/assets/icons/error.svg';
+import FlagIcon from '@/assets/icons/flag.svg';
+import InfoIcon from '@/assets/icons/info.svg';
+import LogoIcon from '@/assets/icons/logo.svg';
+import NightIcon from '@/assets/icons/night.svg';
+import PeopleIcon from '@/assets/icons/people.svg';
+import ReloadIcon from '@/assets/icons/reload.svg';
+import SearchIcon from '@/assets/icons/search.svg';
+import StarshipsIcon from '@/assets/icons/starship.svg';
+import SunIcon from '@/assets/icons/sun.svg';
 
 export type IconName =
   | 'search'
@@ -29,7 +29,7 @@ export type IconName =
   | 'flag'
   | 'download';
 
-const iconsMap: Record<IconName, React.FC<React.SVGProps<SVGSVGElement>>> = {
+const iconsMap: Record<IconName, { src: string }> = {
   search: SearchIcon,
   close: CloseIcon,
   people: PeopleIcon,
@@ -50,8 +50,23 @@ interface IconProps {
   className?: string;
 }
 
-export default function Icon({ name }: IconProps) {
-  const SelectedIcon = iconsMap[name];
+export default function Icon({ name, className = '' }: IconProps) {
+  const iconData = iconsMap[name];
 
-  return <SelectedIcon className={`${style.icon}`} />;
+  if (!iconData) return null;
+
+  return (
+    <span
+      className={`${style.icon} ${className}`}
+      style={{
+        WebkitMaskImage: `url(${iconData.src})`,
+        maskImage: `url(${iconData.src})`,
+        WebkitMaskRepeat: 'no-repeat',
+        maskRepeat: 'no-repeat',
+        WebkitMaskPosition: 'center',
+        maskPosition: 'center',
+        display: 'inline-block',
+      }}
+    />
+  );
 }

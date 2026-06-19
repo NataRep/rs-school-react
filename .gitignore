@@ -1,25 +1,41 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
+# Специфично для Next.js (Новое!)
+.next/
+out/
 
-node_modules
-dist
-dist-ssr
-coverage
+# Логи и сборка
+node_modules/
+dist/
+coverage/
 *.local
+.vcm_meta
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+# Кэш сборщиков и инструментов
+.turbo/
+.eslintcache
+
+# Файлы операционной системы и редакторов
 .DS_Store
+Thumbs.db
+.idea/
+.vscode/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+
+# Локальные переменные окружения
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Логи ошибок
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Папка конфигурации Husky
+.husky/_/

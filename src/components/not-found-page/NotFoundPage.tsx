@@ -1,5 +1,6 @@
+import notFoundImg from '@/assets/images/not-found.png';
+import Image from 'next/image';
 import { useNavigate } from 'react-router-dom';
-import notFoundImg from '../../assets/not-found.png';
 import Button from '../shared/button/Button';
 import style from './NotFoundPage.module.scss';
 
@@ -14,7 +15,12 @@ export const NotFoundPage = () => {
     <main className={style.main}>
       <h1>404 - THIS IS NOT THE PAGE YOU ARE LOOKING FOR</h1>
       <div className={style.content}>
-        <img src={notFoundImg} alt="Not found" className={style.image} />
+        <Image
+          src={notFoundImg.src}
+          alt="Not found"
+          className={style.image}
+          priority
+        />
         <div className={style.info}>
           <div className={style.text}>
             <p>THE PATHWAY LOST. THIS SECTOR CONTAINS NO DATA.</p>

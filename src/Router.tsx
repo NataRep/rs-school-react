@@ -67,6 +67,6 @@ export const router = createBrowserRouter(
     { path: '*', element: <NotFoundPage /> },
   ],
   {
-    basename: process.env.NODE_ENV === 'test' ? '/' : '/rs-school-react',
+    basename: '/',
   },
 );
