@@ -20,14 +20,11 @@
       fill: currentColor;
     }
   }
-
 }
 
 .checkbox:checked {
-  &+.label {
-
+  & + .label {
     svg {
-
       path {
         fill: var(--color-energy-yellow);
         stroke: var(--color-energy-yellow);

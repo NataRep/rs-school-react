@@ -18,7 +18,8 @@
   }
 }
 
-.blue {
+.blue,
+.blue-round {
   background-image: var(--gradient-lightsaber-blue);
   color: var(--text-button);
 
@@ -65,10 +66,12 @@
   color: inherit;
 
   @include hover-supported {
-
     svg {
       opacity: 1;
     }
   }
+}
 
+.small {
+  padding: 0.25rem;
 }

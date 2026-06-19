@@ -14,10 +14,14 @@ const selectedSlice = createSlice({
   initialState,
   reducers: {
     toggleSelected: (state, action: PayloadAction<SearchItem>) => {
-      const itemExists = state.items.find(item => item.name === action.payload.name);
+      const itemExists = state.items.find(
+        (item) => item.name === action.payload.name,
+      );
 
       if (itemExists) {
-        state.items = state.items.filter(item => item.name !== action.payload.name);
+        state.items = state.items.filter(
+          (item) => item.name !== action.payload.name,
+        );
       } else {
         state.items.push(action.payload);
       }
@@ -28,8 +32,8 @@ const selectedSlice = createSlice({
     clearSelected: (state) => {
       state.items = [];
       localStorage.removeItem('sw_selected_items');
-    }
-  }
+    },
+  },
 });
 
 export const { toggleSelected, clearSelected } = selectedSlice.actions;

@@ -4,7 +4,6 @@ import { ThemeProvider } from './ThemeProvider';
 
 describe('ThemeProvider', () => {
   it('should return the default "dark" theme', () => {
-
     const { result } = renderHook(() => useTheme(), {
       wrapper: ThemeProvider,
     });

@@ -20,10 +20,11 @@
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   box-shadow: var(--theme-container-shadow);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
   color: var(--text-primary);
   position: relative;
-
 
   @media (max-width: 1080px) {
     width: auto;

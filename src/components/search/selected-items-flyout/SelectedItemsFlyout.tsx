@@ -1,8 +1,8 @@
-import { useDispatch, useSelector } from "react-redux";
-import type { RootState } from "../../../store";
-import { clearSelected } from "../../../store/selectedSlice";
-import { handleDownload } from "../../../utils/handlerDownload";
-import Button from "../../shared/button/Button";
+import { useDispatch, useSelector } from 'react-redux';
+import type { RootState } from '../../../store';
+import { clearSelected } from '../../../store/selectedSlice';
+import { handleDownload } from '../../../utils/handlerDownload';
+import Button from '../../shared/button/Button';
 import style from './SelectedItemsFlyout.module.scss';
 
 export const SelectedItemsFlyout = () => {
@@ -15,11 +15,13 @@ export const SelectedItemsFlyout = () => {
 
   return (
     <div className={style.wrapper}>
-      <div className={style.count}><span>Selected items:</span> {selectedItems.length}</div>
+      <div className={style.count}>
+        <span>Selected items:</span> {selectedItems.length}
+      </div>
       <div className={style.buttonsRow}>
         <Button
           text="Download"
-          type='button'
+          type="button"
           variant="blue"
           icon="download"
           iconPosition="left"
@@ -28,7 +30,7 @@ export const SelectedItemsFlyout = () => {
         />
         <Button
           text="Unselect all"
-          type='button'
+          type="button"
           variant="red"
           icon="close"
           iconPosition="left"

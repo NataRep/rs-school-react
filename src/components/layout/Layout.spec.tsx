@@ -10,7 +10,7 @@ jest.mock('react-router-dom', () => ({
 }));
 
 jest.mock('../search/selected-items-flyout/SelectedItemsFlyout', () => ({
-  SelectedItemsFlyout: () => <div data-testid="flyout" />
+  SelectedItemsFlyout: () => <div data-testid="flyout" />,
 }));
 
 interface MockButtonProps {
@@ -22,29 +22,29 @@ jest.mock('../shared/button/Button', () => ({
   __esModule: true,
   default: ({ text, callback }: MockButtonProps) => (
     <button onClick={callback}>{text}</button>
-  )
+  ),
 }));
 
 jest.mock('./theme-button/ThemeButton', () => ({
   __esModule: true,
-  ThemeButton: () => <button data-testid="mock-theme">Theme</button>
+  ThemeButton: () => <button data-testid="mock-theme">Theme</button>,
 }));
 
 jest.mock('./top-nav/TopNav', () => ({
   __esModule: true,
-  default: () => <nav data-testid="mock-topnav">Navigation</nav>
+  default: () => <nav data-testid="mock-topnav">Navigation</nav>,
 }));
 
 jest.mock('../shared/loader/Loader', () => ({
   __esModule: true,
-  default: () => <div data-testid="mock-loader">Loading...</div>
+  default: () => <div data-testid="mock-loader">Loading...</div>,
 }));
 
 describe('Layout Component', () => {
   let consoleSpy: jest.SpyInstance;
 
   beforeAll(() => {
-    consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => { });
+    consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
   });
 
   afterAll(() => {
@@ -62,10 +62,13 @@ describe('Layout Component', () => {
       <MemoryRouter initialEntries={['/']}>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route index element={<div data-testid="child-page">Child Content</div>} />
+            <Route
+              index
+              element={<div data-testid="child-page">Child Content</div>}
+            />
           </Route>
         </Routes>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(screen.getByTestId('mock-loader')).toBeInTheDocument();
@@ -77,10 +80,13 @@ describe('Layout Component', () => {
       <MemoryRouter initialEntries={['/']}>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route index element={<div data-testid="child-page">Child Content</div>} />
+            <Route
+              index
+              element={<div data-testid="child-page">Child Content</div>}
+            />
           </Route>
         </Routes>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(screen.queryByTestId('mock-loader')).not.toBeInTheDocument();
@@ -91,7 +97,7 @@ describe('Layout Component', () => {
     render(
       <MemoryRouter>
         <Layout />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(screen.getByRole('main')).toBeInTheDocument();
@@ -104,10 +110,13 @@ describe('Layout Component', () => {
       <MemoryRouter initialEntries={['/']}>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route index element={<div data-testid="child-page">Child Content</div>} />
+            <Route
+              index
+              element={<div data-testid="child-page">Child Content</div>}
+            />
           </Route>
         </Routes>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(screen.getByTestId('child-page')).toBeInTheDocument();
@@ -118,7 +127,7 @@ describe('Layout Component', () => {
     render(
       <MemoryRouter>
         <Layout />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     const crashButton = screen.getByText('Show Error Boundary');

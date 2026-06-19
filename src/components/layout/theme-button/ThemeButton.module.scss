@@ -43,7 +43,9 @@
     :global(svg) {
       width: 14px;
       height: 14px;
-      transition: color 0.3s ease, filter 0.3s ease;
+      transition:
+        color 0.3s ease,
+        filter 0.3s ease;
     }
   }
 
@@ -58,14 +60,18 @@
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 14px;
     z-index: 1;
-    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    transition:
+      transform 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+      background-color 0.3s ease,
+      box-shadow 0.3s ease,
+      border-color 0.3s ease;
   }
 
   &:hover .slider {
     border-color: rgba(255, 255, 255, 0.2);
   }
 
-  .input:not(:checked)+.slider {
+  .input:not(:checked) + .slider {
     .sun :global(svg) {
       fill: none;
       fill: var(--color-sand-shadow);
@@ -84,7 +90,7 @@
     }
   }
 
-  .input:checked+.slider {
+  .input:checked + .slider {
     .sun :global(svg) {
       color: rgba(255, 255, 255, 0.25);
       filter: none;

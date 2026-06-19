@@ -1,12 +1,12 @@
-import { useState } from "react";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import { useSearchStorage } from "../../../hooks/useSearchStorage";
-import Button from "../../shared/button/Button";
-import style from "./SearchForm.module.scss";
+import { useState } from 'react';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchStorage } from '../../../hooks/useSearchStorage';
+import Button from '../../shared/button/Button';
+import style from './SearchForm.module.scss';
 
 export default function SearchForm() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const queryFromUrl = searchParams.get('search') || "";
+  const queryFromUrl = searchParams.get('search') || '';
   const [searchQuery, setSearchQuery] = useState(queryFromUrl);
   const [prevQueryFromUrl, setPrevQueryFromUrl] = useState(queryFromUrl);
   const { saveSearchQuery } = useSearchStorage();
@@ -22,7 +22,7 @@ export default function SearchForm() {
 
       navigate({
         pathname: basePath,
-        search: location.search
+        search: location.search,
       });
     }
   };

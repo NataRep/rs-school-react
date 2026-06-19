@@ -2,14 +2,16 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import SearchPagination from './SearchPagination';
 
-
 function renderWithRouter(initialPage = '1', totalPages = 5) {
   return render(
     <MemoryRouter initialEntries={[`/?page=${initialPage}`]}>
       <Routes>
-        <Route path="/" element={<SearchPagination totalPages={totalPages} />} />
+        <Route
+          path="/"
+          element={<SearchPagination totalPages={totalPages} />}
+        />
       </Routes>
-    </MemoryRouter>
+    </MemoryRouter>,
   );
 }
 

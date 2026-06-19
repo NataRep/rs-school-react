@@ -1,22 +1,22 @@
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { useDispatch, useSelector } from "react-redux";
-import type { Person, Planet } from "../../../services/api-service/api-models";
-import { clearSelected } from "../../../store/selectedSlice";
-import { handleDownload } from "../../../utils/handlerDownload";
-import { SelectedItemsFlyout } from "./SelectedItemsFlyout";
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { useDispatch, useSelector } from 'react-redux';
+import type { Person, Planet } from '../../../store/api-models';
+import { clearSelected } from '../../../store/selectedSlice';
+import { handleDownload } from '../../../utils/handlerDownload';
+import { SelectedItemsFlyout } from './SelectedItemsFlyout';
 
-jest.mock("react-redux", () => ({
+jest.mock('react-redux', () => ({
   useDispatch: jest.fn(),
   useSelector: jest.fn(),
 }));
 
-jest.mock("../../../utils/handlerDownload", () => ({
+jest.mock('../../../utils/handlerDownload', () => ({
   handleDownload: jest.fn(),
 }));
 
-jest.mock("../../../store/selectedSlice", () => ({
-  clearSelected: jest.fn(() => ({ type: "selected/clearSelected" })),
+jest.mock('../../../store/selectedSlice', () => ({
+  clearSelected: jest.fn(() => ({ type: 'selected/clearSelected' })),
 }));
 
 describe('SelectedItemsFlyout component', () => {
@@ -38,14 +38,16 @@ describe('SelectedItemsFlyout component', () => {
     url: 'https://swapi.dev/api/planets/2/',
   } as Planet;
 
-  const mockData = [mockPerson, mockPlanet]
+  const mockData = [mockPerson, mockPlanet];
 
   beforeEach(() => {
     mockDispatch = jest.fn();
-    ((useDispatch as unknown as jest.Mock).mockReturnValue(mockDispatch)).mockReturnValue(mockDispatch);
+    (useDispatch as unknown as jest.Mock)
+      .mockReturnValue(mockDispatch)
+      .mockReturnValue(mockDispatch);
   });
 
-  afterEach(() => jest.clearAllMocks())
+  afterEach(() => jest.clearAllMocks());
 
   it('should not render flyout if no items are selected', () => {
     (useSelector as unknown as jest.Mock).mockReturnValue([]);
@@ -65,18 +67,18 @@ describe('SelectedItemsFlyout component', () => {
     expect(screen.getByText('Unselect all')).toBeInTheDocument();
   });
 
-
   it('should display current count for selected items', () => {
     (useSelector as unknown as jest.Mock).mockReturnValue(mockData);
 
     render(<SelectedItemsFlyout />);
 
     const countSpan = screen.getByText('Selected items:');
-    expect(countSpan.parentElement).toHaveTextContent(`Selected items: ${mockData.length}`);
+    expect(countSpan.parentElement).toHaveTextContent(
+      `Selected items: ${mockData.length}`,
+    );
   });
 
   it('should call handleDownload with argument when button Download is clicked ', async () => {
-
     (useSelector as unknown as jest.Mock).mockReturnValue(mockData);
 
     render(<SelectedItemsFlyout />);
@@ -90,7 +92,6 @@ describe('SelectedItemsFlyout component', () => {
   });
 
   it('should call clearHandler when button Unselect all is clicked ', async () => {
-
     (useSelector as unknown as jest.Mock).mockReturnValue(mockData);
 
     render(<SelectedItemsFlyout />);
@@ -100,6 +101,5 @@ describe('SelectedItemsFlyout component', () => {
     await userEvent.click(buttonUnselect);
 
     expect(clearSelected).toHaveBeenCalledTimes(1);
-
   });
-})
+});

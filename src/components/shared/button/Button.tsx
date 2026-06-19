@@ -1,4 +1,4 @@
-import Icon, { type IconName } from "../icon/Icon";
+import Icon, { type IconName } from '../icon/Icon';
 import style from './Button.module.scss';
 
 interface ButtonProps {
@@ -9,13 +9,14 @@ interface ButtonProps {
   className?: string;
   icon?: IconName;
   iconPosition?: 'left' | 'right';
-  variant?: 'blue' | 'red' | 'base';
+  variant?: 'blue' | 'red' | 'base' | 'blue small';
+  title?: string;
 }
 
 function renderIcon(
   icon: IconName | undefined,
   iconPosition: 'left' | 'right' | undefined,
-  current: 'left' | 'right'
+  current: 'left' | 'right',
 ) {
   if (!icon || iconPosition !== current) return null;
 
@@ -31,13 +32,16 @@ export default function Button({
   icon,
   iconPosition = 'left',
   variant = 'blue',
+  title = '',
 }: ButtonProps) {
+  const variantClasses = variant
+    .split(' ')
+    .map((v) => style[v])
+    .filter(Boolean);
 
-  const classes = [
-    style.button,
-    style[variant],
-    className,
-  ].filter(Boolean).join(' ');
+  const classes = [...variantClasses, style.button, className]
+    .filter(Boolean)
+    .join(' ');
 
   return (
     <button
@@ -46,6 +50,7 @@ export default function Button({
       className={classes}
       disabled={disabled}
       aria-disabled={disabled}
+      title={title}
     >
       {renderIcon(icon, iconPosition, 'left')}
       {text}

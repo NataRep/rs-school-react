@@ -1,7 +1,7 @@
-import { render, screen } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
-import type { NavLinkItem } from "../../../constants/navLinks";
-import TopNav from "./TopNav";
+import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
+import type { NavLinkItem } from '../../../constants/navLinks';
+import TopNav from './TopNav';
 
 jest.mock('../../shared/icon/Icon', () => {
   return function MockIcon({ name }: { name: string }) {
@@ -27,7 +27,7 @@ describe('TopNav', () => {
     render(
       <MemoryRouter>
         <TopNav items={mokLinks} />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     mokLinks.forEach((link) => {
@@ -40,7 +40,7 @@ describe('TopNav', () => {
     render(
       <MemoryRouter initialEntries={['/search/people']}>
         <TopNav items={mokLinks} />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     const searchLink = screen.getByRole('link', { name: /search/i });
@@ -54,7 +54,7 @@ describe('TopNav', () => {
     render(
       <MemoryRouter initialEntries={['/search/people/123?page=2&sort=desc']}>
         <TopNav items={mokLinks} />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     const searchLink = screen.getByRole('link', { name: /search/i });

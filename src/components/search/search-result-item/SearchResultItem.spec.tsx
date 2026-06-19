@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import type { Person, Planet, Starship } from '../../../services/api-service/api-models';
+import type { Person, Planet, Starship } from '../../../store/api-models';
 import SearchResultItem from './SearchResultItem';
 
 const mockNavigate = jest.fn();
@@ -12,7 +12,7 @@ jest.mock('react-router-dom', () => ({
   useLocation: () => ({ search: '?page=1' }),
 }));
 
-jest.mock('./../selection-checkbox/SelectionСheckbox', () => {
+jest.mock('./../selection-checkbox/SelectionCheckbox', () => {
   return function MockSelectionCheckbox() {
     return <div data-testid="mock-checkbox" />;
   };
@@ -36,7 +36,7 @@ describe('SearchResultItem Component', () => {
     render(
       <MemoryRouter>
         <SearchResultItem item={mockPerson} />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(screen.getByText(/Luke Skywalker/i)).toBeInTheDocument();
@@ -54,7 +54,7 @@ describe('SearchResultItem Component', () => {
     render(
       <MemoryRouter>
         <SearchResultItem item={mockPlanet} />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(screen.getByText(/Tatooine/i)).toBeInTheDocument();
@@ -72,7 +72,7 @@ describe('SearchResultItem Component', () => {
     render(
       <MemoryRouter>
         <SearchResultItem item={mockStarship} />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(screen.getByText(/Death Star/i)).toBeInTheDocument();
@@ -91,7 +91,7 @@ describe('SearchResultItem Component', () => {
     render(
       <MemoryRouter>
         <SearchResultItem item={mockPerson} />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     const card = screen.getByText(/Luke Skywalker/i).closest('div');
