@@ -4,11 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build && cp dist/index.html dist/404.html",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "preview": "vite preview",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
@@ -33,7 +33,6 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@types/redux-mock-store": "^1.5.0",
-    "@vitejs/plugin-react": "^6.0.1",
     "eslint": "^10.2.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.6",
@@ -50,8 +49,6 @@
     "sass": "^1.99.0",
     "ts-jest": "^29.4.9",
     "typescript": "~6.0.2",
-    "typescript-eslint": "^8.58.2",
-    "vite": "^8.0.10",
-    "vite-plugin-svgr": "^5.2.0"
+    "typescript-eslint": "^8.58.2"
   }
 }
