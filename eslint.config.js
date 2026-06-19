@@ -19,6 +19,18 @@ export default defineConfig([
     languageOptions: {
       globals: globals.browser,
     },
+    rules: {
+      'react-refresh/only-export-components': [
+        'warn',
+        { allowConstantExport: true },
+      ],
+    },
+  },
+  {
+    files: ['**/*{layout,page,loading,error,not-found,route}.tsx'],
+    rules: {
+      'react-refresh/only-export-components': 'off',
+    },
   },
   prettierRecommended,
 ]);
