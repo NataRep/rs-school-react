@@ -6,9 +6,10 @@ import Search from './components/search/Search';
 import DetailView from './components/search/detail/Detail';
 import { detailLoader } from './components/search/detail/detailLoader';
 import SearchResult from './components/search/search-result/SearchResult';
-import { searchResultLoader } from './components/search/search-result/searchLoader';
+import { createSearchResultLoader } from './components/search/search-result/searchLoader';
 import { RouterErrorCatch } from './components/shared/error-boundary/ErrorBoundary';
 import Loader from './components/shared/loader/Loader';
+import { store } from './store';
 
 export const router = createBrowserRouter(
   [
@@ -34,7 +35,7 @@ export const router = createBrowserRouter(
               path: ':categoryName',
               element: <SearchResult />,
               HydrateFallback: () => <Loader />,
-              loader: searchResultLoader,
+              loader: createSearchResultLoader(store),
               shouldRevalidate: ({
                 currentParams,
                 nextParams,

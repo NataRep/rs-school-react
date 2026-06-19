@@ -71,7 +71,7 @@ export default function SearchResult() {
   };
 
   return (
-    <div className={style.container} key={location.key}>
+    <div className={style.container}>
       {isLoading && (
         <div className={style.result}>
           <Loader />
