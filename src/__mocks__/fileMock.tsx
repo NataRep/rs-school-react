@@ -7,9 +7,10 @@ const mockAsset = {
   blurDataURL: '',
 };
 
-const FileMockComponent = React.forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement>>(
-  (props, ref) => <svg ref={ref} {...props} data-testid="svg-icon" />
-);
+const FileMockComponent = React.forwardRef<
+  SVGSVGElement,
+  React.SVGProps<SVGSVGElement>
+>((props, ref) => <svg ref={ref} {...props} data-testid="svg-icon" />);
 
 Object.assign(FileMockComponent, mockAsset);
 

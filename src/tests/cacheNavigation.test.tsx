@@ -2,7 +2,11 @@ import { configureStore } from '@reduxjs/toolkit';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
-import { createMemoryRouter, RouterProvider, type RouteObject } from 'react-router-dom';
+import {
+  createMemoryRouter,
+  RouterProvider,
+  type RouteObject,
+} from 'react-router-dom';
 import About from '../components/about/About';
 import Layout from '../components/layout/Layout';
 import Search from '../components/search/Search';
@@ -39,7 +43,9 @@ describe('Integration Test: Saving RTK Cache Query During Navigation', () => {
 
   test('не должен делать повторные сетевые запросы при переходе на About и назад на Поиск', async () => {
     const mockPeopleData = {
-      results: [{ name: 'Luke Skywalker', url: 'https://swapi.py4e.com/api/people/1/' }],
+      results: [
+        { name: 'Luke Skywalker', url: 'https://swapi.py4e.com/api/people/1/' },
+      ],
       count: 1,
     };
 
@@ -50,7 +56,7 @@ describe('Integration Test: Saving RTK Cache Query During Navigation', () => {
         category: 'people',
         searchQuery: '',
         page: 1,
-      })
+      }),
     );
 
     const testRoutes: RouteObject[] = [
@@ -90,7 +96,9 @@ describe('Integration Test: Saving RTK Cache Query During Navigation', () => {
 
     const aboutLink = screen.getByRole('link', { name: /about/i });
     await userEvent.click(aboutLink);
-    expect(await screen.findByRole('heading', { name: /^about$/i, level: 1 })).toBeInTheDocument();
+    expect(
+      await screen.findByRole('heading', { name: /^about$/i, level: 1 }),
+    ).toBeInTheDocument();
 
     const searchLink = screen.getByRole('link', { name: /^search$/i });
     await userEvent.click(searchLink);
@@ -104,7 +112,8 @@ describe('Integration Test: Saving RTK Cache Query During Navigation', () => {
 
     const swapiCalls = fetchMock.mock.calls.filter((call) => {
       const firstArg = call[0];
-      const url = typeof firstArg === 'string' ? firstArg : (firstArg as Request).url;
+      const url =
+        typeof firstArg === 'string' ? firstArg : (firstArg as Request).url;
       return url && (url.includes('people') || url.includes('api'));
     });
 
