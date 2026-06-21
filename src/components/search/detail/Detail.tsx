@@ -1,13 +1,16 @@
-import { useLoaderData, useOutletContext } from 'react-router-dom';
-import { useGetEntityDetailsQuery } from '../../../store/starWarsApi';
-import { formatKey } from '../../../utils/formatKey';
-import { removeTechnicalFields } from '../../../utils/removeTechnicalField';
-import Button from '../../button/Button';
-import ErrorNotification from '../../shared/error-notification/ErrorNotification';
+'use client';
+
+import Button from '@/components/button/Button';
+import ErrorNotification from '@/components/error-notification/ErrorNotification';
+import { useGetEntityDetailsQuery } from '@/store/starWarsApi';
+import { formatKey } from '@/utils/formatKey';
+import { removeTechnicalFields } from '@/utils/removeTechnicalField';
 import SelectionCheckbox from '../selection-checkbox/SelectionCheckbox';
 import style from './Detail.module.scss';
 
-interface DetailContextType {
+interface DetailViewProps {
+  id: string;
+  categoryName: string;
   closeDetails: () => void;
 }
 
@@ -52,6 +55,7 @@ function DetailSkeleton({ closeDetails }: { closeDetails: () => void }) {
                 className="skeleton"
                 style={{ width: '100%', height: '15px' }}
               ></span>
+              East
             </li>
           ))}
         </ul>
@@ -60,12 +64,11 @@ function DetailSkeleton({ closeDetails }: { closeDetails: () => void }) {
   );
 }
 
-export default function DetailView() {
-  const { closeDetails } = useOutletContext<DetailContextType>();
-  const { categoryName, id } = useLoaderData() as {
-    categoryName: string;
-    id: string;
-  };
+export default function DetailView({
+  id,
+  categoryName,
+  closeDetails,
+}: DetailViewProps) {
   const { data, isLoading, isError, error } = useGetEntityDetailsQuery({
     category: categoryName,
     id,
