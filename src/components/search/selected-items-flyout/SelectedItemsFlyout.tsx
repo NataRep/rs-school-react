@@ -1,8 +1,10 @@
+'use client';
+
+import Button from '@/components/button/Button';
+import type { RootState } from '@/store';
+import { clearSelected } from '@/store/selectedSlice';
+import { handleDownload } from '@/utils/handlerDownload';
 import { useDispatch, useSelector } from 'react-redux';
-import type { RootState } from '../../../store';
-import { clearSelected } from '../../../store/selectedSlice';
-import { handleDownload } from '../../../utils/handlerDownload';
-import Button from '../../button/Button';
 import style from './SelectedItemsFlyout.module.scss';
 
 export const SelectedItemsFlyout = () => {
@@ -11,7 +13,7 @@ export const SelectedItemsFlyout = () => {
 
   const clearHandler = () => dispatch(clearSelected());
 
-  if (selectedItems.length < 1) return;
+  if (selectedItems.length < 1) return null;
 
   return (
     <div className={style.wrapper}>
