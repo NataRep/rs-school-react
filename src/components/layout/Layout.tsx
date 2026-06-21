@@ -1,6 +1,6 @@
 'use client';
 
-import Button from '@/components/shared/button/Button';
+import Button from '@/components/button/Button';
 import { ThemeButton } from '@/components/theme-button/ThemeButton';
 import TopNav from '@/components/top-nav/TopNav';
 import { useState } from 'react';

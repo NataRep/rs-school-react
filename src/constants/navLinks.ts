@@ -1,4 +1,4 @@
-import type { IconName } from '../components/shared/icon/Icon';
+import type { IconName } from '../components/icon/Icon';
 
 export interface NavLinkItem {
   label: string;

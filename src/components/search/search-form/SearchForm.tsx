@@ -1,58 +1,57 @@
+'use client';
+
+import Button from '@/components/button/Button';
+import { useSearchStorage } from '@/hooks/useSearchStorage';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { useSearchStorage } from '../../../hooks/useSearchStorage';
-import Button from '../../shared/button/Button';
 import style from './SearchForm.module.scss';
 
-export default function SearchForm() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const queryFromUrl = searchParams.get('search') || '';
-  const [searchQuery, setSearchQuery] = useState(queryFromUrl);
-  const [prevQueryFromUrl, setPrevQueryFromUrl] = useState(queryFromUrl);
+interface SearchFormProps {
+  initialQuery?: string;
+}
+
+export default function SearchForm({ initialQuery = '' }: SearchFormProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const [searchQuery, setSearchQuery] = useState(initialQuery);
+
+  const [prevInitialQuery, setPrevInitialQuery] = useState(initialQuery);
+
   const { saveSearchQuery } = useSearchStorage();
 
-  const location = useLocation();
-  const navigate = useNavigate();
+  if (initialQuery !== prevInitialQuery) {
+    setSearchQuery(initialQuery);
+    setPrevInitialQuery(initialQuery);
+  }
 
   const handleInputClick = () => {
-    const pathParts = location.pathname.split('/').filter(Boolean);
-
+    const pathParts = pathname.split('/').filter(Boolean);
     if (pathParts.length > 2) {
       const basePath = '/' + pathParts.slice(0, 2).join('/');
-
-      navigate({
-        pathname: basePath,
-        search: location.search,
-      });
+      const currentParams = searchParams.toString();
+      router.push(`${basePath}${currentParams ? `?${currentParams}` : ''}`);
     }
   };
 
-  if (queryFromUrl !== prevQueryFromUrl) {
-    setSearchQuery(queryFromUrl);
-    setPrevQueryFromUrl(queryFromUrl);
-  }
-
   const submit = () => {
     const trimmed = searchQuery.trim();
+    const newParams = new URLSearchParams(searchParams.toString());
+
+    newParams.set('page', '1');
+    newParams.delete('details');
 
     if (!trimmed) {
-      const newParams = new URLSearchParams(searchParams);
       newParams.delete('search');
-      newParams.set('page', '1');
-      newParams.delete('details');
-      setSearchParams(newParams);
-      return;
+    } else {
+      if (trimmed === initialQuery) return;
+      newParams.set('search', trimmed);
+      saveSearchQuery(trimmed);
     }
 
-    if (trimmed === queryFromUrl) return;
-
-    const newParams = new URLSearchParams(searchParams);
-    newParams.set('page', '1');
-    newParams.set('search', trimmed);
-    newParams.delete('details');
-    setSearchParams(newParams);
-
-    saveSearchQuery(trimmed);
+    const queryStr = newParams.toString();
+    router.push(`${pathname}${queryStr ? `?${queryStr}` : ''}`);
   };
 
   return (

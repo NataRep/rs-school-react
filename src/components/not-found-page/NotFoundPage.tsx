@@ -1,7 +1,7 @@
 import notFoundImg from '@/assets/images/not-found.png';
 import Image from 'next/image';
 import { useNavigate } from 'react-router-dom';
-import Button from '../shared/button/Button';
+import Button from '../button/Button';
 import style from './NotFoundPage.module.scss';
 
 export const NotFoundPage = () => {

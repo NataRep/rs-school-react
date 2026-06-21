@@ -1,5 +1,5 @@
 import { useSearchParams } from 'react-router-dom';
-import Button from '../../shared/button/Button';
+import Button from '../../button/Button';
 import style from './SearchPagination.module.scss';
 
 export interface SearchPaginationProps {

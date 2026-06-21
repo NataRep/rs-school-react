@@ -1,4 +1,4 @@
-import Icon from '../shared/icon/Icon';
+import Icon from '../icon/Icon';
 import style from './About.module.scss';
 
 export default function About() {

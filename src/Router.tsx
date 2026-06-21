@@ -1,6 +1,7 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import About from './components/about/About';
 import Layout from './components/layout/Layout';
+import Loader from './components/loader/Loader';
 import { NotFoundPage } from './components/not-found-page/NotFoundPage';
 import Search from './components/search/Search';
 import DetailView from './components/search/detail/Detail';
@@ -8,7 +9,6 @@ import { detailLoader } from './components/search/detail/detailLoader';
 import SearchResult from './components/search/search-result/SearchResult';
 import { createSearchResultLoader } from './components/search/search-result/searchLoader';
 import { RouterErrorCatch } from './components/shared/error-boundary/ErrorBoundary';
-import Loader from './components/shared/loader/Loader';
 import { store } from './store';
 
 export const router = createBrowserRouter(

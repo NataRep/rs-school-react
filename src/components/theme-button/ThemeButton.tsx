@@ -1,5 +1,5 @@
 import { useTheme } from '../../hooks/useTheme';
-import Icon from '../shared/icon/Icon';
+import Icon from '../icon/Icon';
 import style from './ThemeButton.module.scss';
 
 export const ThemeButton = () => {

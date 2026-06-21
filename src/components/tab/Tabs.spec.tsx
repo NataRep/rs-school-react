@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import type { RootState } from '../../../store';
-import { starWarsApi } from '../../../store/starWarsApi';
+import type { RootState } from '../../store';
+import { starWarsApi } from '../../store/starWarsApi';
 import Tabs from './Tabs';
 
 jest.mock('../icon/Icon', () => {

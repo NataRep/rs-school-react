@@ -2,7 +2,7 @@
 
 import { DEFAULT_NAV_LINKS, type NavLinkItem } from '@/constants/navLinks';
 import { Link, usePathname } from '@/i18n/navigation';
-import Icon from '../shared/icon/Icon';
+import Icon from '../icon/Icon';
 import style from './TopNav.module.scss';
 
 interface TopNavProps {

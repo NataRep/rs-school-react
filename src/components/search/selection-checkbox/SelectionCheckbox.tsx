@@ -2,7 +2,7 @@ import { useId } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../../../store';
 import { toggleSelected } from '../../../store/selectedSlice';
-import Icon from '../../shared/icon/Icon';
+import Icon from '../../icon/Icon';
 import type { SearchItem } from '../search-result-item/SearchResultItem';
 import style from './SelectionCheckbox.module.scss';
 

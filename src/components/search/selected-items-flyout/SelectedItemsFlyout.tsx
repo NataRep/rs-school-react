@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../../../store';
 import { clearSelected } from '../../../store/selectedSlice';
 import { handleDownload } from '../../../utils/handlerDownload';
-import Button from '../../shared/button/Button';
+import Button from '../../button/Button';
 import style from './SelectedItemsFlyout.module.scss';
 
 export const SelectedItemsFlyout = () => {

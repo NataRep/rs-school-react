@@ -2,7 +2,7 @@ import { useLoaderData, useOutletContext } from 'react-router-dom';
 import { useGetEntityDetailsQuery } from '../../../store/starWarsApi';
 import { formatKey } from '../../../utils/formatKey';
 import { removeTechnicalFields } from '../../../utils/removeTechnicalField';
-import Button from '../../shared/button/Button';
+import Button from '../../button/Button';
 import ErrorNotification from '../../shared/error-notification/ErrorNotification';
 import SelectionCheckbox from '../selection-checkbox/SelectionCheckbox';
 import style from './Detail.module.scss';

@@ -1,8 +1,8 @@
 import { Component } from 'react';
 import { isRouteErrorResponse, useRouteError } from 'react-router-dom';
 import { reloadPage } from '../../../utils/navigation';
+import Button from '../../button/Button';
 import { NotFoundPage } from '../../not-found-page/NotFoundPage';
-import Button from '../button/Button';
 import style from './ErrorBoundary.module.scss';
 
 interface Props {

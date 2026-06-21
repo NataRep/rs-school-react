@@ -1,6 +1,6 @@
 import { Outlet, useNavigation } from 'react-router-dom';
-import Loader from '../shared/loader/Loader';
-import Tabs from '../shared/tab/Tabs';
+import Loader from '../loader/Loader';
+import Tabs from '../tab/Tabs';
 import SearchForm from './search-form/SearchForm';
 import style from './Search.module.scss';
 import { SelectedItemsFlyout } from './selected-items-flyout/SelectedItemsFlyout';
