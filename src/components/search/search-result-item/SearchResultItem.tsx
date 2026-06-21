@@ -1,8 +1,8 @@
 'use client';
 
-import type { Person, Planet, Starship } from '@/store/api-models'; // Absolute path
-import { getItemId } from '@/utils/get-id-from-url'; // Absolute path
-import { isPerson, isPlanet, isStarship } from '@/utils/search-item'; // Absolute path
+import type { Person, Planet, Starship } from '@/store/api-models';
+import { getItemId } from '@/utils/get-id-from-url';
+import { isPerson, isPlanet, isStarship } from '@/utils/search-item';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import SelectionCheckbox from '../selection-checkbox/SelectionCheckbox';
 import style from './SearchResultItem.module.scss';
