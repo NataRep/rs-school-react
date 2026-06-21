@@ -24,7 +24,6 @@
         "name": "next"
       }
     ],
-    "verbatimModuleSyntax": true,
     "erasableSyntaxOnly": true,
     "paths": {
       "@/*": ["./src/*"],

@@ -1,16 +1,18 @@
-import { useState } from 'react';
-import { Outlet, useNavigation } from 'react-router-dom';
-import Button from '../shared/button/Button';
-import Loader from '../shared/loader/Loader';
-import style from './Layout.module.scss';
-import { ThemeButton } from './theme-button/ThemeButton';
-import TopNav from './top-nav/TopNav';
+'use client';
 
-export default function Layout() {
+import Button from '@/components/shared/button/Button';
+import { ThemeButton } from '@/components/theme-button/ThemeButton';
+import TopNav from '@/components/top-nav/TopNav';
+import { useState } from 'react';
+import style from './Layout.module.scss';
+
+interface MainLayoutProps {
+  children: React.ReactNode;
+}
+
+export default function MainLayout({ children }: MainLayoutProps) {
   const [shouldCrash, setShouldCrash] = useState(false);
   const [error] = useState<Error | null>(null);
-  const navigation = useNavigation();
-  const isLoading = navigation.state === 'loading';
 
   if (shouldCrash) {
     throw new Error('Critical rendering error');
@@ -35,12 +37,12 @@ export default function Layout() {
           iconPosition="left"
         />
         <div className={style.tools}>
-          <TopNav></TopNav>
-          <ThemeButton></ThemeButton>
+          <TopNav />
+          <ThemeButton />
         </div>
       </div>
 
-      <main className={style.main}>{isLoading ? <Loader /> : <Outlet />}</main>
+      <main className={style.main}>{children}</main>
     </div>
   );
 }
