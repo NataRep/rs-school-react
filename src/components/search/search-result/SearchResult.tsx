@@ -1,23 +1,34 @@
-import { Outlet, useLoaderData, useLocation, useNavigate } from 'react-router';
-import type { Person, Planet, Starship } from '../../../store/api-models';
-import { useGetDataQuery } from '../../../store/starWarsApi';
-import Loader from '../../loader/Loader';
-import ErrorNotification from '../../shared/error-notification/ErrorNotification';
+'use client';
+
+import ErrorNotification from '@/components/error-notification/ErrorNotification';
+import Loader from '@/components/loader/Loader';
+import type { Person, Planet, Starship } from '@/store/api-models';
+import { useGetDataQuery } from '@/store/starWarsApi';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import DetailView from '../detail/Detail';
 import SearchPagination from '../search-pagination/SearchPagination';
 import SearchResultItem from '../search-result-item/SearchResultItem';
 import style from './SearchResult.module.scss';
 
-export default function SearchResult() {
-  const { searchQuery, currentPage, categoryName } = useLoaderData() as {
-    searchQuery: string;
-    currentPage: number;
-    categoryName: string;
-  };
+interface SearchResultProps {
+  query: string;
+  category: string;
+  page: string;
+}
+
+export default function SearchResult({
+  query,
+  category,
+  page,
+}: SearchResultProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const { data, isLoading, isError, error } = useGetDataQuery({
-    category: categoryName || 'people',
-    searchQuery: searchQuery || '',
-    page: currentPage,
+    category: category || 'people',
+    searchQuery: query || '',
+    page: Number(page) || 1,
   });
 
   const getErrorContent = () => {
@@ -30,14 +41,11 @@ export default function SearchResult() {
     return 'Something went wrong. Please try again later.';
   };
 
-  const navigate = useNavigate();
-  const location = useLocation();
-
   const closeDetails = () => {
-    navigate({
-      pathname: `/search/${categoryName}`,
-      search: location.search,
-    });
+    const newParams = new URLSearchParams(searchParams.toString());
+    newParams.delete('details');
+
+    router.push(`${pathname}?${newParams.toString()}`);
   };
 
   const renderConstant = (currentData: typeof data) => {
@@ -63,7 +71,10 @@ export default function SearchResult() {
                 </li>
               ))}
             </ul>
-            <SearchPagination totalPages={totalPages} />
+            <SearchPagination
+              totalPages={totalPages}
+              currentPage={Number(page)}
+            />
           </>
         )}
       </div>
@@ -83,7 +94,14 @@ export default function SearchResult() {
       )}
 
       {!isLoading && !isError && data && renderConstant(data)}
-      <Outlet context={{ closeDetails }} />
+
+      {searchParams.has('details') && (
+        <DetailView
+          id={searchParams.get('details') || ''}
+          categoryName={category}
+          closeDetails={closeDetails}
+        />
+      )}
     </div>
   );
 }
