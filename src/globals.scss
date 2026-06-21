@@ -1,3 +1,7 @@
+@use "@/assets/styles/theme-dark";
+@use "@/assets/styles/theme-light";
+@use "@/assets/styles/variables";
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
@@ -40,7 +44,7 @@ li {
   list-style: none;
 }
 
-.appWrapper {
+body {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -58,7 +62,7 @@ li {
 }
 
 @media (max-width: 768px) {
-  .appWrapper {
+  body {
     min-height: calc(100vh - 2rem);
     width: calc(100% - 2rem);
     padding: 1rem;
@@ -80,12 +84,10 @@ li {
     left: -150px;
     width: 100px;
     height: 100%;
-    background: linear-gradient(
-      90deg,
-      rgba(var(--color-light-side-rgb), 0) 0%,
-      rgba(var(--color-light-side-rgb), 0.3) 50%,
-      rgba(var(--color-light-side-rgb), 0) 100%
-    );
+    background: linear-gradient(90deg,
+        rgba(var(--color-light-side-rgb), 0) 0%,
+        rgba(var(--color-light-side-rgb), 0.3) 50%,
+        rgba(var(--color-light-side-rgb), 0) 100%);
     animation: skeleton 1.5s infinite ease-in-out;
   }
 }
