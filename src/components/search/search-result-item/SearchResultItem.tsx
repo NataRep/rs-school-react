@@ -1,7 +1,9 @@
-import { useLocation, useNavigate } from 'react-router-dom';
-import type { Person, Planet, Starship } from '../../../store/api-models';
-import { getItemId } from '../../../utils/get-id-from-url';
-import { isPerson, isPlanet, isStarship } from '../../../utils/search-item';
+'use client';
+
+import type { Person, Planet, Starship } from '@/store/api-models'; // Absolute path
+import { getItemId } from '@/utils/get-id-from-url'; // Absolute path
+import { isPerson, isPlanet, isStarship } from '@/utils/search-item'; // Absolute path
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import SelectionCheckbox from '../selection-checkbox/SelectionCheckbox';
 import style from './SearchResultItem.module.scss';
 
@@ -12,13 +14,18 @@ export type SearchItemProps = {
 export type SearchItem = Person | Planet | Starship;
 
 export default function SearchResultItem({ item }: SearchItemProps) {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const selectItem = (item: SearchItem) => {
     const id = getItemId(item.url);
     if (!id) return;
-    navigate(`${id}${location.search}`);
+
+    const newParams = new URLSearchParams(searchParams.toString());
+    newParams.set('details', id);
+
+    router.push(`${pathname}?${newParams.toString()}`);
   };
 
   const renderDescription = () => {
