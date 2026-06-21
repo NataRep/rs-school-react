@@ -1,18 +1,7 @@
+import React from 'react';
 import style from './Icon.module.scss';
 
-import CloseIcon from '@/assets/icons/close.svg';
-import PlanetsIcon from '@/assets/icons/death-star.svg';
-import DownloadIcon from '@/assets/icons/download.svg';
-import ErrorIcon from '@/assets/icons/error.svg';
-import FlagIcon from '@/assets/icons/flag.svg';
-import InfoIcon from '@/assets/icons/info.svg';
-import LogoIcon from '@/assets/icons/logo.svg';
-import NightIcon from '@/assets/icons/night.svg';
-import PeopleIcon from '@/assets/icons/people.svg';
-import ReloadIcon from '@/assets/icons/reload.svg';
-import SearchIcon from '@/assets/icons/search.svg';
-import StarshipsIcon from '@/assets/icons/starship.svg';
-import SunIcon from '@/assets/icons/sun.svg';
+import * as GeneratedIcons from '@/components/ui/icons';
 
 export type IconName =
   | 'search'
@@ -29,44 +18,40 @@ export type IconName =
   | 'flag'
   | 'download';
 
-const iconsMap: Record<IconName, { src: string }> = {
-  search: SearchIcon,
-  close: CloseIcon,
-  people: PeopleIcon,
-  planets: PlanetsIcon,
-  starships: StarshipsIcon,
-  error: ErrorIcon,
-  reload: ReloadIcon,
-  info: InfoIcon,
-  logo: LogoIcon,
-  night: NightIcon,
-  sun: SunIcon,
-  flag: FlagIcon,
-  download: DownloadIcon,
+const iconsMap: Record<IconName, React.ComponentType<React.SVGProps<SVGSVGElement>> | undefined> = {
+  search: GeneratedIcons.Search,
+  close: GeneratedIcons.Close,
+  people: GeneratedIcons.People,
+  planets: GeneratedIcons.DeathStar,
+  starships: GeneratedIcons.Starship,
+  error: GeneratedIcons.Error,
+  reload: GeneratedIcons.Reload,
+  info: GeneratedIcons.Info,
+  logo: GeneratedIcons.Logo,
+  night: GeneratedIcons.Night,
+  sun: GeneratedIcons.Sun,
+  flag: GeneratedIcons.Flag,
+  download: GeneratedIcons.Download,
 };
 
-interface IconProps {
+interface IconProps extends React.SVGProps<SVGSVGElement> {
   name: IconName;
   className?: string;
 }
 
-export default function Icon({ name, className = '' }: IconProps) {
-  const iconData = iconsMap[name];
+export default function Icon({ name, className = '', ...props }: IconProps) {
+  // Достаем нужный компонент из нашей мапы
+  const SVGComponent = iconsMap[name];
 
-  if (!iconData) return null;
+  if (!SVGComponent) {
+    console.warn(`Icon with name "${name}" not found in generated components.`);
+    return null;
+  }
 
   return (
-    <span
-      className={`${style.icon} ${className}`}
-      style={{
-        WebkitMaskImage: `url(${iconData.src})`,
-        maskImage: `url(${iconData.src})`,
-        WebkitMaskRepeat: 'no-repeat',
-        maskRepeat: 'no-repeat',
-        WebkitMaskPosition: 'center',
-        maskPosition: 'center',
-        display: 'inline-block',
-      }}
+    <SVGComponent
+      className={`${style.svgIcon} ${className}`}
+      {...props}
     />
   );
 }
