@@ -1,8 +1,8 @@
-import style from '@/components/search/Search.module.scss';
 import SearchForm from '@/components/search/search-form/SearchForm';
 import SearchResult from '@/components/search/search-result/SearchResult';
 import { SelectedItemsFlyout } from '@/components/search/selected-items-flyout/SelectedItemsFlyout';
 import Tabs from '@/components/tab/Tabs';
+import style from './page.module.scss';
 
 interface SearchPageProps {
   searchParams: Promise<{

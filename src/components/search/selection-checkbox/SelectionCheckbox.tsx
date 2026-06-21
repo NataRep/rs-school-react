@@ -1,45 +1,45 @@
-import { useId } from 'react';
+'use client';
+
+import Button from '@/components/button/Button';
+import type { RootState } from '@/store';
+import { clearSelected } from '@/store/selectedSlice';
+import { handleDownload } from '@/utils/handlerDownload';
 import { useDispatch, useSelector } from 'react-redux';
-import type { RootState } from '../../../store';
-import { toggleSelected } from '../../../store/selectedSlice';
-import Icon from '../../icon/Icon';
-import type { SearchItem } from '../search-result-item/SearchResultItem';
-import style from './SelectionCheckbox.module.scss';
+import style from './SelectedItemsFlyout.module.scss';
 
-interface SelectionCheckboxProps {
-  data: SearchItem;
-}
-
-export default function SelectionCheckbox({ data }: SelectionCheckboxProps) {
-  const reactId = useId();
+export const SelectedItemsFlyout = () => {
   const dispatch = useDispatch();
+  const selectedItems = useSelector((state: RootState) => state.selected.items);
 
-  const isChecked = useSelector((state: RootState) =>
-    state.selected.items.some(
-      (selectedItem) => selectedItem.name === data.name,
-    ),
-  );
+  const clearHandler = () => dispatch(clearSelected());
 
-  const handleChange = () => {
-    dispatch(toggleSelected(data));
-  };
+  if (selectedItems.length < 1) return null;
 
   return (
     <div className={style.wrapper}>
-      <input
-        type="checkbox"
-        id={`${reactId}-checkbox`}
-        className={style.checkbox}
-        checked={isChecked}
-        onChange={handleChange}
-      ></input>
-      <label
-        htmlFor={`${reactId}-checkbox`}
-        className={style.label}
-        title="Save"
-      >
-        <Icon name="flag"></Icon>
-      </label>
+      <div className={style.count}>
+        <span>Selected items:</span> {selectedItems.length}
+      </div>
+      <div className={style.buttonsRow}>
+        <Button
+          text="Download"
+          type="button"
+          variant="blue"
+          icon="download"
+          iconPosition="left"
+          callback={() => handleDownload(selectedItems)}
+          disabled={false}
+        />
+        <Button
+          text="Unselect all"
+          type="button"
+          variant="red"
+          icon="close"
+          iconPosition="left"
+          callback={clearHandler}
+          disabled={false}
+        />
+      </div>
     </div>
   );
-}
+};
