@@ -1,33 +1,37 @@
-import { useSearchParams } from 'react-router-dom';
-import Button from '../../button/Button';
+'use client';
+
+import Button from '@/components/button/Button';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import style from './SearchPagination.module.scss';
 
 export interface SearchPaginationProps {
   totalPages: number;
+  currentPage: number;
 }
 
 export default function SearchPagination({
   totalPages,
+  currentPage,
 }: SearchPaginationProps) {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const currentPage = Number(searchParams.get('page')) || 1;
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const setPageSearchParams = (page: number) => {
+    const newParams = new URLSearchParams(searchParams.toString());
+    newParams.set('page', page.toString());
+
+    router.push(`${pathname}?${newParams.toString()}`);
+  };
 
   const goToNextPage = () => {
     if (currentPage >= totalPages) return;
-    const nextPage = currentPage + 1;
-    setPageSearchParams(nextPage);
+    setPageSearchParams(currentPage + 1);
   };
 
   const goToPrevPage = () => {
     if (currentPage <= 1) return;
-    const prevPage = currentPage - 1;
-    setPageSearchParams(prevPage);
-  };
-
-  const setPageSearchParams = (page: number) => {
-    const newParams = new URLSearchParams(searchParams);
-    newParams.set('page', page.toString());
-    setSearchParams(newParams);
+    setPageSearchParams(currentPage - 1);
   };
 
   if (totalPages <= 1) return null;
