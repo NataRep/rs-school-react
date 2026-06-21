@@ -1,4 +1,6 @@
-import { useTheme } from '../../hooks/useTheme';
+'use client';
+
+import { useTheme } from '@/hooks/useTheme';
 import Icon from '../icon/Icon';
 import style from './ThemeButton.module.scss';
 

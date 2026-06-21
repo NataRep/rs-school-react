@@ -1,8 +1,9 @@
 import MainLayout from '@/components/layout/Layout';
+import { ThemeProvider } from '@/context/ThemeProvider';
+import '@/globals.scss';
 import { Providers } from '@/providers/Providers';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
-import '../globals.scss';
 
 export default async function LocaleLayout({
   children,
@@ -19,7 +20,9 @@ export default async function LocaleLayout({
       <body>
         <NextIntlClientProvider messages={messages}>
           <Providers>
-            <MainLayout>{children}</MainLayout>
+            <ThemeProvider>
+              <MainLayout>{children}</MainLayout>
+            </ThemeProvider>
           </Providers>
         </NextIntlClientProvider>
       </body>

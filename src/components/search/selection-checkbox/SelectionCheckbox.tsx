@@ -1,45 +1,45 @@
-'use client';
-
-import Button from '@/components/button/Button';
+import Icon from '@/components/icon/Icon';
 import type { RootState } from '@/store';
-import { clearSelected } from '@/store/selectedSlice';
-import { handleDownload } from '@/utils/handlerDownload';
+import { toggleSelected } from '@/store/selectedSlice';
+import { useId } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import style from './SelectedItemsFlyout.module.scss';
+import type { SearchItem } from '../search-result-item/SearchResultItem';
+import style from './SelectionCheckbox.module.scss';
 
-export const SelectedItemsFlyout = () => {
+interface SelectionCheckboxProps {
+  data: SearchItem;
+}
+
+export default function SelectionCheckbox({ data }: SelectionCheckboxProps) {
+  const reactId = useId();
   const dispatch = useDispatch();
-  const selectedItems = useSelector((state: RootState) => state.selected.items);
 
-  const clearHandler = () => dispatch(clearSelected());
+  const isChecked = useSelector((state: RootState) =>
+    state.selected.items.some(
+      (selectedItem) => selectedItem.name === data.name,
+    ),
+  );
 
-  if (selectedItems.length < 1) return null;
+  const handleChange = () => {
+    dispatch(toggleSelected(data));
+  };
 
   return (
     <div className={style.wrapper}>
-      <div className={style.count}>
-        <span>Selected items:</span> {selectedItems.length}
-      </div>
-      <div className={style.buttonsRow}>
-        <Button
-          text="Download"
-          type="button"
-          variant="blue"
-          icon="download"
-          iconPosition="left"
-          callback={() => handleDownload(selectedItems)}
-          disabled={false}
-        />
-        <Button
-          text="Unselect all"
-          type="button"
-          variant="red"
-          icon="close"
-          iconPosition="left"
-          callback={clearHandler}
-          disabled={false}
-        />
-      </div>
+      <input
+        type="checkbox"
+        id={`${reactId}-checkbox`}
+        className={style.checkbox}
+        checked={isChecked}
+        onChange={handleChange}
+      />
+      <label
+        htmlFor={`${reactId}-checkbox`}
+        className={style.label}
+        title="Save"
+      >
+        <Icon name="flag" />
+      </label>
     </div>
   );
-};
+}
