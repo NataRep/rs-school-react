@@ -8,7 +8,7 @@ export interface NavLinkItem {
 export const DEFAULT_NAV_LINKS: NavLinkItem[] = [
   {
     label: 'Search',
-    path: '/search',
+    path: '/',
     icon: 'search',
   },
   {

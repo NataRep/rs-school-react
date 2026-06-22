@@ -67,8 +67,10 @@
       border-color 0.3s ease;
   }
 
-  &:hover .slider {
-    border-color: rgba(255, 255, 255, 0.2);
+  @include hover-supported {
+    .slider {
+      border-color: rgba(255, 255, 255, 0.2);
+    }
   }
 
   .input:not(:checked) + .slider {

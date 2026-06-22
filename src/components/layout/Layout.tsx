@@ -4,6 +4,7 @@ import Button from '@/components/button/Button';
 import { ThemeButton } from '@/components/theme-button/ThemeButton';
 import TopNav from '@/components/top-nav/TopNav';
 import { useState } from 'react';
+import LanguageSwitcher from '../language-switcher/LanguageSwitcher';
 import style from './Layout.module.scss';
 
 interface MainLayoutProps {
@@ -39,6 +40,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
         <div className={style.tools}>
           <TopNav />
           <ThemeButton />
+          <LanguageSwitcher />
         </div>
       </div>
 

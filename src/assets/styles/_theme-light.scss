@@ -42,10 +42,11 @@ html[data-theme='light'] {
   --search-item-border: rgba(var(--input-border), 0.25);
   --search-item-border--hover: rgba(var(--input-border), 0.5);
   --card-bg: var(--color-white);
-
   --scrollbar-bg-rgb: 164, 164, 164;
   --scrollbar-track-rgb: 217, 217, 217;
   --checkbox-itemList: var(--color-sand-shadow);
   --checkbox-card: var(--color-sand-shadow);
   --flyout-bg-rgb: var(--color-white-milk-rgb);
+  --language-switcher-active: var(--color-light-side);
+  --language-switcher-active-shadow: transparent;
 }
