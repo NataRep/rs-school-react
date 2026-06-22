@@ -43,10 +43,10 @@ export default function SearchForm({ initialQuery = '' }: SearchFormProps) {
     newParams.delete('details');
 
     if (!trimmed) {
-      newParams.delete('search');
+      newParams.delete('query');
     } else {
       if (trimmed === initialQuery) return;
-      newParams.set('search', trimmed);
+      newParams.set('query', trimmed);
       saveSearchQuery(trimmed);
     }
 

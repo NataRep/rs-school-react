@@ -18,7 +18,10 @@ export type IconName =
   | 'flag'
   | 'download';
 
-const iconsMap: Record<IconName, React.ComponentType<React.SVGProps<SVGSVGElement>> | undefined> = {
+const iconsMap: Record<
+  IconName,
+  React.ComponentType<React.SVGProps<SVGSVGElement>> | undefined
+> = {
   search: GeneratedIcons.Search,
   close: GeneratedIcons.Close,
   people: GeneratedIcons.People,
@@ -49,9 +52,6 @@ export default function Icon({ name, className = '', ...props }: IconProps) {
   }
 
   return (
-    <SVGComponent
-      className={`${style.svgIcon} ${className}`}
-      {...props}
-    />
+    <SVGComponent className={`${style.svgIcon} ${className}`} {...props} />
   );
 }
