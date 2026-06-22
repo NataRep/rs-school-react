@@ -7,7 +7,7 @@ export type CategoryMap = {
   starships: Starship;
 };
 
-const CACHE_TTL = Number(process.env.VITE_CACHE_TTL);
+const CACHE_TTL = Number(process.env.NEXT_PUBLIC_CACHE_TTL);
 
 export const starWarsApi = createApi({
   reducerPath: 'starWarsApi',
