@@ -1,17 +1,13 @@
-'use client';
-
-import Button from '@/components/button/Button';
 import ErrorNotification from '@/components/error-notification/ErrorNotification';
-import { useGetEntityDetailsQuery } from '@/store/starWarsApi';
 import { formatKey } from '@/utils/formatKey';
 import { removeTechnicalFields } from '@/utils/removeTechnicalField';
 import SelectionCheckbox from '../selection-checkbox/SelectionCheckbox';
+import CloseDetailsButton from './CloseDetailsButton'; // 🌟 Наша кнопка
 import style from './Detail.module.scss';
 
 interface DetailViewProps {
   id: string;
   categoryName: string;
-  closeDetails: () => void;
 }
 
 function renderFields(obj: Record<string, unknown>) {
@@ -27,90 +23,45 @@ function renderFields(obj: Record<string, unknown>) {
   );
 }
 
-function DetailSkeleton({ closeDetails }: { closeDetails: () => void }) {
-  return (
-    <>
-      <div className={style.card}>
-        <div className={style.row}>
-          <span
-            className="skeleton"
-            style={{ width: '50%', height: '20px' }}
-          ></span>
-          <Button
-            text=""
-            type="button"
-            callback={closeDetails}
-            disabled={false}
-            variant="base"
-            icon="close"
-            iconPosition="left"
-          />
-        </div>
-      </div>
-      <div className={style.information}>
-        <ul className={style.info}>
-          {Array.from({ length: 8 }).map((_, index) => (
-            <li key={index}>
-              <span
-                className="skeleton"
-                style={{ width: '100%', height: '15px' }}
-              ></span>
-              East
-            </li>
-          ))}
-        </ul>
-      </div>
-    </>
-  );
-}
-
-export default function DetailView({
+export default async function DetailView({
   id,
   categoryName,
-  closeDetails,
 }: DetailViewProps) {
-  const { data, isLoading, isError, error } = useGetEntityDetailsQuery({
-    category: categoryName,
-    id,
-  });
+  let data = null;
+  let isError = false;
 
-  const getErrorContent = () => {
-    if (!error) return null;
-    return 'Failed to load details. Please try again.';
-  };
+  try {
+    const res = await fetch(`https://swapi.py4e.com/api/${categoryName}/${id}`);
+    if (!res.ok) throw new Error();
+    data = await res.json();
+  } catch {
+    isError = true;
+  }
 
   const wrapperClass = `${style.wrapper} ${style.open}`;
 
   return (
     <div className={wrapperClass}>
-      {isLoading && <DetailSkeleton closeDetails={closeDetails} />}
-
-      {!isLoading && isError && (
+      {isError && (
         <div className={style.errorBlock}>
           <div className={style.row}>
-            <ErrorNotification>{getErrorContent()}</ErrorNotification>
-            <Button
-              text=""
-              type="button"
-              callback={closeDetails}
-              variant="base"
-              icon="close"
-            />
+            <ErrorNotification>
+              Failed to load details. Please try again.
+            </ErrorNotification>
+            <CloseDetailsButton />
           </div>
         </div>
       )}
 
-      {!isLoading && !isError && data && (
+      {!isError && data && (
         <div className={style.card}>
-          <Button
-            text=""
-            type="button"
-            callback={closeDetails}
-            disabled={false}
-            variant="base"
-            icon="close"
-            iconPosition="left"
-          />
+          <div
+            className={style.closeWrapper}
+            style={{ display: 'flex', justifyContent: 'flex-end' }}
+          >
+            <CloseDetailsButton />
+          </div>
+
           <div className={style.row}>
             <div className={style.checkbox}>
               <SelectionCheckbox data={data} />
@@ -123,16 +74,10 @@ export default function DetailView({
         </div>
       )}
 
-      {!isLoading && !isError && !data && (
+      {!isError && !data && (
         <div className={style.row}>
           <div>No data available</div>
-          <Button
-            text=""
-            type="button"
-            callback={closeDetails}
-            variant="base"
-            icon="close"
-          />
+          <CloseDetailsButton />
         </div>
       )}
     </div>

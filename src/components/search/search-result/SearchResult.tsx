@@ -40,7 +40,7 @@ export default async function SearchResult({
   }
 
   return (
-    <>
+    <div className={style.wrapper}>
       <ul className={style.itemList}>
         {currentData.results.map((item: Person | Planet | Starship) => (
           <li key={item.url} className={style.item}>
@@ -49,6 +49,6 @@ export default async function SearchResult({
         ))}
       </ul>
       <SearchPagination totalPages={totalPages} currentPage={Number(page)} />
-    </>
+    </div>
   );
 }

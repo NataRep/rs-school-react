@@ -1,3 +1,5 @@
+'use client';
+
 import Icon from '@/components/icon/Icon';
 import type { RootState } from '@/store';
 import { toggleSelected } from '@/store/selectedSlice';

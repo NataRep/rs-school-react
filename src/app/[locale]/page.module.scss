@@ -3,6 +3,7 @@
   flex-direction: column;
 }
 
-.resultWrapper {
-  display: block;
+.content {
+  display: flex;
+  overflow: hidden;
 }

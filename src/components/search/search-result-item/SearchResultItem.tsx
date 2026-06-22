@@ -15,7 +15,7 @@ export type SearchItem = Person | Planet | Starship;
 
 export default function SearchResultItem({ item }: SearchItemProps) {
   const router = useRouter();
-  const pathname = usePathname();
+  const rawPathname = usePathname();
   const searchParams = useSearchParams();
 
   const selectItem = (item: SearchItem) => {
@@ -25,34 +25,30 @@ export default function SearchResultItem({ item }: SearchItemProps) {
     const newParams = new URLSearchParams(searchParams.toString());
     newParams.set('details', id);
 
-    router.push(`${pathname}?${newParams.toString()}`);
+    const cleanPathname = rawPathname.replace(/^\/(ru|en)(\/|$)/, '/') || '/';
+
+    router.push(`${cleanPathname}?${newParams.toString()}`);
   };
 
   const renderDescription = () => {
-    if (isPerson(item)) {
+    if (isPerson(item))
       return (
         <ul className={style.info}>
           <li>Birth year: {item.birth_year}</li>
         </ul>
       );
-    }
-
-    if (isPlanet(item)) {
+    if (isPlanet(item))
       return (
         <ul className={style.info}>
           <li>Terrain: {item.terrain}</li>
         </ul>
       );
-    }
-
-    if (isStarship(item)) {
+    if (isStarship(item))
       return (
         <ul className={style.info}>
           <li>Model: {item.model}</li>
         </ul>
       );
-    }
-
     return null;
   };
 

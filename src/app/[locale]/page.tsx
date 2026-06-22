@@ -1,3 +1,4 @@
+import DetailView from '@/components/search/detail/Detail';
 import SearchForm from '@/components/search/search-form/SearchForm';
 import SearchResult from '@/components/search/search-result/SearchResult';
 import { SelectedItemsFlyout } from '@/components/search/selected-items-flyout/SelectedItemsFlyout';
@@ -9,6 +10,7 @@ interface SearchPageProps {
     query?: string;
     category?: string;
     page?: string;
+    details?: string;
   }>;
 }
 
@@ -17,6 +19,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   const currentQuery = params.query || '';
   const currentCategory = params.category || 'people';
   const currentPage = params.page || '1';
+  const currentDetailsId = params.details || '';
 
   return (
     <div className={style.container}>
@@ -33,12 +36,15 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
         ]}
       />
 
-      <div className={style.resultWrapper}>
+      <div className={style.content}>
         <SearchResult
           query={currentQuery}
           category={currentCategory}
           page={currentPage}
         />
+        {currentDetailsId && (
+          <DetailView id={currentDetailsId} categoryName={currentCategory} />
+        )}
       </div>
 
       <SelectedItemsFlyout />
