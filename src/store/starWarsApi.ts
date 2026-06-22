@@ -29,9 +29,6 @@ export const starWarsApi = createApi({
         const searchParams = searchQuery
           ? `&search=${encodeURIComponent(searchQuery)}`
           : '';
-
-        console.log(searchParams);
-
         return {
           url: `${category}/?page=${page}${searchParams}`,
           method: 'GET',
