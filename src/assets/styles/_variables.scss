@@ -1,0 +1,70 @@
+:root {
+  --color-black: #0b0f1a;
+  --color-imperial-blue: #111827;
+  --color-carbon: #1f2937;
+  --color-carbon-light: #2d3b55;
+  --color-grey: #2b363f;
+
+  --text-white: #e5e7eb;
+  --text-gray-light: #9ca3af;
+  --text-grey: #6b7280;
+
+  --color-light-side: #3b82f6;
+  --color-jedi-glow: #22d3ee;
+  --color-jedi-light: #90caf9;
+
+  --color-dark-side: #f43f5e;
+  --color-energy-yellow: #facc15;
+
+  --color-sandy: #f1e6dd;
+
+  --color-black-rgb: 11, 15, 26;
+  --color-imperial-blue-rgb: 17, 24, 39;
+  --color-carbon-rgb: 31, 41, 55;
+  --color-grey-rgb: 43, 54, 63;
+
+  --text-primary-rgb: 229, 231, 235;
+  --text-secondary-rgb: 156, 163, 175;
+  --text-disabled-rgb: 107, 114, 128;
+
+  --color-light-side-rgb: 59, 130, 246;
+  --color-jedi-glow-rgb: 34, 211, 238;
+
+  --color-dark-side-rgb: 239, 68, 68;
+  --color-sith-glow-rgb: 244, 63, 94;
+
+  --color-energy-yellow-rgb: 250, 204, 21;
+
+  --gradient-container-bg:
+    linear-gradient(
+      180deg,
+      rgba(var(--color-imperial-blue-rgb), 0.65) 0%,
+      rgba(var(--color-black-rgb), 0.85) 55%,
+      rgba(0, 0, 0, 0.9) 100%
+    ),
+    linear-gradient(
+      90deg,
+      rgba(var(--color-carbon-rgb), 0.7) 0%,
+      rgba(var(--color-light-side-rgb), 0.1) 50%,
+      rgba(var(--color-carbon-rgb), 0.65) 100%
+    );
+
+  --gradient-lightsaber-blue: linear-gradient(
+    90deg,
+    #1d4ed8,
+    var(--color-jedi-glow)
+  );
+  --gradient-lightsaber-red: linear-gradient(
+    90deg,
+    #7f1d1d,
+    var(--color-dark-side)
+  );
+  --gradient-hyperspace: linear-gradient(
+    135deg,
+    #0b0f1a,
+    #1e3a8a,
+    var(--color-jedi-glow)
+  );
+
+  --height-container: 31rem;
+}

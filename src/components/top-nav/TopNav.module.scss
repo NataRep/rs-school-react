@@ -1,0 +1,22 @@
+.nav {
+  display: flex;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  padding: 0 0 0.25rem;
+  margin-right: 1rem;
+  text-decoration: none;
+  color: var(--text-secondary);
+  border-bottom: 1px solid transparent;
+
+  svg {
+    margin-right: 0.25rem;
+    height: 1rem;
+  }
+
+  &.active {
+    border-bottom: 1px solid var(--text-secondary);
+  }
+}

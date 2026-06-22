@@ -1,0 +1,67 @@
+.wrapper {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  background-color: var(--search-item-bg);
+  border-bottom: 1px solid var(--search-item-border);
+  border-radius: 0;
+  box-shadow: none;
+  transition: background 0.15s ease;
+  display: grid;
+  cursor: pointer;
+  position: relative;
+
+  @include hover-supported {
+    background: var(--search-item-bg--hover);
+    transform: none;
+    border-color: var(--search-item-border--hover);
+  }
+}
+
+.topRow {
+  display: flex;
+  justify-content: space-between;
+}
+
+.name {
+  display: inline;
+  margin: 0;
+  margin-right: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-primary);
+}
+
+.checkbox {
+  color: var(--checkbox-itemList);
+}
+
+.description {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 0.75rem;
+}
+
+.subtitle {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: var(--text-grey);
+  margin: 0.25rem 0 0 0;
+  white-space: nowrap;
+}
+
+.info {
+  display: inline-flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 3px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+  }
+}

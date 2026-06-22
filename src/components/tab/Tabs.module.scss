@@ -1,0 +1,41 @@
+.container {
+  display: flex;
+  padding: 0.5rem;
+  background: var(--tab-bg);
+  border-radius: 0.5rem;
+  overflow: auto;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav {
+  display: flex;
+  gap: 1rem;
+  overflow: auto;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    color 0.5s,
+    border 0.5s;
+  text-decoration: none;
+
+  svg {
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.5rem;
+  }
+}
+
+.active {
+  color: var(--link-text);
+  border-bottom: 1px solid var(--link-text);
+}

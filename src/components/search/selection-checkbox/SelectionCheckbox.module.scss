@@ -1,0 +1,34 @@
+.wrapper {
+  display: block;
+  width: fit-content;
+}
+
+.checkbox {
+  display: none;
+}
+
+.label {
+  cursor: pointer;
+  padding: 0.25rem;
+
+  svg {
+    width: 0.75rem;
+    height: 1rem;
+
+    path {
+      stroke: currentColor;
+      fill: currentColor;
+    }
+  }
+}
+
+.checkbox:checked {
+  & + .label {
+    svg {
+      path {
+        fill: var(--color-energy-yellow);
+        stroke: var(--color-energy-yellow);
+      }
+    }
+  }
+}
