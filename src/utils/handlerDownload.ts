@@ -1,4 +1,4 @@
-import { generateCsvAction } from '@/app/actions/csvActions';
+import { generateCsvAction } from '@/actions/csvActions';
 import type { SearchItem } from '@/components/search/search-result-item/SearchResultItem';
 
 export const handleDownload = async (selectedItems: SearchItem[]) => {
