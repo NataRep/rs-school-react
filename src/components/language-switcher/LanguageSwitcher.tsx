@@ -1,7 +1,7 @@
 'use client';
 
-import { Link } from '@/i18n/navigation'; // Оставляем только кастомный Link
-import { usePathname, useSearchParams } from 'next/navigation'; // 🌟 Берем стандартный usePathname
+import { Link } from '@/i18n/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import style from './LanguageSwitcher.module.scss';
 
 export default function LanguageSwitcher() {
