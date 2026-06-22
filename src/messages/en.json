@@ -1,5 +1,62 @@
 {
   "Search": {
-    "title": "Star Wars Search"
+    "metaTitle": "Star Wars Search | Explore the Galaxy",
+    "metaDescription": "Search for characters, planets, and starships from the Star Wars universe.",
+    "title": "Star Wars Universe Search",
+    "tabs": {
+      "people": "People",
+      "planets": "Planets",
+      "starships": "Starships"
+    },
+    "placeholder": "Find a character, planet, or starship",
+    "submitBtn": "Search",
+    "pagination": {
+      "prev": "Prev",
+      "next": "Next"
+    },
+    "resultError": "Error loading data from Star Wars Universe",
+    "noResults": "Nothing found matching your request.",
+    "item": {
+      "nameLabel": {
+        "people": "Name:",
+        "planets": "Name:",
+        "starships": "Name:"
+      },
+      "descriptionLabel": "Description:",
+      "birthYear": "Birth year:",
+      "terrain": "Terrain:",
+      "model": "Model:"
+    },
+    "flyout": {
+      "selectedCount": "Selected items:",
+      "downloadBtn": "Download",
+      "unselectAllBtn": "Unselect all"
+    }
+  },
+  "navigation": {
+    "search": "Search",
+    "about": "About"
+  },
+  "About": {
+    "title": "About",
+    "p1": "Hi! My name is <github>Nata Repkina</github>, and this project was created as part of the React course at RS School.",
+    "p2": "This app is a small Star Wars search project powered by the <swapi>SWAPI API</swapi>. You can search for characters, planets, starships, and other information from the Star Wars universe.",
+    "subtitleMe": "A little about me:",
+    "pMe1": "I’m a bit of a designer, a bit of an SEO specialist, a bit of a juggler — but mostly a frontend developer. I enjoy building interfaces, learning how applications work under the hood, and turning ideas into interactive web projects.",
+    "pMe2": "While working on this app, I practiced React, component-based architecture, routing, API requests, and state management.",
+    "subtitleCourse": "A little about the course:",
+    "pCourse": "This project is part of the RS School React training program, where I’m improving my frontend skills through hands-on practice and real-world-style tasks.",
+    "mentor": "My project mentor: <mentorLink>Maksim Gorohov</mentorLink>.",
+    "courseLink": "Course: <courseLink>RS School React Course</courseLink>"
+  },
+  "NotFound": {
+    "title": "404 - THIS IS NOT THE PAGE YOU ARE LOOKING FOR",
+    "p1": "THE PATHWAY LOST. THIS SECTOR CONTAINS NO DATA.",
+    "p2": "Return to the beginning of your journey, traveller. The galaxy is vast, but not every path leads to the destination.",
+    "goHome": "Go to home"
+  },
+  "DetailView": {
+    "error": "Failed to load details. Please try again.",
+    "noData": "No data available"
   }
 }

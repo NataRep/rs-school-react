@@ -2,7 +2,9 @@
 
 import Button from '@/components/button/Button';
 import { useSearchStorage } from '@/hooks/useSearchStorage';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter } from '@/i18n/navigation';
+import { useTranslations } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import style from './SearchForm.module.scss';
 
@@ -14,9 +16,9 @@ export default function SearchForm({ initialQuery = '' }: SearchFormProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const t = useTranslations('Search');
 
   const [searchQuery, setSearchQuery] = useState(initialQuery);
-
   const [prevInitialQuery, setPrevInitialQuery] = useState(initialQuery);
 
   const { saveSearchQuery } = useSearchStorage();
@@ -28,8 +30,8 @@ export default function SearchForm({ initialQuery = '' }: SearchFormProps) {
 
   const handleInputClick = () => {
     const pathParts = pathname.split('/').filter(Boolean);
-    if (pathParts.length > 2) {
-      const basePath = '/' + pathParts.slice(0, 2).join('/');
+    if (pathParts.length > 1) {
+      const basePath = '/' + pathParts.slice(0, 1).join('/');
       const currentParams = searchParams.toString();
       router.push(`${basePath}${currentParams ? `?${currentParams}` : ''}`);
     }
@@ -69,14 +71,14 @@ export default function SearchForm({ initialQuery = '' }: SearchFormProps) {
           type="text"
           name="search"
           className={style.input}
-          placeholder="Find a character, planet, or starship"
+          placeholder={t('placeholder')}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
 
       <Button
-        text="Search"
+        text={t('submitBtn')}
         type="submit"
         disabled={false}
         variant="blue"

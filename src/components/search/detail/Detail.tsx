@@ -1,8 +1,9 @@
 import ErrorNotification from '@/components/error-notification/ErrorNotification';
 import { formatKey } from '@/utils/formatKey';
 import { removeTechnicalFields } from '@/utils/removeTechnicalField';
+import { getTranslations } from 'next-intl/server'; // 🌟 Импортируем для сервера
 import SelectionCheckbox from '../selection-checkbox/SelectionCheckbox';
-import CloseDetailsButton from './CloseDetailsButton'; // 🌟 Наша кнопка
+import CloseDetailsButton from './CloseDetailsButton';
 import style from './Detail.module.scss';
 
 interface DetailViewProps {
@@ -38,6 +39,8 @@ export default async function DetailView({
     isError = true;
   }
 
+  const t = await getTranslations('DetailView');
+
   const wrapperClass = `${style.wrapper} ${style.open}`;
 
   return (
@@ -45,9 +48,7 @@ export default async function DetailView({
       {isError && (
         <div className={style.errorBlock}>
           <div className={style.row}>
-            <ErrorNotification>
-              Failed to load details. Please try again.
-            </ErrorNotification>
+            <ErrorNotification>{t('error')}</ErrorNotification>
             <CloseDetailsButton />
           </div>
         </div>
@@ -67,16 +68,16 @@ export default async function DetailView({
               <SelectionCheckbox data={data} />
             </div>
             <h2 className={style.name}>
-              <span>Name:</span> {(data as { name?: string }).name || 'Unknown'}
+              {(data as { name?: string }).name || 'Unknown'}
             </h2>
           </div>
-          {renderFields(data as Record<string, unknown>)}
+          {renderFields(data as Record<string, unknown>, t)}
         </div>
       )}
 
       {!isError && !data && (
         <div className={style.row}>
-          <div>No data available</div>
+          <div>{t('noData')}</div>
           <CloseDetailsButton />
         </div>
       )}

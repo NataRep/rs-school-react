@@ -59,7 +59,6 @@ export default function Tabs({ tabs, currentCategory }: TabsProps) {
       <Button
         type="button"
         text=""
-        title="Refresh result"
         callback={handleRefresh}
         variant="blue small"
         icon="reload"

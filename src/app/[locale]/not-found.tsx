@@ -1,12 +1,15 @@
 import GoHomeButton from '@/components/go-to-home-button/GoHomeButton';
 import '@/globals.scss';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import style from './not-found.module.scss';
 
 export default function NotFound() {
+  const t = useTranslations('NotFound');
+
   return (
     <>
-      <h1>404 - THIS IS NOT THE PAGE YOU ARE LOOKING FOR</h1>
+      <h1>{t('title')}</h1>
       <div className={style.content}>
         <Image
           src="/images/not-found.png"
@@ -18,11 +21,8 @@ export default function NotFound() {
         />
         <div className={style.info}>
           <div className={style.text}>
-            <p>THE PATHWAY LOST. THIS SECTOR CONTAINS NO DATA.</p>
-            <p>
-              Return to the beginning of your journey, traveller. The galaxy is
-              vast, but not every path leads to the destination.
-            </p>
+            <p>{t('p1')}</p>
+            <p>{t('p2')}</p>
           </div>
           <GoHomeButton />
         </div>

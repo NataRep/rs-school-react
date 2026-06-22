@@ -2,6 +2,7 @@
 
 import { DEFAULT_NAV_LINKS, type NavLinkItem } from '@/constants/navLinks';
 import { Link } from '@/i18n/navigation';
+import { useTranslations } from 'next-intl';
 import { usePathname } from 'next/navigation';
 import Icon from '../icon/Icon';
 import style from './TopNav.module.scss';
@@ -12,6 +13,9 @@ interface TopNavProps {
 
 export default function TopNav({ items = DEFAULT_NAV_LINKS }: TopNavProps) {
   const rawPathname = usePathname();
+  const t = useTranslations('navigation');
+
+  console.log(t('search'));
 
   const currentLocale = rawPathname.startsWith('/ru') ? 'ru' : 'en';
 
@@ -19,7 +23,7 @@ export default function TopNav({ items = DEFAULT_NAV_LINKS }: TopNavProps) {
 
   return (
     <nav className={style.nav}>
-      {items.map(({ path, icon, label }) => {
+      {items.map(({ path, icon, translationKey }) => {
         const isActive =
           path === '/' ? cleanPathname === '/' : cleanPathname.startsWith(path);
 
@@ -31,7 +35,7 @@ export default function TopNav({ items = DEFAULT_NAV_LINKS }: TopNavProps) {
             className={`${style.link} ${isActive ? style.active : ''}`}
           >
             <Icon name={icon} className="center" />
-            <span>{label}</span>
+            <span>{t(translationKey)}</span>
           </Link>
         );
       })}

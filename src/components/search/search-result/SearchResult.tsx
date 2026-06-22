@@ -1,4 +1,5 @@
 import { Person, Planet, Starship } from '@/store/api-models';
+import { getTranslations } from 'next-intl/server'; // 🌟 Импортируем для сервера
 import SearchPagination from '../search-pagination/SearchPagination';
 import SearchResultItem from '../search-result-item/SearchResultItem';
 import style from './SearchResult.module.scss';
@@ -18,12 +19,10 @@ export default async function SearchResult({
     `https://swapi.py4e.com/api/${category}/?page=${page}&search=${query}`,
   );
 
+  const t = await getTranslations('Search');
+
   if (!res.ok) {
-    return (
-      <div className={style.error}>
-        Error loading data from Star Wars Universe
-      </div>
-    );
+    return <div className={style.error}>{t('resultError')}</div>;
   }
 
   const currentData = await res.json();
@@ -34,7 +33,7 @@ export default async function SearchResult({
   if (!hasResults) {
     return (
       <div className={style.emptyResult}>
-        <h2>Nothing found matching your request.</h2>
+        <h2>{t('noResults')}</h2>
       </div>
     );
   }
@@ -44,7 +43,7 @@ export default async function SearchResult({
       <ul className={style.itemList}>
         {currentData.results.map((item: Person | Planet | Starship) => (
           <li key={item.url} className={style.item}>
-            <SearchResultItem item={item} />
+            <SearchResultItem item={item} category={category} />
           </li>
         ))}
       </ul>
