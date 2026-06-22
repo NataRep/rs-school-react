@@ -1,7 +1,7 @@
 'use client';
 
 import Button from '@/components/button/Button';
-import { useSearchStorage } from '@/hooks/useSearchStorage';
+import { useStorage } from '@/hooks/useStorage';
 import { usePathname, useRouter } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
@@ -21,7 +21,7 @@ export default function SearchForm({ initialQuery = '' }: SearchFormProps) {
   const [searchQuery, setSearchQuery] = useState(initialQuery);
   const [prevInitialQuery, setPrevInitialQuery] = useState(initialQuery);
 
-  const { saveSearchQuery } = useSearchStorage();
+  const { saveSearchQuery } = useStorage();
 
   if (initialQuery !== prevInitialQuery) {
     setSearchQuery(initialQuery);
