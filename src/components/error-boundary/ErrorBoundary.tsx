@@ -1,12 +1,10 @@
-import { Component } from 'react';
-import { isRouteErrorResponse, useRouteError } from 'react-router-dom';
-import { reloadPage } from '../../../utils/navigation';
-import Button from '../../button/Button';
-import { NotFoundPage } from '../../not-found-page/NotFoundPage';
-import style from './ErrorBoundary.module.scss';
+'use client';
+
+import { Component, ReactNode } from 'react';
+import ErrorFallback from './ErrorFallback';
 
 interface Props {
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
 interface State {
@@ -16,10 +14,6 @@ interface State {
 export default class ErrorBoundary extends Component<Props, State> {
   state: State = {
     hasError: false,
-  };
-
-  handleReload = () => {
-    reloadPage();
   };
 
   static getDerivedStateFromError(): State {
@@ -32,46 +26,9 @@ export default class ErrorBoundary extends Component<Props, State> {
 
   render() {
     if (this.state.hasError) {
-      return (
-        <div className={style.wrapper}>
-          <h2>Oops! Something went wrong.</h2>
-          <Button
-            type="button"
-            text="Reload This Page"
-            callback={this.handleReload}
-            disabled={false}
-            variant="blue"
-            icon="reload"
-            iconPosition="right"
-          />
-        </div>
-      );
+      return <ErrorFallback />;
     }
 
     return this.props.children;
   }
-}
-
-export function RouterErrorCatch() {
-  const error = useRouteError();
-
-  if (
-    (isRouteErrorResponse(error) || error instanceof Response) &&
-    error?.status === 404
-  ) {
-    return <NotFoundPage />;
-  }
-
-  return (
-    <ErrorBoundary>
-      <TriggerError error={error} />
-    </ErrorBoundary>
-  );
-}
-
-function TriggerError({ error }: { error: unknown }): never {
-  if (error instanceof Error) {
-    throw error;
-  }
-  throw new Error(String(error || 'Rendering Error'));
 }

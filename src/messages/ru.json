@@ -33,6 +33,11 @@
       "unselectAllBtn": "Снять выделение"
     }
   },
+  "Errors": {
+    "boundaryMessage": "Ой! Что-то пошло не так.",
+    "reloadBtn": "Обновить страницу",
+    "triggerBtn": "Вызвать Error Boundary"
+  },
   "navigation": {
     "search": "Поиск",
     "about": "О нас"

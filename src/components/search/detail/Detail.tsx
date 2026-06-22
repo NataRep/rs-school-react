@@ -71,7 +71,7 @@ export default async function DetailView({
               {(data as { name?: string }).name || 'Unknown'}
             </h2>
           </div>
-          {renderFields(data as Record<string, unknown>, t)}
+          {renderFields(data as Record<string, unknown>)}
         </div>
       )}
 

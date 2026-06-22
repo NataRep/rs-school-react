@@ -1,4 +1,3 @@
-import * as React from 'react';
 import type { SVGProps } from 'react';
 const SvgError = (props: SVGProps<SVGSVGElement>) => (
   <svg

@@ -33,6 +33,11 @@
       "unselectAllBtn": "Unselect all"
     }
   },
+  "Errors": {
+    "boundaryMessage": "Oops! Something went wrong.",
+    "reloadBtn": "Reload This Page",
+    "triggerBtn": "Show Error Boundary"
+  },
   "navigation": {
     "search": "Search",
     "about": "About"
