@@ -17,8 +17,13 @@ export default async function SearchResult({
 }: SearchResultProps) {
   const res = await fetch(
     `https://swapi.py4e.com/api/${category}/?page=${page}&search=${query}`,
+    {
+      headers: {
+        Accept: 'application/json',
+      },
+      next: { revalidate: 3600 },
+    },
   );
-
   const t = await getTranslations('Search');
 
   if (!res.ok) {
