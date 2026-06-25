@@ -1,11 +1,11 @@
-import { scan } from 'react-scan';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import './index.css';
+import { scan } from 'react-scan';
 import { App } from './components/app/app';
+import './index.css';
 
 scan({
-  enabled: false,
+  enabled: true,
 });
 
 createRoot(document.getElementById('root')!).render(

@@ -1,0 +1,9 @@
+.columnButtonContainer {
+  margin-bottom: 16px;
+}
+
+.columnButton {
+  padding: 8px 16px;
+  font-size: 16px;
+  cursor: pointer;
+}
