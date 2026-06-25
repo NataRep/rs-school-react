@@ -1,25 +1,33 @@
-import type { SearchItem } from '../components/search/search-result-item/SearchResultItem';
-import { convertDataToCSV } from './convertDataToCSV';
+import { generateCsvAction } from '@/actions/csvActions';
+import type { SearchItem } from '@/components/search/search-result-item/SearchResultItem';
 
-export const handleDownload = (selectedItems: SearchItem[]) => {
-  if (selectedItems.length === 0) return;
+export const handleDownload = async (selectedItems: SearchItem[]) => {
+  try {
+    const response = await generateCsvAction(selectedItems);
 
-  const csvContent = convertDataToCSV(selectedItems);
+    if (!response.success || !response.csvContent) {
+      console.error(response.error || 'Export failed');
+      return;
+    }
 
-  const blob = new Blob(['\uFEFF' + csvContent], {
-    type: 'text/csv;charset=utf-8;',
-  });
+    const blob = new Blob([response.csvContent], {
+      type: 'text/csv;charset=utf-8;',
+    });
+    const url = URL.createObjectURL(blob);
 
-  const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute(
+      'download',
+      `star-wars-items-${selectedItems.length}.csv`,
+    );
+    document.body.appendChild(link);
 
-  const link = document.createElement('a');
-  link.href = url;
+    link.click();
 
-  link.setAttribute('download', `data_star_wars_${selectedItems.length}.csv`);
-
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-
-  URL.revokeObjectURL(url);
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    console.error('Download handler error:', err);
+  }
 };

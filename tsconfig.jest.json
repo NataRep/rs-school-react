@@ -1,12 +1,16 @@
 {
-  "extends": "./tsconfig.app.json",
+  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "jsx": "react-jsx",
-    "module": "CommonJS",
+    "rootDir": "./src",
     "moduleResolution": "node",
-    "esModuleInterop": true,
-    "allowImportingTsExtensions": false,
-    "noEmit": false,
-    "verbatimModuleSyntax": false
-  }
+    "ignoreDeprecations": "6.0",
+    "noEmit": false
+  },
+  "include": [
+    "src/**/*.spec.ts",
+    "src/**/*.spec.tsx",
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx",
+    "src/**/*.d.ts"
+  ]
 }

@@ -1,8 +1,10 @@
+'use client';
+
+import Icon from '@/components/icon/Icon';
+import type { RootState } from '@/store';
+import { toggleSelected } from '@/store/selectedSlice';
 import { useId } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import type { RootState } from '../../../store';
-import { toggleSelected } from '../../../store/selectedSlice';
-import Icon from '../../shared/icon/Icon';
 import type { SearchItem } from '../search-result-item/SearchResultItem';
 import style from './SelectionCheckbox.module.scss';
 
@@ -32,13 +34,13 @@ export default function SelectionCheckbox({ data }: SelectionCheckboxProps) {
         className={style.checkbox}
         checked={isChecked}
         onChange={handleChange}
-      ></input>
+      />
       <label
         htmlFor={`${reactId}-checkbox`}
         className={style.label}
         title="Save"
       >
-        <Icon name="flag"></Icon>
+        <Icon name="flag" />
       </label>
     </div>
   );

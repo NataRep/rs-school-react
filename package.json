@@ -4,18 +4,21 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build && cp dist/index.html dist/404.html",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "preview": "vite preview",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "icons:gen": "svgr src/assets/icons -d src/components/ui/icons --typescript --icon"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.12.0",
+    "next": "^16.2.9",
+    "next-intl": "^4.13.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "react-redux": "^9.3.0",
@@ -23,6 +26,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@svgr/cli": "^8.1.0",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
@@ -32,7 +36,6 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@types/redux-mock-store": "^1.5.0",
-    "@vitejs/plugin-react": "^6.0.1",
     "eslint": "^10.2.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.6",
@@ -46,11 +49,9 @@
     "jest-fetch-mock": "^3.0.3",
     "prettier": "^3.8.4",
     "redux-mock-store": "^1.5.5",
-    "sass": "^1.99.0",
+    "sass": "^1.101.0",
     "ts-jest": "^29.4.9",
     "typescript": "~6.0.2",
-    "typescript-eslint": "^8.58.2",
-    "vite": "^8.0.10",
-    "vite-plugin-svgr": "^5.2.0"
+    "typescript-eslint": "^8.58.2"
   }
 }

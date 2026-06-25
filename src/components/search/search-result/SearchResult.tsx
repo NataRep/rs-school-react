@@ -1,89 +1,58 @@
-import { Outlet, useLoaderData, useLocation, useNavigate } from 'react-router';
-import type { Person, Planet, Starship } from '../../../store/api-models';
-import { useGetDataQuery } from '../../../store/starWarsApi';
-import ErrorNotification from '../../shared/error-notification/ErrorNotification';
-import Loader from '../../shared/loader/Loader';
+import { Person, Planet, Starship } from '@/store/api-models';
+import { getTranslations } from 'next-intl/server'; // 🌟 Импортируем для сервера
 import SearchPagination from '../search-pagination/SearchPagination';
 import SearchResultItem from '../search-result-item/SearchResultItem';
 import style from './SearchResult.module.scss';
 
-export default function SearchResult() {
-  const { searchQuery, currentPage, categoryName } = useLoaderData() as {
-    searchQuery: string;
-    currentPage: number;
-    categoryName: string;
-  };
+interface SearchResultProps {
+  query: string;
+  category: string;
+  page: string;
+}
 
-  const { data, isLoading, isError, error } = useGetDataQuery({
-    category: categoryName || 'people',
-    searchQuery: searchQuery || '',
-    page: currentPage,
-  });
+export default async function SearchResult({
+  query,
+  category,
+  page,
+}: SearchResultProps) {
+  const res = await fetch(
+    `https://swapi.py4e.com/api/${category}/?page=${page}&search=${query}`,
+    {
+      headers: {
+        Accept: 'application/json',
+      },
+      next: { revalidate: 3600 },
+    },
+  );
+  const t = await getTranslations('Search');
 
-  const getErrorContent = () => {
-    if (!error) return null;
+  if (!res.ok) {
+    return <div className={style.error}>{t('resultError')}</div>;
+  }
 
-    if ('status' in error && error.status === 404) {
-      return 'The requested category or page was not found.';
-    }
+  const currentData = await res.json();
+  const hasResults = currentData.results && currentData.results.length > 0;
 
-    return 'Something went wrong. Please try again later.';
-  };
+  const totalPages = currentData.count ? Math.ceil(currentData.count / 10) : 1;
 
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const closeDetails = () => {
-    navigate({
-      pathname: `/search/${categoryName}`,
-      search: location.search,
-    });
-  };
-
-  const renderConstant = (currentData: typeof data) => {
-    if (!currentData) return null;
-
-    const hasResults = currentData?.results && currentData.results.length > 0;
-    const totalPages = Math.ceil(currentData.count / 10);
-
+  if (!hasResults) {
     return (
-      <div className={style.result}>
-        {!hasResults && (
-          <div className={style.emptyResult}>
-            <h2>Nothing found matching your request.</h2>
-          </div>
-        )}
-
-        {hasResults && (
-          <>
-            <ul className={style.itemList}>
-              {currentData.results.map((item: Person | Planet | Starship) => (
-                <li key={item.url} className={style.item}>
-                  <SearchResultItem item={item} />
-                </li>
-              ))}
-            </ul>
-            <SearchPagination totalPages={totalPages} />
-          </>
-        )}
+      <div className={style.emptyResult}>
+        <h2>{t('noResults')}</h2>
       </div>
     );
-  };
+  }
 
   return (
-    <div className={style.container} key={location.key}>
-      {isLoading && (
-        <div className={style.result}>
-          <Loader />
-        </div>
-      )}
-
-      {!isLoading && isError && (
-        <ErrorNotification>{getErrorContent()}</ErrorNotification>
-      )}
-
-      {!isLoading && !isError && data && renderConstant(data)}
-      <Outlet context={{ closeDetails }} />
+    <div className={style.wrapper}>
+      <ul className={style.itemList}>
+        {currentData.results.map((item: Person | Planet | Starship) => (
+          <li key={item.url} className={style.item}>
+            <SearchResultItem item={item} category={category} />
+          </li>
+        ))}
+      </ul>
+      <SearchPagination totalPages={totalPages} currentPage={Number(page)} />
     </div>
   );
 }

@@ -1,51 +1,62 @@
-import { useLocation, useNavigate } from 'react-router-dom';
-import type { Person, Planet, Starship } from '../../../store/api-models';
-import { getItemId } from '../../../utils/get-id-from-url';
-import { isPerson, isPlanet, isStarship } from '../../../utils/search-item';
+'use client';
+
+import { usePathname, useRouter } from '@/i18n/navigation';
+import type { Person, Planet, Starship } from '@/store/api-models';
+import { getItemId } from '@/utils/get-id-from-url';
+import { isPerson, isPlanet, isStarship } from '@/utils/search-item';
+import { useTranslations } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
 import SelectionCheckbox from '../selection-checkbox/SelectionCheckbox';
 import style from './SearchResultItem.module.scss';
 
 export type SearchItemProps = {
   item: SearchItem;
+  category: string;
 };
 
 export type SearchItem = Person | Planet | Starship;
 
-export default function SearchResultItem({ item }: SearchItemProps) {
-  const navigate = useNavigate();
-  const location = useLocation();
+export default function SearchResultItem({ item, category }: SearchItemProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const t = useTranslations('Search.item');
 
   const selectItem = (item: SearchItem) => {
     const id = getItemId(item.url);
     if (!id) return;
-    navigate(`${id}${location.search}`);
+
+    const newParams = new URLSearchParams(searchParams.toString());
+    newParams.set('details', id);
+
+    router.push(`${pathname}?${newParams.toString()}`);
   };
 
   const renderDescription = () => {
-    if (isPerson(item)) {
+    if (isPerson(item))
       return (
         <ul className={style.info}>
-          <li>Birth year: {item.birth_year}</li>
+          <li>
+            {t('birthYear')} {item.birth_year}
+          </li>
         </ul>
       );
-    }
-
-    if (isPlanet(item)) {
+    if (isPlanet(item))
       return (
         <ul className={style.info}>
-          <li>Terrain: {item.terrain}</li>
+          <li>
+            {t('terrain')} {item.terrain}
+          </li>
         </ul>
       );
-    }
-
-    if (isStarship(item)) {
+    if (isStarship(item))
       return (
         <ul className={style.info}>
-          <li>Model: {item.model}</li>
+          <li>
+            {t('model')} {item.model}
+          </li>
         </ul>
       );
-    }
-
     return null;
   };
 
@@ -53,14 +64,15 @@ export default function SearchResultItem({ item }: SearchItemProps) {
     <div className={style.wrapper} onClick={() => selectItem(item)}>
       <div className={style.topRow}>
         <h2 className={style.name}>
-          <span>Name:</span> {item.name}
+          {/* 🌟 Динамически подставляем подключ в зависимости от категории */}
+          <span>{t(`nameLabel.${category}`)}</span> {item.name}
         </h2>
         <div onClick={(e) => e.stopPropagation()} className={style.checkbox}>
           <SelectionCheckbox data={item} />
         </div>
       </div>
       <div className={style.description}>
-        <div className={style.subtitle}>Description:</div>
+        <div className={style.subtitle}>{t('descriptionLabel')}</div>
         {renderDescription()}
       </div>
     </div>

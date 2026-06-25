@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: sans-serif;
+}
+
+.button {
+  background: none;
+  border: none;
+  color: #858585;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  transition: color 0.2s ease;
+  padding: 4px 8px;
+
+  @include hover-supported {
+    color: #fff;
+  }
+
+  &.active {
+    color: var(--language-switcher-active);
+    text-shadow: 0 0 8px var(--language-switcher-active-shadow);
+  }
+}
+
+.divider {
+  color: #444;
+  user-select: none;
+}

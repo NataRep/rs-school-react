@@ -11,6 +11,7 @@
   will-change: transform;
   border-radius: 0.75rem;
   overflow: hidden;
+  width: 28rem;
 
   @media (max-width: 768px) {
     position: absolute;
@@ -27,12 +28,10 @@
 @keyframes slideIn {
   from {
     transform: translateX(100%);
-    width: 0;
   }
 
   to {
     transform: translateX(0%);
-    width: 28rem;
   }
 }
 

@@ -1,18 +1,19 @@
-import type { IconName } from '../components/shared/icon/Icon';
+import type { IconName } from '../components/icon/Icon';
 
 export interface NavLinkItem {
-  label: string;
+  translationKey: string;
   path: string;
   icon: IconName;
 }
+
 export const DEFAULT_NAV_LINKS: NavLinkItem[] = [
   {
-    label: 'Search',
-    path: '/search',
+    translationKey: 'search',
+    path: '/',
     icon: 'search',
   },
   {
-    label: 'About',
+    translationKey: 'about',
     path: '/about',
     icon: 'info',
   },

@@ -1,8 +1,6 @@
-.container {
-  min-height: var(--height-container);
-  display: flex;
-  justify-content: space-around;
-  overflow: hidden;
+.wrapper {
+  display: block;
+  width: 100%;
 }
 
 .itemList {
